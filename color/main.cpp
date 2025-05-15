@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <cstring>
+#include <cstdlib>
 #include "Region.h"
 #include "Player.h"
 
@@ -18,18 +19,48 @@ void playerInRegion(int num);
 void regionLevel(int num);
 void drawMap();
 
+void walk(int who, int count);
+
+string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+-------+"},
+					  {"+-------+","| ¡´     |","|       |","|     ¡´ |","+-------+"},
+					  {"+-------+","| ¡´     |","|   ¡´   |","|     ¡´ |","+-------+"},
+					  {"+-------+","| ¡´   ¡´ |","|       |","| ¡´   ¡´ |","+-------+"},
+					  {"+-------+","| ¡´   ¡´ |","|   ¡´   |","| ¡´   ¡´ |","+-------+"},
+					  {"+-------+","| ¡´   ¡´ |","| ¡´   ¡´ |","| ¡´   ¡´ |","+-------+"} };
+
+int twoDiceTotal;
+void rollDice();
+
 Region area[16];
 Player player[2];
 
 int main()
 {
+	srand(time(NULL));
+
 	area[0].name = "Start";area[1].name = "USA";area[2].name = "Chance";area[3].name = "France";
 	area[4].name = "Item Shop";area[5].name = "Germany";area[6].name = "Fate";area[7].name = "UK";
 	area[8].name = "Chance";area[9].name = "Italy";area[10].name = "Hospital";area[11].name = "Russia";
 	area[12].name = "Chance";area[13].name = "Canada";area[14].name = "Fate";area[15].name = "Japan";
 	area[0].playerHere[0] = 1;area[0].playerHere[1] = 1;
 
-	drawMap();
+	bool a = 1;
+	int b;
+
+	//drawMap();
+
+	while (1)
+	{
+		a = !a;
+		rollDice();
+		cout << twoDiceTotal << endl;
+		walk(a, twoDiceTotal);
+		drawMap();
+		cin >> b;
+	}
+
+
+
 }
 
 void setTextColor(int textColor)
@@ -206,4 +237,28 @@ void drawMap()
 	cout << "|";blank();regionLevel(11);blank();regionLevel(9);blank();cout << endl;
 
 	drawEdge();
+}
+
+void rollDice()
+{
+
+	int first = rand() % 6;
+	int second = rand() % 6;
+
+	for (int i = 0;i < 5;i++)
+	{
+		cout << dice[first][i] << "  " << dice[second][i] << endl;
+	}
+
+	twoDiceTotal = first + second + 2;
+}
+
+void walk(int who, int count)
+{
+	for (int i = count;i > 0;i--)
+	{
+		area[player[who].position].playerHere[who] = 0;
+		player[who].position = (player[who].position + 1) % 16;
+		area[player[who].position].playerHere[who] = 1;
+	}
 }
