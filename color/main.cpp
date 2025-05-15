@@ -74,9 +74,6 @@ int main()
 		cin >> b;
 		playerTurn = !playerTurn;
 	}
-
-
-
 }
 
 void setTextColor(int textColor)
@@ -126,7 +123,7 @@ void beginAnime()
 		cout << "       [";
 		setTextColor(32);
 
-		for (int j = 0;j <= i;j++)
+		for (int j = 0;j < i;j++)
 		{
 			cout << "#";
 		}
@@ -189,9 +186,9 @@ void regionName(int num)
 		length++;
 	}
 
-	if (area[num].owner == 1)
+	if (area[num].owner == 0)
 		setTextColor(31);
-	else if (area[num].owner == 2)
+	else if (area[num].owner == 1)
 		setTextColor(32);
 	else if (area[num].name == "Start")
 		setTextColor(42);
@@ -203,6 +200,8 @@ void regionName(int num)
 		setTextAndBackgroundColor(30, 46);
 	else if (area[num].name == "Hospital")
 		setTextColor(41);
+	else
+		resetColor();
 
 	cout << num << " " << area[num].name;
 
@@ -234,18 +233,24 @@ void playerInRegion(int num)
 		setTextColor(31);
 		cout << "[A]";
 		resetColor();
-	}
-	else
-		cout << "   ";
 
-	if (area[num].playerHere[1] == 1)
+		if (area[num].playerHere[1] == 1)
+		{
+			setTextColor(32);
+			cout << "[B]";
+			resetColor();
+		}
+		else
+			cout << "   ";
+	}
+	else if (area[num].playerHere[1] == 1)
 	{
 		setTextColor(32);
-		cout << "[B]";
+		cout << "[B]   ";
 		resetColor();
 	}
 	else
-		cout << "   ";
+		cout << "      ";
 
 	if (num < 10)
 	{
@@ -263,21 +268,38 @@ void playerInRegion(int num)
 
 void regionLevel(int num)
 {
-	if (area->owner == 1)
-		setTextColor(31);
-	else if (area->owner == 2)
-		setTextColor(32);
-
-	if (num < 10)
+	if (area[num].owner != 2)
 	{
-		cout << "   Level 0         ";
+		if (area[num].owner == 0)
+			setTextColor(31);
+		else if (area[num].owner == 1)
+			setTextColor(32);
+
+		if (num < 10)
+		{
+			cout << "   Level 0         ";
+		}
+		else
+		{
+			cout << "    Level 0        ";
+		}
+
+		resetColor();
 	}
 	else
 	{
-		cout << "    Level 0        ";
+		resetColor();
+
+		if (num < 10)
+		{
+			cout << "   Vacancy         ";
+		}
+		else
+		{
+			cout << "    Vacancy        ";
+		}
 	}
 
-	resetColor();
 	cout << "|";
 }
 

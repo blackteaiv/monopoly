@@ -12,6 +12,6 @@ public:
 	//if playerA is here, playerHere[0] = 1;if playerB is here, playerHere[1] = 1
 	bool playerHere[2] = { 0,0 };
 	int level = 0;
-	//nobody:0    playerA:1    playerB:2
-	int owner = 0;
+	//playerA:0    playerB:1    nobody:2
+	int owner = 2;
 };
