@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <cstring>
 #include <cstdlib>
+#include <time.h>
 #include "Region.h"
 #include "Player.h"
 
@@ -34,6 +35,8 @@ void rollDice();
 Region area[16];
 Player player[2];
 
+clock_t startTime, endTime;
+
 int main()
 {
 	srand(time(NULL));
@@ -44,19 +47,27 @@ int main()
 	area[12].name = "Chance";area[13].name = "Canada";area[14].name = "Fate";area[15].name = "Japan";
 	area[0].playerHere[0] = 1;area[0].playerHere[1] = 1;
 
-	bool a = 1;
-	int b;
-
-	//drawMap();
+	bool playerTurn = 0;
+	string b;
 
 	while (1)
 	{
-		a = !a;
+		system("CLS");
+		drawMap();
+		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+		cout << "(choose to roll the dice or check the items)" << endl << "Enter any word to continue : ";
+		cin >> b;
 		rollDice();
 		cout << twoDiceTotal << endl;
-		walk(a, twoDiceTotal);
-		drawMap();
+		cout << "(check the dice)" << endl << "Enter any word to move : ";
 		cin >> b;
+		walk(playerTurn, twoDiceTotal);
+		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+		cout << "(Trigger events or check the items)" << endl;
+		cout << "(After the events triggered, change side)" << endl;
+		cout << "Enter any word to continue : ";
+		cin >> b;
+		playerTurn = !playerTurn;
 	}
 
 
@@ -260,5 +271,13 @@ void walk(int who, int count)
 		area[player[who].position].playerHere[who] = 0;
 		player[who].position = (player[who].position + 1) % 16;
 		area[player[who].position].playerHere[who] = 1;
+		system("CLS");
+		drawMap();
+		startTime = clock();
+
+		do
+		{
+			endTime = clock();
+		} while (endTime - startTime < 150);
 	}
 }
