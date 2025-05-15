@@ -12,6 +12,8 @@ void setTextColor(int textColor);
 void setTextAndBackgroundColor(int textColor, int backgroundColor);
 void resetColor();
 
+void beginAnime();
+
 void drawEdge();
 void blank();
 
@@ -49,6 +51,9 @@ int main()
 
 	bool playerTurn = 0;
 	string b;
+
+	beginAnime();
+
 
 	while (1)
 	{
@@ -89,6 +94,67 @@ void setTextAndBackgroundColor(int textColor, int backgroundColor)
 void resetColor()
 {
 	cout << "\033[0m";
+}
+
+void beginAnime()
+{
+	//white:0 red:31 green:32 yellow:33 blue:34 purple:35 light blue:36
+	int color[11] = { 31,33,32,36,34,35,31,33,36,34,0 };
+	int times = 45;
+
+	for (int i = 0;i <= 10;i++)
+	{
+		for (int j = 0;j < 9;j++)
+		{
+			cout << endl;
+		}
+
+		for (int j = 0;j < times;j++)
+			cout << " ";
+
+		setTextColor(color[i]);
+		cout << "  /\\_/\\         ";
+		resetColor();
+		cout << i * 10 << "%" << endl;
+
+		for (int j = 0;j < times;j++)
+			cout << " ";
+
+		setTextColor(color[i]);
+		cout << "=( ¡P£s¡P )=";
+		resetColor();
+		cout << "       [";
+		setTextColor(32);
+
+		for (int j = 0;j <= i;j++)
+		{
+			cout << "#";
+		}
+
+		setTextColor(31);
+		for (int j = 10 - i;j > 0;j--)
+		{
+			cout << "_";
+		}
+
+		resetColor();
+		cout << "]" << endl;
+
+		for (int j = 0;j < times;j++)
+			cout << " ";
+
+		setTextColor(color[i]);
+		cout << " / > < \\" << endl;
+		resetColor();
+		startTime = clock();
+
+		do
+		{
+			endTime = clock();
+		} while (endTime - startTime < 500);
+
+		system("CLS");
+	}
 }
 
 void drawEdge()
