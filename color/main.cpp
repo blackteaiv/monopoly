@@ -50,7 +50,7 @@ int main()
 	area[0].playerHere[0] = 1;area[0].playerHere[1] = 1;
 
 	bool playerTurn = 0;
-	string b;
+	string uselessStr;
 
 	beginAnime();
 
@@ -61,17 +61,17 @@ int main()
 		drawMap();
 		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 		cout << "(choose to roll the dice or check the items)" << endl << "Enter any word to continue : ";
-		cin >> b;
+		cin >> uselessStr;
 		rollDice();
 		cout << twoDiceTotal << endl;
 		cout << "(check the dice)" << endl << "Enter any word to move : ";
-		cin >> b;
+		cin >> uselessStr;
 		walk(playerTurn, twoDiceTotal);
 		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 		cout << "(Trigger events or check the items)" << endl;
 		cout << "(After the events triggered, change side)" << endl;
 		cout << "Enter any word to continue : ";
-		cin >> b;
+		cin >> uselessStr;
 		playerTurn = !playerTurn;
 	}
 }
