@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <cstring>
+#include <vector>
 #include <cstdlib>
 #include <time.h>
 #include <fstream>
@@ -25,6 +26,9 @@ void drawMap();
 
 void walk(int who, int count);
 
+void shootDragonDoor();
+void horse(int horseNumber);
+
 string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+-------+"},
 					  {"+-------+","| ¡´     |","|       |","|     ¡´ |","+-------+"},
 					  {"+-------+","| ¡´     |","|   ¡´   |","|     ¡´ |","+-------+"},
@@ -39,6 +43,9 @@ Region area[28];
 Player player[2];
 
 clock_t startTime, endTime;
+bool playerTurn = 0;
+string uselessStr;
+
 
 int main()
 {
@@ -54,11 +61,13 @@ int main()
 
 	area[0].playerHere[0] = 1;area[0].playerHere[1] = 1;
 
-	bool playerTurn = 0;
-	string uselessStr;
+
 	//beginAnime();
 
-	while (1)
+	horse(1);
+
+
+	/*while (1)
 	{
 		system("CLS");
 		drawMap();
@@ -76,7 +85,7 @@ int main()
 		cout << "Enter any word to continue : ";
 		cin >> uselessStr;
 		playerTurn = !playerTurn;
-	}
+	}*/
 }
 
 void setTextColor(int textColor)
@@ -389,4 +398,106 @@ void walk(int who, int count)
 			endTime = clock();
 		} while (endTime - startTime < 150);
 	}
+}
+
+void shootDragonDoor()
+{
+	system("CLS");
+
+	//output the map
+}
+
+void horse(int horseNumber)
+{
+	system("CLS");
+
+	int end = 0;
+	int horse[4] = { 1,1,1,1 };
+	int color[4] = { 31,33,32,36 };
+
+	do
+	{
+		resetColor();
+		cout << "                            |" << endl;
+
+		for (int j = 0;j < 4;j++)
+		{
+			setTextColor(color[j]);
+			cout << "horse " << j << " ";
+
+			for (int k = 0;k < horse[j];k++)
+				cout << "-";
+
+			for (int k = horse[j];k < 20;k++)
+				cout << " ";
+
+			resetColor();
+			cout << "|\n                            |" << endl;
+		}
+
+		for (int i = 0;i < 4;i++)
+		{
+			horse[i] += rand() % 3 + 1;
+
+			if (horse[i] >= 20)
+			{
+				horse[i] = 20;
+				end = 1;
+			}
+		}
+		cout << endl << endl;
+
+
+		startTime = clock();
+
+		do
+		{
+			endTime = clock();
+		} while (endTime - startTime < 500);
+
+		system("CLS");
+	} while (end != 1);
+
+	cout << "                            |" << endl;
+
+	for (int j = 0;j < 4;j++)
+	{
+		setTextColor(color[j]);
+		cout << "horse " << j << " ";
+
+		for (int k = 0;k < horse[j];k++)
+			cout << "-";
+
+		for (int k = horse[j];k < 20;k++)
+			cout << " ";
+
+		resetColor();
+		cout << "|\n                            |" << endl;
+	}
+
+	startTime = clock();
+
+	do
+	{
+		endTime = clock();
+	} while (endTime - startTime < 500);
+
+
+	if (horse[horseNumber] == 20)
+	{
+		setTextColor(32);
+		cout << "\nyou win";
+	}
+	else
+	{
+		setTextColor(31);
+		cout << "\nyou lose";
+	}
+
+	resetColor();
+	cout << "\n\nEnter any word to continue:";
+	cin >> uselessStr;
+
+	system("CLS");
+	//output the map
 }
