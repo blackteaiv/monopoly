@@ -46,14 +46,12 @@ int main()
 	ifstream in;
 	in.open("map.txt");
 
-	cout << in.fail() << endl;
-
 	for (int i = 0;i < 28;i++)
 		in >> area[i].name;
 
 	in.close();
 
-	/*
+
 	area[0].playerHere[0] = 1;area[0].playerHere[1] = 1;
 
 	bool playerTurn = 0;
@@ -78,7 +76,7 @@ int main()
 		cout << "Enter any word to continue : ";
 		cin >> uselessStr;
 		playerTurn = !playerTurn;
-	}*/
+	}
 }
 
 void setTextColor(int textColor)
@@ -332,13 +330,13 @@ void drawMap()
 
 	cout << "|";regionName(25);blank();blank();blank();blank();blank();blank();regionName(10);cout << endl;
 	cout << "|";playerInRegion(25);blank();blank();blank();blank();blank();blank();playerInRegion(10);cout << endl;
-	cout << "|";regionLevel(25);blank();blank();blank();blank();blank();blank();blank();cout << endl;
+	cout << "|";blank();blank();blank();blank();blank();blank();blank();regionLevel(10);cout << endl;
 
 	drawEdge();
 
 	cout << "|";regionName(24);blank();blank();blank();blank();blank();blank();regionName(11);cout << endl;
 	cout << "|";playerInRegion(24);blank();blank();blank();blank();blank();blank();playerInRegion(11);cout << endl;
-	cout << "|";blank();blank();blank();blank();blank();blank();blank();regionLevel(11);cout << endl;
+	cout << "|";regionLevel(24);blank();blank();blank();blank();blank();blank();blank();cout << endl;
 
 	drawEdge();
 
@@ -356,7 +354,7 @@ void drawMap()
 
 	cout << "|";regionName(21);regionName(20);regionName(19);regionName(18);regionName(17);regionName(16);regionName(15);regionName(14);cout << endl;
 	cout << "|";playerInRegion(21);playerInRegion(20);playerInRegion(19);playerInRegion(18);playerInRegion(17);playerInRegion(16);playerInRegion(15);playerInRegion(14);cout << endl;
-	cout << "|";regionLevel(21);regionLevel(20);regionLevel(19);regionLevel(18);regionLevel(17);blank();blank();regionLevel(14);cout << endl;
+	cout << "|";regionLevel(21);regionLevel(20);regionLevel(19);regionLevel(18);blank();blank();regionLevel(15);regionLevel(14);cout << endl;
 
 	drawEdge();
 }

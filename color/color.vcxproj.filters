@@ -28,6 +28,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\map.txt" />
+    <Text Include="map.txt" />
   </ItemGroup>
 </Project>
