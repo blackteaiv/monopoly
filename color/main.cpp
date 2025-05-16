@@ -3,6 +3,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <time.h>
+#include <fstream>
 #include "Region.h"
 #include "Player.h"
 
@@ -34,7 +35,7 @@ string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+------
 int twoDiceTotal;
 void rollDice();
 
-Region area[16];
+Region area[28];
 Player player[2];
 
 clock_t startTime, endTime;
@@ -42,18 +43,22 @@ clock_t startTime, endTime;
 int main()
 {
 	srand(time(NULL));
+	ifstream in;
+	in.open("map.txt");
 
-	area[0].name = "Start";area[1].name = "USA";area[2].name = "Chance";area[3].name = "France";
-	area[4].name = "Item Shop";area[5].name = "Germany";area[6].name = "Fate";area[7].name = "UK";
-	area[8].name = "Chance";area[9].name = "Italy";area[10].name = "Hospital";area[11].name = "Russia";
-	area[12].name = "Chance";area[13].name = "Canada";area[14].name = "Fate";area[15].name = "Japan";
+	cout << in.fail() << endl;
+
+	for (int i = 0;i < 28;i++)
+		in >> area[i].name;
+
+	in.close();
+
+	/*
 	area[0].playerHere[0] = 1;area[0].playerHere[1] = 1;
 
 	bool playerTurn = 0;
 	string uselessStr;
-
-	beginAnime();
-
+	//beginAnime();
 
 	while (1)
 	{
@@ -73,7 +78,7 @@ int main()
 		cout << "Enter any word to continue : ";
 		cin >> uselessStr;
 		playerTurn = !playerTurn;
-	}
+	}*/
 }
 
 void setTextColor(int textColor)
@@ -156,7 +161,7 @@ void beginAnime()
 
 void drawEdge()
 {
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 160; i++)
 	{
 		if (i % 20 == 0)
 		{
@@ -307,33 +312,51 @@ void drawMap()
 {
 	drawEdge();
 
-	cout << "|";regionName(0);regionName(1);regionName(2);regionName(3);regionName(4);cout << endl;
-	cout << "|";playerInRegion(0);playerInRegion(1);playerInRegion(2);playerInRegion(3);playerInRegion(4);cout << endl;
-	cout << "|";blank();regionLevel(1);blank();regionLevel(3);blank();cout << endl;
+	cout << "|";regionName(0);regionName(1);regionName(2);regionName(3);regionName(4);regionName(5);regionName(6);regionName(7);cout << endl;
+	cout << "|";playerInRegion(0);playerInRegion(1);playerInRegion(2);playerInRegion(3);playerInRegion(4);playerInRegion(5);playerInRegion(6);playerInRegion(7);cout << endl;
+	cout << "|";blank();regionLevel(1);blank();regionLevel(3);blank();regionLevel(5);regionLevel(6);regionLevel(7);cout << endl;
 
 	drawEdge();
 
-	cout << "|";regionName(15);blank();blank();blank();regionName(5);cout << endl;
-	cout << "|";playerInRegion(15);blank();blank();blank();playerInRegion(5);cout << endl;
-	cout << "|";regionLevel(15);blank();blank();blank();regionLevel(5);cout << endl;
+	cout << "|";regionName(27);blank();blank();blank();blank();blank();blank();regionName(8);cout << endl;
+	cout << "|";playerInRegion(27);blank();blank();blank();blank();blank();blank();playerInRegion(8);cout << endl;
+	cout << "|";regionLevel(27);blank();blank();blank();blank();blank();blank();regionLevel(8);cout << endl;
 
 	drawEdge();
 
-	cout << "|";regionName(14);blank();blank();blank();regionName(6);cout << endl;
-	cout << "|";playerInRegion(14);blank();blank();blank();playerInRegion(6);cout << endl;
-	cout << "|";blank();blank();blank();blank();blank();cout << endl;
+	cout << "|";regionName(26);blank();blank();blank();blank();blank();blank();regionName(9);cout << endl;
+	cout << "|";playerInRegion(26);blank();blank();blank();blank();blank();blank();playerInRegion(9);cout << endl;
+	cout << "|";regionLevel(26);blank();blank();blank();blank();blank();blank();regionLevel(9);cout << endl;
 
 	drawEdge();
 
-	cout << "|";regionName(13);blank();blank();blank();regionName(7);cout << endl;
-	cout << "|";playerInRegion(13);blank();blank();blank();playerInRegion(7);cout << endl;
-	cout << "|";regionLevel(13);blank();blank();blank();regionLevel(7);cout << endl;
+	cout << "|";regionName(25);blank();blank();blank();blank();blank();blank();regionName(10);cout << endl;
+	cout << "|";playerInRegion(25);blank();blank();blank();blank();blank();blank();playerInRegion(10);cout << endl;
+	cout << "|";regionLevel(25);blank();blank();blank();blank();blank();blank();blank();cout << endl;
 
 	drawEdge();
 
-	cout << "|";regionName(12);regionName(11);regionName(10);regionName(9);regionName(8);cout << endl;
-	cout << "|";playerInRegion(12);playerInRegion(11);playerInRegion(10);playerInRegion(9);playerInRegion(8);cout << endl;
-	cout << "|";blank();regionLevel(11);blank();regionLevel(9);blank();cout << endl;
+	cout << "|";regionName(24);blank();blank();blank();blank();blank();blank();regionName(11);cout << endl;
+	cout << "|";playerInRegion(24);blank();blank();blank();blank();blank();blank();playerInRegion(11);cout << endl;
+	cout << "|";blank();blank();blank();blank();blank();blank();blank();regionLevel(11);cout << endl;
+
+	drawEdge();
+
+	cout << "|";regionName(23);blank();blank();blank();blank();blank();blank();regionName(12);cout << endl;
+	cout << "|";playerInRegion(23);blank();blank();blank();blank();blank();blank();playerInRegion(12);cout << endl;
+	cout << "|";regionLevel(23);blank();blank();blank();blank();blank();blank();regionLevel(12);cout << endl;
+
+	drawEdge();
+
+	cout << "|";regionName(22);blank();blank();blank();blank();blank();blank();regionName(13);cout << endl;
+	cout << "|";playerInRegion(22);blank();blank();blank();blank();;blank();blank();playerInRegion(13);cout << endl;
+	cout << "|";regionLevel(22);blank();blank();blank();blank();;blank();blank();regionLevel(13);cout << endl;
+
+	drawEdge();
+
+	cout << "|";regionName(21);regionName(20);regionName(19);regionName(18);regionName(17);regionName(16);regionName(15);regionName(14);cout << endl;
+	cout << "|";playerInRegion(21);playerInRegion(20);playerInRegion(19);playerInRegion(18);playerInRegion(17);playerInRegion(16);playerInRegion(15);playerInRegion(14);cout << endl;
+	cout << "|";regionLevel(21);regionLevel(20);regionLevel(19);regionLevel(18);regionLevel(17);blank();blank();regionLevel(14);cout << endl;
 
 	drawEdge();
 }
