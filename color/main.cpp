@@ -27,7 +27,7 @@ void drawMap();
 void walk(int who, int count);
 
 void shootDragonDoor();
-void horse(int horseNumber);
+void horse();
 
 string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+-------+"},
 					  {"+-------+","| ¡´     |","|       |","|     ¡´ |","+-------+"},
@@ -64,7 +64,7 @@ int main()
 
 	//beginAnime();
 
-	horse(1);
+	horse();
 
 
 	/*while (1)
@@ -404,16 +404,148 @@ void shootDragonDoor()
 {
 	system("CLS");
 
+	int card1, card2, card3, change, guess;
+	string num[14] = { "0","A","2","3","4","5","6","7","8","9","10","J","Q","K" };
+	card1 = rand() % 13 + 1;
+	card2 = rand() % 13 + 1;
+	card3 = rand() % 13 + 1;
+
+	if (card1 > card2)
+	{
+		change = card1;
+		card1 = card2;
+		card2 = change;
+	}
+
+	cout << "the 1st card : " << num[card1] << endl;
+	cout << "the 2nd card : " << num[card2] << endl << endl;
+
+	if (card1 == card2)
+	{
+		cout << "Guess if the next card is larger or smaller" << endl;
+		cout << "1:larger\n2:smaller\nEnter 1 or 2 : ";
+	reEnterGuess1:
+		cin >> guess;
+
+		if (guess == 1)
+		{
+			cout << "The next card is " << num[card3] << endl;
+
+			if (card1 < card3)
+			{
+				cout << "You win" << endl;
+			}
+			else if (card1 == card3)
+			{
+				goto skittles1;
+			}
+			else
+			{
+				cout << "You lose" << endl;
+			}
+		}
+		else if (guess == 2)
+		{
+			cout << "The next card is " << num[card3] << endl;
+
+			if (card1 < card3)
+			{
+				cout << "You lose" << endl;
+			}
+			else if (card1 == card3)
+			{
+				goto skittles1;
+			}
+			else
+			{
+				cout << "You win" << endl;
+			}
+		}
+		else
+		{
+			cout << "Wrong input, enter again:";
+			goto reEnterGuess1;
+		skittles1:
+			cout << "Skittles, you lose stake*3" << endl;
+		}
+	}
+	else
+	{
+		cout << "Guess if the next card is in or out if range" << endl;
+		cout << "1:in\n2:out\nEnter 1 or 2 : ";
+	reEnterGuess2:
+		cin >> guess;
+
+		if (guess == 1)
+		{
+			cout << "The next card is " << num[card3] << endl;
+
+			if (card1 < card3 && card3 < card2)
+			{
+				cout << "You win" << endl;
+			}
+			else if (card1 == card3 || card2 == card3)
+			{
+				goto skittles2;
+			}
+			else
+			{
+				cout << "You lose" << endl;
+			}
+		}
+		else if (guess == 2)
+		{
+			cout << "\nThe next card is " << num[card3] << endl;
+
+			if (card1 < card3 && card3 < card2)
+			{
+				cout << "You lose" << endl;
+			}
+			else if (card1 == card3 || card2 == card3)
+			{
+				goto skittles2;
+			}
+			else
+			{
+				cout << "You win" << endl;
+			}
+		}
+		else
+		{
+			cout << "Wrong input, enter again:";
+			goto reEnterGuess2;
+		skittles2:
+			cout << "Skittles, you lose stake*2" << endl;
+		}
+	}
+
+	cout << endl << "Enter any word to continue:";
+	cin >> num[0];
+	system("CLS");
 	//output the map
 }
 
-void horse(int horseNumber)
+void horse()
 {
 	system("CLS");
 
 	int end = 0;
 	int horse[4] = { 1,1,1,1 };
 	int color[4] = { 31,33,32,36 };
+	int horseNumber;
+
+	cout << "Choose the horse from 1~4 : ";
+chooseHorseNumber:
+	cin >> horseNumber;
+
+	if (horseNumber < 1 || horseNumber>4)
+	{
+		cout << "Wrong input, choose again : ";
+		goto chooseHorseNumber;
+	}
+
+	horseNumber--;
+	system("CLS");
 
 	do
 	{
@@ -423,7 +555,7 @@ void horse(int horseNumber)
 		for (int j = 0;j < 4;j++)
 		{
 			setTextColor(color[j]);
-			cout << "horse " << j << " ";
+			cout << "horse " << j + 1 << " ";
 
 			for (int k = 0;k < horse[j];k++)
 				cout << "-";
@@ -463,7 +595,7 @@ void horse(int horseNumber)
 	for (int j = 0;j < 4;j++)
 	{
 		setTextColor(color[j]);
-		cout << "horse " << j << " ";
+		cout << "horse " << j + 1 << " ";
 
 		for (int k = 0;k < horse[j];k++)
 			cout << "-";
@@ -482,19 +614,14 @@ void horse(int horseNumber)
 		endTime = clock();
 	} while (endTime - startTime < 500);
 
+	resetColor();
 
 	if (horse[horseNumber] == 20)
-	{
-		setTextColor(32);
 		cout << "\nyou win";
-	}
 	else
-	{
-		setTextColor(31);
 		cout << "\nyou lose";
-	}
 
-	resetColor();
+
 	cout << "\n\nEnter any word to continue:";
 	cin >> uselessStr;
 
