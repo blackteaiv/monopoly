@@ -1,3 +1,4 @@
+//https://hackmd.io/@CPklPazPTGmhC46aFU17WQ/Hyrccwp6kl
 #include <iostream>
 #include <stdio.h>
 #include <cstring>
@@ -27,6 +28,11 @@ void regionName(int num);
 void playerInRegion(int num);
 void regionLevel(int num);
 void drawMap();
+//player's status
+int lengthOfNumber(int num);
+void statusEdge();
+void playerStatus(int who);
+void status();
 //move
 void walk(bool who, int count);
 //game
@@ -49,7 +55,7 @@ Player player[2];
 
 //player A:0 player B:1
 bool playerTurn = 0;
-string uselessStr;
+string input;
 
 
 int main()
@@ -70,20 +76,41 @@ int main()
 	turnBegin:
 		system("CLS");
 		drawMap();
+		status();
 		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 		cout << "(choose to roll the dice or check the cards)" << endl;
-		cout << "1.roll the dice" << endl << "2.check the cards" << endl << "Enter 1 or 2:";
-		cin >> uselessStr;
+		cout << "1.Roll the dice" << endl << "2.Check the cards" << endl << "Enter 1 or 2:";
+	input1:
+		cin >> input;
+
+		if (input == "1")
+		{
+			//continue
+		}
+		else if (input == "2")
+		{
+			//print the cards
+		}
+		else
+		{
+			cout << "Wrong input, enter again:";
+			goto input1;
+		}
+
 		rollDice();
 		cout << twoDiceTotal << endl;
 		cout << "(check the dice)" << endl << "Enter any word to move : ";
-		cin >> uselessStr;
+		cin >> input;
 		walk(playerTurn, twoDiceTotal);
 		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
-		cout << "(Trigger events or check the items)" << endl;
-		cout << "(After the events triggered, change side)" << endl;
+		cout << "(Trigger the event or check the cards)" << endl;
+		cout << "1.Trigger the event" << endl << "2.Check the cards" << endl << "Enter 1 or 2:";
+	input2:
+		cin >> input;
+
+		cout << "(After the event is triggered, change side)" << endl;
 		cout << "Enter any word to continue : ";
-		cin >> uselessStr;
+		cin >> input;
 		playerTurn = !playerTurn;
 	}
 }
@@ -370,6 +397,73 @@ void drawMap()
 	cout << "|";regionLevel(21);regionLevel(20);regionLevel(19);regionLevel(18);regionLevel(17);blank();blank();regionLevel(14);cout << endl;
 
 	drawEdge();
+	cout << endl;
+}
+
+int lengthOfNumber(int num)
+{
+	int count = 0;
+
+	if (num == 0)
+		return 1;
+
+	while (num != 0)
+	{
+		num /= 10;
+		count++;
+	}
+
+	return count;
+}
+
+void statusEdge()
+{
+	cout << "+---------------+----------+----------------------------------------------------+-----------------------------------------------------------+" << endl;
+}
+
+void playerStatus(int who)
+{
+	int count = player[who].house.size() * 2;
+	cout << "| ";setTextColor(who + 31);cout << (who == 0 ? "[A]" : "[B]");resetColor();cout << " Player" << who + 1 << "   | ";
+	cout << player[who].money;
+
+	for (int i = lengthOfNumber(player[who].money);i < 9;i++)
+		cout << " ";
+
+	cout << "| ";//51
+
+	for (int i = 0;i < player[who].house.size();i++)
+	{
+		if (player[who].house[i] >= 10)
+			count++;
+
+		cout << player[who].house[i] << " ";
+	}
+
+	for (int i = count;i < 51;i++)
+		cout << " ";
+
+	cout << "| ";
+	cout << "(Unfinished)";
+	cout << "                                              ";
+	cout << "|" << endl;
+}
+
+void status()
+{
+	statusEdge();
+	cout << "| Player's name | Assets   | Property                                           | Cards                                                     |" << endl;
+	statusEdge();
+
+	playerStatus(0);
+	playerStatus(1);
+
+	cout << "| ";setTextColor(33);cout << "[C]";resetColor();
+	cout << " Player3   |DoNotExist| Player3 is used to check format                    | This line will be deleted after status() is completed     |" << endl;
+
+	statusEdge();
+
+	cout << endl;
 }
 
 void rollDice()
@@ -391,7 +485,7 @@ void walk(bool who, int count)
 	for (int i = count;i > 0;i--)
 	{
 		area[player[who].position].playerHere[who] = 0;
-		player[who].position = (player[who].position + 1) % 16;
+		player[who].position = (player[who].position + 1) % 28;
 		area[player[who].position].playerHere[who] = 1;
 		system("CLS");
 		drawMap();
@@ -399,6 +493,8 @@ void walk(bool who, int count)
 
 		delay(150);
 	}
+
+	status();
 }
 
 void shootDragonDoor()
@@ -613,7 +709,7 @@ chooseHorseNumber:
 
 
 	cout << "\n\nEnter any word to continue:";
-	cin >> uselessStr;
+	cin >> input;
 
 	system("CLS");
 	//output the map
