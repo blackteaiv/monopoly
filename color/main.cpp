@@ -28,7 +28,7 @@ void playerInRegion(int num);
 void regionLevel(int num);
 void drawMap();
 //move
-void walk(int who, int count);
+void walk(bool who, int count);
 //game
 void shootDragonDoor();
 void horse();
@@ -47,6 +47,7 @@ void rollDice();
 Region area[28];
 Player player[2];
 
+//player A:0 player B:1
 bool playerTurn = 0;
 string uselessStr;
 
@@ -62,15 +63,16 @@ int main()
 
 	in.close();
 	area[0].playerHere[0] = 1;area[0].playerHere[1] = 1;
-
 	//beginAnime();
 
 	while (1)
 	{
+	turnBegin:
 		system("CLS");
 		drawMap();
 		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
-		cout << "(choose to roll the dice or check the items)" << endl << "Enter any word to continue : ";
+		cout << "(choose to roll the dice or check the cards)" << endl;
+		cout << "1.roll the dice" << endl << "2.check the cards" << endl << "Enter 1 or 2:";
 		cin >> uselessStr;
 		rollDice();
 		cout << twoDiceTotal << endl;
@@ -210,7 +212,7 @@ void regionName(int num)
 		setTextAndBackgroundColor(30, 43);
 	else if (area[num].name == "Fate")
 		setTextColor(45);
-	else if (area[num].name == "Item Shop")
+	else if (area[num].name == "Shop")
 		setTextAndBackgroundColor(30, 46);
 	else if (area[num].name == "Hospital")
 		setTextColor(41);
@@ -341,13 +343,13 @@ void drawMap()
 
 	cout << "|";regionName(25);blank();blank();blank();blank();blank();blank();regionName(10);cout << endl;
 	cout << "|";playerInRegion(25);blank();blank();blank();blank();blank();blank();playerInRegion(10);cout << endl;
-	cout << "|";blank();blank();blank();blank();blank();blank();blank();regionLevel(10);cout << endl;
+	cout << "|";regionLevel(24);blank();blank();blank();blank();blank();blank();blank();cout << endl;
 
 	drawEdge();
 
 	cout << "|";regionName(24);blank();blank();blank();blank();blank();blank();regionName(11);cout << endl;
 	cout << "|";playerInRegion(24);blank();blank();blank();blank();blank();blank();playerInRegion(11);cout << endl;
-	cout << "|";regionLevel(24);blank();blank();blank();blank();blank();blank();blank();cout << endl;
+	cout << "|";blank();blank();blank();blank();blank();blank();blank();regionLevel(11);cout << endl;
 
 	drawEdge();
 
@@ -365,7 +367,7 @@ void drawMap()
 
 	cout << "|";regionName(21);regionName(20);regionName(19);regionName(18);regionName(17);regionName(16);regionName(15);regionName(14);cout << endl;
 	cout << "|";playerInRegion(21);playerInRegion(20);playerInRegion(19);playerInRegion(18);playerInRegion(17);playerInRegion(16);playerInRegion(15);playerInRegion(14);cout << endl;
-	cout << "|";regionLevel(21);regionLevel(20);regionLevel(19);regionLevel(18);blank();blank();regionLevel(15);regionLevel(14);cout << endl;
+	cout << "|";regionLevel(21);regionLevel(20);regionLevel(19);regionLevel(18);regionLevel(17);blank();blank();regionLevel(14);cout << endl;
 
 	drawEdge();
 }
@@ -384,7 +386,7 @@ void rollDice()
 	twoDiceTotal = first + second + 2;
 }
 
-void walk(int who, int count)
+void walk(bool who, int count)
 {
 	for (int i = count;i > 0;i--)
 	{
