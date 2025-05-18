@@ -343,7 +343,7 @@ void drawMap()
 
 	cout << "|";regionName(25);blank();blank();blank();blank();blank();blank();regionName(10);cout << endl;
 	cout << "|";playerInRegion(25);blank();blank();blank();blank();blank();blank();playerInRegion(10);cout << endl;
-	cout << "|";regionLevel(24);blank();blank();blank();blank();blank();blank();blank();cout << endl;
+	cout << "|";regionLevel(25);blank();blank();blank();blank();blank();blank();blank();cout << endl;
 
 	drawEdge();
 
