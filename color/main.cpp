@@ -38,6 +38,10 @@ void walk(bool who, int count);
 //game
 void shootDragonDoor();
 void horse();
+//region
+void chance();
+void fate();
+
 
 string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+-------+"},
 					  {"+-------+","| ¡´     |","|       |","|     ¡´ |","+-------+"},
@@ -107,10 +111,41 @@ int main()
 		cout << "1.Trigger the event" << endl << "2.Check the cards" << endl << "Enter 1 or 2:";
 	input2:
 		cin >> input;
+		//trigger the event or check the cards
+		if (area[player[playerTurn].position].name == "Start")
+		{
+			cout << "You get some money as reward\nYou get 1000 dollars\n";
+			player[playerTurn].money += 1000;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
+		else if (area[player[playerTurn].position].name == "Chance")
+		{
+			chance();
+		}
+		else if (area[player[playerTurn].position].name == "Fate")
+		{
+			fate();
+		}
+		else if (area[player[playerTurn].position].name == "Shop")
+		{
+			cout << "Shop" << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
+		else if (area[player[playerTurn].position].name == "Hospital")
+		{
+			cout << "Hospital" << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
+		else
+		{
+			cout << "House" << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
 
-		cout << "(After the event is triggered, change side)" << endl;
-		cout << "Enter any word to continue : ";
-		cin >> input;
 		playerTurn = !playerTurn;
 	}
 }
@@ -501,7 +536,8 @@ void shootDragonDoor()
 {
 	system("CLS");
 
-	int card1, card2, card3, change, guess;
+	int card1, card2, card3, change, guess, stake;
+	int stakelist[4] = { 500,1000,1500,2000 };
 	string num[14] = { "0","A","2","3","4","5","6","7","8","9","10","J","Q","K" };
 	card1 = rand() % 13 + 1;
 	card2 = rand() % 13 + 1;
@@ -514,8 +550,23 @@ void shootDragonDoor()
 		card2 = change;
 	}
 
-	cout << "the 1st card : " << num[card1] << endl;
-	cout << "the 2nd card : " << num[card2] << endl << endl;
+	cout << "Stake : 1. 500 dollars\n        2. 1000 dollars\n        3. 1500 dollars\n        4. 2000 dollars" << endl;
+	cout << "Enter 1~4 :";
+stakeSDD:
+	cin >> stake;
+
+	if (stake >= 1 && stake <= 4)
+	{
+		stake = stakelist[stake - 1];
+	}
+	else
+	{
+		cout << "Wrong input, enter again:";
+		goto stakeSDD;
+	}
+
+	cout << "\nthe 1st card : " << num[card1];
+	cout << "\nthe 2nd card : " << num[card2] << endl << endl;
 
 	if (card1 == card2)
 	{
@@ -531,6 +582,7 @@ void shootDragonDoor()
 			if (card1 < card3)
 			{
 				cout << "You win" << endl;
+				player[playerTurn].money += stake;
 			}
 			else if (card1 == card3)
 			{
@@ -539,6 +591,7 @@ void shootDragonDoor()
 			else
 			{
 				cout << "You lose" << endl;
+				player[playerTurn].money -= stake;
 			}
 		}
 		else if (guess == 2)
@@ -548,6 +601,7 @@ void shootDragonDoor()
 			if (card1 < card3)
 			{
 				cout << "You lose" << endl;
+				player[playerTurn].money -= stake;
 			}
 			else if (card1 == card3)
 			{
@@ -556,6 +610,7 @@ void shootDragonDoor()
 			else
 			{
 				cout << "You win" << endl;
+				player[playerTurn].money += stake;
 			}
 		}
 		else
@@ -563,7 +618,8 @@ void shootDragonDoor()
 			cout << "Wrong input, enter again:";
 			goto reEnterGuess1;
 		skittles1:
-			cout << "Skittles, you lose stake*3" << endl;
+			cout << "Skittles, you lose stake * 3" << endl;
+			player[playerTurn].money -= stake * 3;
 		}
 	}
 	else
@@ -580,6 +636,7 @@ void shootDragonDoor()
 			if (card1 < card3 && card3 < card2)
 			{
 				cout << "You win" << endl;
+				player[playerTurn].money += stake;
 			}
 			else if (card1 == card3 || card2 == card3)
 			{
@@ -588,6 +645,7 @@ void shootDragonDoor()
 			else
 			{
 				cout << "You lose" << endl;
+				player[playerTurn].money -= stake;
 			}
 		}
 		else if (guess == 2)
@@ -597,6 +655,7 @@ void shootDragonDoor()
 			if (card1 < card3 && card3 < card2)
 			{
 				cout << "You lose" << endl;
+				player[playerTurn].money -= stake;
 			}
 			else if (card1 == card3 || card2 == card3)
 			{
@@ -605,6 +664,7 @@ void shootDragonDoor()
 			else
 			{
 				cout << "You win" << endl;
+				player[playerTurn].money += stake;
 			}
 		}
 		else
@@ -612,26 +672,41 @@ void shootDragonDoor()
 			cout << "Wrong input, enter again:";
 			goto reEnterGuess2;
 		skittles2:
-			cout << "Skittles, you lose stake*2" << endl;
+			cout << "Skittles, you lose stake * 2" << endl;
+			player[playerTurn].money -= stake * 2;
 		}
 	}
 
 	cout << endl << "Enter any word to continue:";
-	cin >> num[0];
-	system("CLS");
-	//output the map
+	cin >> input;
 }
 
 void horse()
 {
 	system("CLS");
 
-	int end = 0;
+	int end = 0, stake;
+	int stakelist[4] = { 500,1000,1500,2000 };
 	int horse[4] = { 1,1,1,1 };
 	int color[4] = { 31,33,32,36 };
 	int horseNumber;
 
-	cout << "Choose the horse from 1~4 : ";
+	cout << "Stake : 1. 500 dollars\n        2. 1000 dollars\n        3. 1500 dollars\n        4. 2000 dollars" << endl;
+	cout << "Enter 1~4 :";
+stakeHorse:
+	cin >> stake;
+
+	if (stake >= 1 && stake <= 4)
+	{
+		stake = stakelist[stake - 1];
+	}
+	else
+	{
+		cout << "Wrong input, enter again:";
+		goto stakeHorse;
+	}
+
+	cout << endl << "Choose the horse from 1~4 : ";
 chooseHorseNumber:
 	cin >> horseNumber;
 
@@ -703,14 +778,81 @@ chooseHorseNumber:
 	resetColor();
 
 	if (horse[horseNumber] == 20)
+	{
+		player[playerTurn].money += stake;
 		cout << "\nyou win";
+	}
 	else
+	{
+		player[playerTurn].money -= stake;
 		cout << "\nyou lose";
-
+	}
 
 	cout << "\n\nEnter any word to continue:";
 	cin >> input;
+}
 
-	system("CLS");
-	//output the map
+void chance()
+{
+	int random = rand() % 2;
+
+	if (random == 0)
+	{
+		random = (rand() % 4 + 1) * 500;
+		player[playerTurn].money += random;
+		cout << "It rains cats and dogs ... and money?" << endl;
+		cout << "You get " << random << " dollars" << endl;
+		cout << "Enter any word to continue:";
+		cin >> input;
+	}
+	else
+	{
+		random = rand() % 2;
+
+		if (random == 0)
+		{
+			cout << "Your friend invites you to play shoot dragon door" << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+			shootDragonDoor();
+		}
+		else
+		{
+			cout << "You decide to gamble on the horses" << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+			horse();
+		}
+	}
+}
+
+void fate()
+{
+	int random = rand() % 1;
+
+	if (random == 0)
+	{
+		random = (rand() % 8 - 2) * 1000;
+		player[playerTurn].money += random;
+
+		if (random > 0)
+		{
+			cout << "You robbed the bank and got some money" << endl;
+			cout << "You get " << random << " dollars" << endl;
+		}
+		else if (random == 0)
+		{
+			cout << "You work for 30 hours everyday and 10 days per week" << endl;
+			cout << "But your boss forgot to paid you this month" << endl;
+			cout << "Nothing happened" << endl;
+		}
+		else
+		{
+			cout << "You robbed the bank and got caught by the police" << endl;
+			cout << "You lose " << -random << " dollars" << endl;
+		}
+	}
+
+	cout << "Enter any word to continue:";
+	cin >> input;
 }
