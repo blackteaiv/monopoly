@@ -1,3 +1,3 @@
 ﻿  main.cpp
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(52,12): warning C4244: '引數': 將 'time_t' 轉換為 'unsigned int'，由於類型不同，可能導致資料遺失
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(56,12): warning C4244: '引數': 將 'time_t' 轉換為 'unsigned int'，由於類型不同，可能導致資料遺失
   color.vcxproj -> C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\Debug\color.exe

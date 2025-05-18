@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <cstring>
+#include <vector>
 
 using namespace std;
 
@@ -10,4 +11,5 @@ class Player
 public:
 	char name = ' ';
 	int position = 0;
+	vector <string> card;
 };

@@ -10,22 +10,26 @@
 
 using namespace std;
 
+clock_t startTime, endTime;
+
+//delay
+void delay(int ms);
+//color
 void setTextColor(int textColor);
 void setTextAndBackgroundColor(int textColor, int backgroundColor);
 void resetColor();
-
+//begin anime
 void beginAnime();
-
+//draw the map
 void drawEdge();
 void blank();
-
 void regionName(int num);
 void playerInRegion(int num);
 void regionLevel(int num);
 void drawMap();
-
+//move
 void walk(int who, int count);
-
+//game
 void shootDragonDoor();
 void horse();
 
@@ -36,13 +40,13 @@ string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+------
 					  {"+-------+","| ¡´   ¡´ |","|   ¡´   |","| ¡´   ¡´ |","+-------+"},
 					  {"+-------+","| ¡´   ¡´ |","| ¡´   ¡´ |","| ¡´   ¡´ |","+-------+"} };
 
+//dice
 int twoDiceTotal;
 void rollDice();
 
 Region area[28];
 Player player[2];
 
-clock_t startTime, endTime;
 bool playerTurn = 0;
 string uselessStr;
 
@@ -57,17 +61,11 @@ int main()
 		in >> area[i].name;
 
 	in.close();
-
-
 	area[0].playerHere[0] = 1;area[0].playerHere[1] = 1;
-
 
 	//beginAnime();
 
-	horse();
-
-
-	/*while (1)
+	while (1)
 	{
 		system("CLS");
 		drawMap();
@@ -85,7 +83,17 @@ int main()
 		cout << "Enter any word to continue : ";
 		cin >> uselessStr;
 		playerTurn = !playerTurn;
-	}*/
+	}
+}
+
+void delay(int ms)
+{
+	startTime = clock();
+
+	do
+	{
+		endTime = clock();
+	} while (endTime - startTime < ms);
 }
 
 void setTextColor(int textColor)
@@ -109,7 +117,6 @@ void beginAnime()
 {
 	//white:0 red:31 green:32 yellow:33 blue:34 purple:35 light blue:36
 	int color[11] = { 31,33,32,36,34,35,31,33,36,34,0 };
-	int times = 45;
 
 	for (int i = 0;i <= 10;i++)
 	{
@@ -118,7 +125,7 @@ void beginAnime()
 			cout << endl;
 		}
 
-		for (int j = 0;j < times;j++)
+		for (int j = 0;j < 45;j++)
 			cout << " ";
 
 		setTextColor(color[i]);
@@ -126,7 +133,7 @@ void beginAnime()
 		resetColor();
 		cout << i * 10 << "%" << endl;
 
-		for (int j = 0;j < times;j++)
+		for (int j = 0;j < 45;j++)
 			cout << " ";
 
 		setTextColor(color[i]);
@@ -149,19 +156,14 @@ void beginAnime()
 		resetColor();
 		cout << "]" << endl;
 
-		for (int j = 0;j < times;j++)
+		for (int j = 0;j < 45;j++)
 			cout << " ";
 
 		setTextColor(color[i]);
 		cout << " / > < \\" << endl;
 		resetColor();
 		startTime = clock();
-
-		do
-		{
-			endTime = clock();
-		} while (endTime - startTime < 500);
-
+		delay(500);
 		system("CLS");
 	}
 }
@@ -289,11 +291,11 @@ void regionLevel(int num)
 
 		if (num < 10)
 		{
-			cout << "   Level 0         ";
+			cout << "   Level " << area[num].level << "         ";
 		}
 		else
 		{
-			cout << "    Level 0        ";
+			cout << "    Level " << area[num].level << "        ";
 		}
 
 		resetColor();
@@ -393,10 +395,7 @@ void walk(int who, int count)
 		drawMap();
 		startTime = clock();
 
-		do
-		{
-			endTime = clock();
-		} while (endTime - startTime < 150);
+		delay(150);
 	}
 }
 
@@ -577,16 +576,10 @@ chooseHorseNumber:
 				end = 1;
 			}
 		}
+
 		cout << endl << endl;
-
-
 		startTime = clock();
-
-		do
-		{
-			endTime = clock();
-		} while (endTime - startTime < 500);
-
+		delay(500);
 		system("CLS");
 	} while (end != 1);
 
@@ -608,12 +601,7 @@ chooseHorseNumber:
 	}
 
 	startTime = clock();
-
-	do
-	{
-		endTime = clock();
-	} while (endTime - startTime < 500);
-
+	delay(500);
 	resetColor();
 
 	if (horse[horseNumber] == 20)
