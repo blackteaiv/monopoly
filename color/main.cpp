@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <time.h>
 #include <fstream>
+#include <cassert>
+#include <algorithm>
 #include "Region.h"
 #include "Player.h"
 
@@ -41,6 +43,7 @@ void horse();
 //region
 void chance();
 void fate();
+void house();
 
 
 string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+-------+"},
@@ -68,11 +71,14 @@ int main()
 	ifstream in;
 	in.open("map.txt");
 
-	for (int i = 0;i < 28;i++)
+	for (int i = 0; i < 28; i++)
 		in >> area[i].name;
 
+	for (int i = 0; i < 28; i++)
+		in >> area[i].buyPrice;
+
 	in.close();
-	area[0].playerHere[0] = 1;area[0].playerHere[1] = 1;
+	area[0].playerHere[0] = 1; area[0].playerHere[1] = 1;
 	//beginAnime();
 
 	while (1)
@@ -141,9 +147,7 @@ int main()
 		}
 		else
 		{
-			cout << "House" << endl;
-			cout << "Enter any word to continue:";
-			cin >> input;
+			house();
 		}
 
 		playerTurn = !playerTurn;
@@ -182,14 +186,14 @@ void beginAnime()
 	//white:0 red:31 green:32 yellow:33 blue:34 purple:35 light blue:36
 	int color[11] = { 31,33,32,36,34,35,31,33,36,34,0 };
 
-	for (int i = 0;i <= 10;i++)
+	for (int i = 0; i <= 10; i++)
 	{
-		for (int j = 0;j < 9;j++)
+		for (int j = 0; j < 9; j++)
 		{
 			cout << endl;
 		}
 
-		for (int j = 0;j < 45;j++)
+		for (int j = 0; j < 45; j++)
 			cout << " ";
 
 		setTextColor(color[i]);
@@ -197,7 +201,7 @@ void beginAnime()
 		resetColor();
 		cout << i * 10 << "%" << endl;
 
-		for (int j = 0;j < 45;j++)
+		for (int j = 0; j < 45; j++)
 			cout << " ";
 
 		setTextColor(color[i]);
@@ -206,13 +210,13 @@ void beginAnime()
 		cout << "       [";
 		setTextColor(32);
 
-		for (int j = 0;j < i;j++)
+		for (int j = 0; j < i; j++)
 		{
 			cout << "#";
 		}
 
 		setTextColor(31);
-		for (int j = 10 - i;j > 0;j--)
+		for (int j = 10 - i; j > 0; j--)
 		{
 			cout << "_";
 		}
@@ -220,7 +224,7 @@ void beginAnime()
 		resetColor();
 		cout << "]" << endl;
 
-		for (int j = 0;j < 45;j++)
+		for (int j = 0; j < 45; j++)
 			cout << " ";
 
 		setTextColor(color[i]);
@@ -285,7 +289,7 @@ void regionName(int num)
 
 	resetColor();
 
-	for (int i = length;i < 19;i++)
+	for (int i = length; i < 19; i++)
 	{
 		cout << " ";
 	}
@@ -297,12 +301,12 @@ void playerInRegion(int num)
 {
 	if (num < 10)
 	{
-		for (int i = 0;i < 3;i++)
+		for (int i = 0; i < 3; i++)
 			cout << " ";
 	}
 	else
 	{
-		for (int i = 0;i < 4;i++)
+		for (int i = 0; i < 4; i++)
 			cout << " ";
 	}
 
@@ -332,12 +336,12 @@ void playerInRegion(int num)
 
 	if (num < 10)
 	{
-		for (int i = 0;i < 10;i++)
+		for (int i = 0; i < 10; i++)
 			cout << " ";
 	}
 	else
 	{
-		for (int i = 0;i < 9;i++)
+		for (int i = 0; i < 9; i++)
 			cout << " ";
 	}
 
@@ -385,51 +389,51 @@ void drawMap()
 {
 	drawEdge();
 
-	cout << "|";regionName(0);regionName(1);regionName(2);regionName(3);regionName(4);regionName(5);regionName(6);regionName(7);cout << endl;
-	cout << "|";playerInRegion(0);playerInRegion(1);playerInRegion(2);playerInRegion(3);playerInRegion(4);playerInRegion(5);playerInRegion(6);playerInRegion(7);cout << endl;
-	cout << "|";blank();regionLevel(1);blank();regionLevel(3);blank();regionLevel(5);regionLevel(6);regionLevel(7);cout << endl;
+	cout << "|"; regionName(0); regionName(1); regionName(2); regionName(3); regionName(4); regionName(5); regionName(6); regionName(7); cout << endl;
+	cout << "|"; playerInRegion(0); playerInRegion(1); playerInRegion(2); playerInRegion(3); playerInRegion(4); playerInRegion(5); playerInRegion(6); playerInRegion(7); cout << endl;
+	cout << "|"; blank(); regionLevel(1); blank(); regionLevel(3); blank(); regionLevel(5); regionLevel(6); regionLevel(7); cout << endl;
 
 	drawEdge();
 
-	cout << "|";regionName(27);blank();blank();blank();blank();blank();blank();regionName(8);cout << endl;
-	cout << "|";playerInRegion(27);blank();blank();blank();blank();blank();blank();playerInRegion(8);cout << endl;
-	cout << "|";regionLevel(27);blank();blank();blank();blank();blank();blank();regionLevel(8);cout << endl;
+	cout << "|"; regionName(27); blank(); blank(); blank(); blank(); blank(); blank(); regionName(8); cout << endl;
+	cout << "|"; playerInRegion(27); blank(); blank(); blank(); blank(); blank(); blank(); playerInRegion(8); cout << endl;
+	cout << "|"; regionLevel(27); blank(); blank(); blank(); blank(); blank(); blank(); regionLevel(8); cout << endl;
 
 	drawEdge();
 
-	cout << "|";regionName(26);blank();blank();blank();blank();blank();blank();regionName(9);cout << endl;
-	cout << "|";playerInRegion(26);blank();blank();blank();blank();blank();blank();playerInRegion(9);cout << endl;
-	cout << "|";regionLevel(26);blank();blank();blank();blank();blank();blank();regionLevel(9);cout << endl;
+	cout << "|"; regionName(26); blank(); blank(); blank(); blank(); blank(); blank(); regionName(9); cout << endl;
+	cout << "|"; playerInRegion(26); blank(); blank(); blank(); blank(); blank(); blank(); playerInRegion(9); cout << endl;
+	cout << "|"; regionLevel(26); blank(); blank(); blank(); blank(); blank(); blank(); regionLevel(9); cout << endl;
 
 	drawEdge();
 
-	cout << "|";regionName(25);blank();blank();blank();blank();blank();blank();regionName(10);cout << endl;
-	cout << "|";playerInRegion(25);blank();blank();blank();blank();blank();blank();playerInRegion(10);cout << endl;
-	cout << "|";regionLevel(25);blank();blank();blank();blank();blank();blank();blank();cout << endl;
+	cout << "|"; regionName(25); blank(); blank(); blank(); blank(); blank(); blank(); regionName(10); cout << endl;
+	cout << "|"; playerInRegion(25); blank(); blank(); blank(); blank(); blank(); blank(); playerInRegion(10); cout << endl;
+	cout << "|"; regionLevel(25); blank(); blank(); blank(); blank(); blank(); blank(); blank(); cout << endl;
 
 	drawEdge();
 
-	cout << "|";regionName(24);blank();blank();blank();blank();blank();blank();regionName(11);cout << endl;
-	cout << "|";playerInRegion(24);blank();blank();blank();blank();blank();blank();playerInRegion(11);cout << endl;
-	cout << "|";blank();blank();blank();blank();blank();blank();blank();regionLevel(11);cout << endl;
+	cout << "|"; regionName(24); blank(); blank(); blank(); blank(); blank(); blank(); regionName(11); cout << endl;
+	cout << "|"; playerInRegion(24); blank(); blank(); blank(); blank(); blank(); blank(); playerInRegion(11); cout << endl;
+	cout << "|"; blank(); blank(); blank(); blank(); blank(); blank(); blank(); regionLevel(11); cout << endl;
 
 	drawEdge();
 
-	cout << "|";regionName(23);blank();blank();blank();blank();blank();blank();regionName(12);cout << endl;
-	cout << "|";playerInRegion(23);blank();blank();blank();blank();blank();blank();playerInRegion(12);cout << endl;
-	cout << "|";regionLevel(23);blank();blank();blank();blank();blank();blank();regionLevel(12);cout << endl;
+	cout << "|"; regionName(23); blank(); blank(); blank(); blank(); blank(); blank(); regionName(12); cout << endl;
+	cout << "|"; playerInRegion(23); blank(); blank(); blank(); blank(); blank(); blank(); playerInRegion(12); cout << endl;
+	cout << "|"; regionLevel(23); blank(); blank(); blank(); blank(); blank(); blank(); regionLevel(12); cout << endl;
 
 	drawEdge();
 
-	cout << "|";regionName(22);blank();blank();blank();blank();blank();blank();regionName(13);cout << endl;
-	cout << "|";playerInRegion(22);blank();blank();blank();blank();;blank();blank();playerInRegion(13);cout << endl;
-	cout << "|";regionLevel(22);blank();blank();blank();blank();;blank();blank();regionLevel(13);cout << endl;
+	cout << "|"; regionName(22); blank(); blank(); blank(); blank(); blank(); blank(); regionName(13); cout << endl;
+	cout << "|"; playerInRegion(22); blank(); blank(); blank(); blank();; blank(); blank(); playerInRegion(13); cout << endl;
+	cout << "|"; regionLevel(22); blank(); blank(); blank(); blank();; blank(); blank(); regionLevel(13); cout << endl;
 
 	drawEdge();
 
-	cout << "|";regionName(21);regionName(20);regionName(19);regionName(18);regionName(17);regionName(16);regionName(15);regionName(14);cout << endl;
-	cout << "|";playerInRegion(21);playerInRegion(20);playerInRegion(19);playerInRegion(18);playerInRegion(17);playerInRegion(16);playerInRegion(15);playerInRegion(14);cout << endl;
-	cout << "|";regionLevel(21);regionLevel(20);regionLevel(19);regionLevel(18);regionLevel(17);blank();blank();regionLevel(14);cout << endl;
+	cout << "|"; regionName(21); regionName(20); regionName(19); regionName(18); regionName(17); regionName(16); regionName(15); regionName(14); cout << endl;
+	cout << "|"; playerInRegion(21); playerInRegion(20); playerInRegion(19); playerInRegion(18); playerInRegion(17); playerInRegion(16); playerInRegion(15); playerInRegion(14); cout << endl;
+	cout << "|"; regionLevel(21); regionLevel(20); regionLevel(19); regionLevel(18); regionLevel(17); blank(); blank(); regionLevel(14); cout << endl;
 
 	drawEdge();
 	cout << endl;
@@ -459,15 +463,15 @@ void statusEdge()
 void playerStatus(int who)
 {
 	int count = player[who].house.size() * 2;
-	cout << "| ";setTextColor(who + 31);cout << (who == 0 ? "[A]" : "[B]");resetColor();cout << " Player" << who + 1 << "   | ";
+	cout << "| "; setTextColor(who + 31); cout << (who == 0 ? "[A]" : "[B]"); resetColor(); cout << " Player" << who + 1 << "   | ";
 	cout << player[who].money;
 
-	for (int i = lengthOfNumber(player[who].money);i < 9;i++)
+	for (int i = lengthOfNumber(player[who].money); i < 9; i++)
 		cout << " ";
 
 	cout << "| ";//51
 
-	for (int i = 0;i < player[who].house.size();i++)
+	for (int i = 0; i < player[who].house.size(); i++)
 	{
 		if (player[who].house[i] >= 10)
 			count++;
@@ -475,7 +479,7 @@ void playerStatus(int who)
 		cout << player[who].house[i] << " ";
 	}
 
-	for (int i = count;i < 51;i++)
+	for (int i = count; i < 51; i++)
 		cout << " ";
 
 	cout << "| ";
@@ -493,7 +497,7 @@ void status()
 	playerStatus(0);
 	playerStatus(1);
 
-	cout << "| ";setTextColor(33);cout << "[C]";resetColor();
+	cout << "| "; setTextColor(33); cout << "[C]"; resetColor();
 	cout << " Player3   |DoNotExist| Player3 is used to check format                    | This line will be deleted after status() is completed     |" << endl;
 
 	statusEdge();
@@ -507,7 +511,7 @@ void rollDice()
 	int first = rand() % 6;
 	int second = rand() % 6;
 
-	for (int i = 0;i < 5;i++)
+	for (int i = 0; i < 5; i++)
 	{
 		cout << dice[first][i] << "  " << dice[second][i] << endl;
 	}
@@ -517,7 +521,7 @@ void rollDice()
 
 void walk(bool who, int count)
 {
-	for (int i = count;i > 0;i--)
+	for (int i = count; i > 0; i--)
 	{
 		area[player[who].position].playerHere[who] = 0;
 		player[who].position = (player[who].position + 1) % 28;
@@ -724,22 +728,22 @@ chooseHorseNumber:
 		resetColor();
 		cout << "                            |" << endl;
 
-		for (int j = 0;j < 4;j++)
+		for (int j = 0; j < 4; j++)
 		{
 			setTextColor(color[j]);
 			cout << "horse " << j + 1 << " ";
 
-			for (int k = 0;k < horse[j];k++)
+			for (int k = 0; k < horse[j]; k++)
 				cout << "-";
 
-			for (int k = horse[j];k < 20;k++)
+			for (int k = horse[j]; k < 20; k++)
 				cout << " ";
 
 			resetColor();
 			cout << "|\n                            |" << endl;
 		}
 
-		for (int i = 0;i < 4;i++)
+		for (int i = 0; i < 4; i++)
 		{
 			horse[i] += rand() % 3 + 1;
 
@@ -758,15 +762,15 @@ chooseHorseNumber:
 
 	cout << "                            |" << endl;
 
-	for (int j = 0;j < 4;j++)
+	for (int j = 0; j < 4; j++)
 	{
 		setTextColor(color[j]);
 		cout << "horse " << j + 1 << " ";
 
-		for (int k = 0;k < horse[j];k++)
+		for (int k = 0; k < horse[j]; k++)
 			cout << "-";
 
-		for (int k = horse[j];k < 20;k++)
+		for (int k = horse[j]; k < 20; k++)
 			cout << " ";
 
 		resetColor();
@@ -855,4 +859,205 @@ void fate()
 
 	cout << "Enter any word to continue:";
 	cin >> input;
+}
+
+void house()
+{
+	if (area[player[playerTurn].position].level == 0)
+	{
+		cout << "buyPrices: " << area[player[playerTurn].position].buyPrice << endl;
+		cout << "(choose to buy the house or pass)" << endl;
+		cout << "1.buy the house" << endl << "2.pass" << endl << "Enter 1 or 2:";
+	buyOrNotInput:
+		cin >> input;
+
+		if (input == "1")
+		{
+			if (player[playerTurn].money >= area[player[playerTurn].position].buyPrice)
+			{
+				area[player[playerTurn].position].owner = playerTurn;
+				area[player[playerTurn].position].level = 1;
+				player[playerTurn].money -= area[player[playerTurn].position].buyPrice;
+				player[playerTurn].house.push_back(player[playerTurn].position);
+				sort(player[playerTurn].house.begin(), player[playerTurn].house.end());
+				cout << "buying sucessful" << endl;
+				cout << "remain money: " << player[playerTurn].money << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+			else
+			{
+				cout << "Not enough money to buy" << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+				goto buyOrNotInput;
+			}
+		}
+		else if (input == "2")
+		{
+			return;
+		}
+		else
+		{
+			cout << "Wrong input, enter again:";
+			goto buyOrNotInput;
+		}
+	}
+	else
+	{
+		if (area[player[playerTurn].position].owner == playerTurn)
+		{
+			switch (area[player[playerTurn].position].level)
+			{
+			case 1:
+				cout << "upgradePrices: " << area[player[playerTurn].position].buyPrice / 2 << endl;
+				cout << "sellPrices: " << area[player[playerTurn].position].buyPrice * 1 << endl;
+				cout << "(choose to upgrade the house,sell the house or pass)" << endl;
+				cout << "1.buy the house" << endl << "2.sell the house" << endl << "3.pass" << endl << "Enter 1, 2 or 3:";
+			upgradeOrSellInput1:
+				cin >> input;
+
+				if (input == "1")
+				{
+					if (player[playerTurn].money >= area[player[playerTurn].position].buyPrice / 2)
+					{
+						area[player[playerTurn].position].level = 2;
+						player[playerTurn].money -= area[player[playerTurn].position].buyPrice / 2;
+						cout << "upgrading sucessful" << endl;
+						cout << "remain money: " << player[playerTurn].money << endl;
+						cout << "Enter any word to continue:";
+						cin >> input;
+					}
+					else
+					{
+						cout << "Not enough money to upgrade" << endl;
+						cout << "Enter any word to continue:";
+						cin >> input;
+						goto upgradeOrSellInput1;
+					}
+				}
+				else if (input == "2")
+				{
+					area[player[playerTurn].position].owner = 2;
+					area[player[playerTurn].position].level = 0;
+					player[playerTurn].money += area[player[playerTurn].position].buyPrice * 1;
+
+					for (int i = 0; i < player[playerTurn].house.size(); i++)
+					{
+						if (player[playerTurn].house[i] == player[playerTurn].position)
+						{
+							player[playerTurn].house.erase(player[playerTurn].house.begin() + i);
+							break;
+						}
+					}
+
+				}
+				else if (input == "3")
+				{
+					return;
+				}
+				else
+				{
+					cout << "Wrong input, enter again:";
+					goto upgradeOrSellInput1;
+				}
+				break;
+			case 2:
+				cout << "upgradePrices: " << area[player[playerTurn].position].buyPrice << endl;
+				cout << "sellPrices: " << area[player[playerTurn].position].buyPrice * 2 << endl;
+				cout << "(choose to upgrade the house,sell the house or pass)" << endl;
+				cout << "1.buy the house" << endl << "2.sell the house" << endl << "3.pass" << endl << "Enter 1, 2 or 3:";
+			upgradeOrSellInput2:
+				cin >> input;
+
+				if (input == "1")
+				{
+					if (player[playerTurn].money >= area[player[playerTurn].position].buyPrice)
+					{
+						area[player[playerTurn].position].level = 3;
+						player[playerTurn].money -= area[player[playerTurn].position].buyPrice;
+						cout << "upgrading sucessful" << endl;
+						cout << "remain money: " << player[playerTurn].money << endl;
+						cout << "Enter any word to continue:";
+						cin >> input;
+					}
+					else
+					{
+						cout << "Not enough money to upgrade" << endl;
+						cout << "Enter any word to continue:";
+						cin >> input;
+						goto upgradeOrSellInput2;
+					}
+				}
+				else if (input == "2")
+				{
+					area[player[playerTurn].position].owner = 2;
+					area[player[playerTurn].position].level = 0;
+					player[playerTurn].money += area[player[playerTurn].position].buyPrice * 2;
+					for (int i = 0; i < player[playerTurn].house.size(); i++)
+					{
+						if (player[playerTurn].house[i] == player[playerTurn].position)
+						{
+							player[playerTurn].house.erase(player[playerTurn].house.begin() + i);
+							break;
+						}
+					}
+
+				}
+				else if (input == "3")
+				{
+					return;
+				}
+				else
+				{
+					cout << "Wrong input, enter again:";
+					goto upgradeOrSellInput1;
+				}
+				break;
+			case 3:
+				cout << "The highest level you can't upgrade" << endl;
+				cout << "sellPrices: " << area[player[playerTurn].position].buyPrice * 3 << endl;
+				cout << "(choose to sell the house or pass)" << endl;
+				cout << "1.sell the house" << endl << "2.pass" << endl << "Enter 1 or 2:";
+			upgradeOrSellInput3:
+				cin >> input;
+
+				if (input == "1")
+				{
+					area[player[playerTurn].position].owner = 2;
+					area[player[playerTurn].position].level = 0;
+					player[playerTurn].money += area[player[playerTurn].position].buyPrice * 3;
+					for (int i = 0; i < player[playerTurn].house.size(); i++)
+					{
+						if (player[playerTurn].house[i] == player[playerTurn].position)
+						{
+							player[playerTurn].house.erase(player[playerTurn].house.begin() + i);
+							break;
+						}
+					}
+				}
+				else if (input == "2")
+				{
+					return;
+				}
+				else
+				{
+					cout << "Wrong input, enter again:";
+					goto upgradeOrSellInput3;
+				}
+				break;
+			default:
+				assert(0);
+				break;
+			}
+		}
+		else
+		{
+			cout << "You should pay the toll" << endl << "toll: " << area[player[playerTurn].position].buyPrice * area[player[playerTurn].position].level / 10 << endl;
+			player[playerTurn].money -= area[player[playerTurn].position].buyPrice * area[player[playerTurn].position].level / 10;
+			cout << "remain money: " << player[playerTurn].money << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
+	}
 }
