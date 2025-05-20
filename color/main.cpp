@@ -45,6 +45,9 @@ void chance();
 void fate();
 void house();
 void hospital();
+//card
+void rocketCard();
+void barrierCard();
 
 string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+-------+"},
 					  {"+-------+","| ¡´     |","|       |","|     ¡´ |","+-------+"},
@@ -103,6 +106,8 @@ int main()
 			else if (input == "2")
 			{
 				//print the cards
+				barrierCard();
+				goto turnBegin;
 			}
 			else
 			{
@@ -115,6 +120,10 @@ int main()
 			cout << "(check the dice)" << endl << "Enter any word to move : ";
 			cin >> input;
 			walk(playerTurn, twoDiceTotal);
+
+			if (area[player[playerTurn].position].barrier == 1)
+				cout << "You are blocked by barrier" << endl;
+
 			cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 		}
 		else
@@ -129,42 +138,55 @@ int main()
 	input2:
 		cin >> input;
 		//trigger the event or check the cards
-		if (area[player[playerTurn].position].name == "Start")
+		if (input == "1")
 		{
-			cout << "You get some money as reward\nYou get 1000 dollars\n";
-			player[playerTurn].money += 1000;
-			cout << "Enter any word to continue:";
-			cin >> input;
-		}
-		else if (area[player[playerTurn].position].name == "Chance")
-		{
-			chance();
-		}
-		else if (area[player[playerTurn].position].name == "Fate")
-		{
-			fate();
-		}
-		else if (area[player[playerTurn].position].name == "Shop")
-		{
-			cout << "Shop" << endl;
-			cout << "Enter any word to continue:";
-			cin >> input;
-		}
-		else if (area[player[playerTurn].position].name == "Hospital")
-		{
-			cout << "Hospital" << endl;
-			cout << "Enter any word to continue:";
-			cin >> input;
+			if (area[player[playerTurn].position].name == "Start")
+			{
+				cout << "You get some money as reward\nYou get 1000 dollars\n";
+				player[playerTurn].money += 1000;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+			else if (area[player[playerTurn].position].name == "Chance")
+			{
+				chance();
+			}
+			else if (area[player[playerTurn].position].name == "Fate")
+			{
+				fate();
+			}
+			else if (area[player[playerTurn].position].name == "Shop")
+			{
+				cout << "Shop" << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+			else if (area[player[playerTurn].position].name == "Hospital")
+			{
+				cout << endl;
+				hospital();
+			}
+			else
+			{
+				house();
+			}
 
-			hospital();
+			area[player[playerTurn].position].barrier = 0;
+			playerTurn = !playerTurn;
+		}
+		else if (input == "2")
+		{
+			//card
+			cout << "Unfinish function, enter again:";
+			goto input2;
 		}
 		else
 		{
-			house();
+			cout << "Wrong input, enter again:";
+			goto input2;
 		}
-
-		playerTurn = !playerTurn;
 	}
+
 }
 
 void delay(int ms)
@@ -180,6 +202,7 @@ void delay(int ms)
 void setTextColor(int textColor)
 {
 	//white:0 red:31 green:32 yellow:33 blue:34 purple:35 light blue:36
+	//    lighter:+60
 	cout << "\033[" << textColor << "m";
 }
 
@@ -314,26 +337,27 @@ void playerInRegion(int num)
 {
 	if (num < 10)
 	{
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 2; i++)
 			cout << " ";
 	}
 	else
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 3; i++)
 			cout << " ";
 	}
+
+	setTextColor(96);
+	cout << (area[num].barrier == 1 ? "#" : " ");
 
 	if (area[num].playerHere[0] == 1)
 	{
 		setTextColor(31);
 		cout << "[A]";
-		resetColor();
 
 		if (area[num].playerHere[1] == 1)
 		{
 			setTextColor(32);
 			cout << "[B]";
-			resetColor();
 		}
 		else
 			cout << "   ";
@@ -342,10 +366,11 @@ void playerInRegion(int num)
 	{
 		setTextColor(32);
 		cout << "[B]   ";
-		resetColor();
 	}
 	else
 		cout << "      ";
+
+	resetColor();
 
 	if (num < 10)
 	{
@@ -510,8 +535,10 @@ void status()
 	playerStatus(0);
 	playerStatus(1);
 
-	cout << "| "; setTextColor(33); cout << "[C]"; resetColor();
-	cout << " Player3   |DoNotExist| Player3 is used to check format                    | This line will be deleted after status() is completed     |" << endl;
+	cout << "| "; setTextColor(93); cout << "[C]"; resetColor();
+	cout << " Player3   |DoNotExist| Player3 is used to check format                    |                                                           |" << endl;
+	cout << "| "; setTextColor(94); cout << "[D]"; resetColor();
+	cout << " Player4   |DoNotExist| Player4 is used to check format                    |                                                           |" << endl;
 
 	statusEdge();
 
@@ -533,16 +560,26 @@ void rollDice()
 
 void walk(bool who, int count)
 {
-	for (int i = count; i > 0; i--)
+	if (area[player[who].position].barrier == 0)
 	{
-		area[player[who].position].playerHere[who] = 0;
-		player[who].position = (player[who].position + 1) % 28;
-		area[player[who].position].playerHere[who] = 1;
+		for (int i = count; i > 0; i--)
+		{
+			if (area[player[who].position].barrier == 1)
+				break;
+
+			area[player[who].position].playerHere[who] = 0;
+			player[who].position = (player[who].position + 1) % 28;
+			area[player[who].position].playerHere[who] = 1;
+			system("CLS");
+			drawMap();
+			delay(150);
+		}
+	}
+	else
+	{
 		system("CLS");
 		drawMap();
-		startTime = clock();
 
-		delay(150);
 	}
 
 	status();
@@ -1084,23 +1121,75 @@ void hospital()
 	else
 	{
 		cout << "You still have " << player[playerTurn].injured << " turn(s) to leave" << endl;
-		cout << "Do you want to paid some money to leave earlier by chance?";
+		cout << "Do you want to paid some money to leave earlier by chance?\n";
 		cout << "1.Yes\n2.No\nEnter 1 or 2:";
 	inputHospital:
 		cin >> input;
 
 		if (input == "1")
 		{
+			player[playerTurn].money -= 5000;
+			int random = rand() % 6;
+			cout << "You can leave the hospital if the number on the dice is larger than 4\n";
+			cout << "Enter any word to roll the dice:";
+			cin >> input;
+			cout << endl;
 
+			for (int i = 0;i < 5;i++)
+				cout << dice[random][i] << endl;
+
+			cout << endl;
+
+			if (random + 1 > 4)
+			{
+				cout << "Fortunately, you're recovered, you're free!" << endl;
+				player[playerTurn].injured = 0;
+			}
+			else
+			{
+				cout << "Unfortunately, the doctor wasn't in the mood for curing you\n";
+				cout << "Nothing happens" << endl;
+				player[playerTurn].injured--;
+			}
 		}
 		else if (input == "2")
 		{
-
+			cout << "You decide to stay since the meals here are free" << endl;
+			player[playerTurn].injured--;
 		}
 		else
 		{
-
+			cout << "Wrong input, enter again:";
+			goto inputHospital;
 		}
 
+		cout << "Enter any word to continue:";
+		cin >> input;
 	}
+}
+
+void rocketCard()
+{
+	area[player[!playerTurn].position].playerHere[!playerTurn] = 0;
+	player[!playerTurn].position = 15;
+	area[15].playerHere[!playerTurn] = 1;
+	player[!playerTurn].injured += 3;
+}
+
+void barrierCard()
+{
+	int pos;
+	cout << "Choose a place to place barrier (0 ~ 27):";
+
+	while (cin >> pos)
+	{
+		if (pos < 0 || pos >27)
+			cout << "Wrong input, enter again:";
+		else if (area[pos].barrier == 1)
+			cout << "There is already barrier placed here, enter again:";
+		else
+			break;
+	}
+
+	area[pos].barrier = 1;
 }

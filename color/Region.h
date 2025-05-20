@@ -17,5 +17,5 @@ public:
 	int owner = 2;
 	//house
 	int buyPrice = 0;
-
+	bool barrier = 0;
 };

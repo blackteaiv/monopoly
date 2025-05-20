@@ -1,6 +1,8 @@
 ﻿  main.cpp
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(67,12): warning C4244: '引數': 將 'time_t' 轉換為 'unsigned int'，由於類型不同，可能導致資料遺失
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(80,11): warning C4102: 'turnBegin': 未參考的標籤
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(112,8): warning C4102: 'input2': 未參考的標籤
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(473,19): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(73,12): warning C4244: '引數': 將 'time_t' 轉換為 'unsigned int'，由於類型不同，可能導致資料遺失
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(512,20): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(957,50): warning C4805: '==': 作業中不安全的混用類型 'int' 和類型 'bool'
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(994,24): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1046,24): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1079,24): warning C4018: '<': signed/unsigned 不相符
   color.vcxproj -> C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\Debug\color.exe
