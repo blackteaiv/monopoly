@@ -14,4 +14,5 @@ public:
 	vector <string> card;
 	vector <int> house;
 	int injured = 0;
+	int nextdice = 0;
 };

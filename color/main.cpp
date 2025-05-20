@@ -8,6 +8,7 @@
 #include <fstream>
 #include <cassert>
 #include <algorithm>
+#include<cctype>
 #include "Region.h"
 #include "Player.h"
 
@@ -48,6 +49,9 @@ void hospital();
 //card
 void rocketCard();
 void barrierCard();
+void controllDiceCard();
+void destroyCard();
+
 
 string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+-------+"},
 					  {"+-------+","| ¡´     |","|       |","|     ¡´ |","+-------+"},
@@ -106,7 +110,9 @@ int main()
 			else if (input == "2")
 			{
 				//print the cards
-				barrierCard();
+				//barrierCard();
+				//controllDiceCard();
+				destroyCard();
 				goto turnBegin;
 			}
 			else
@@ -549,6 +555,22 @@ void rollDice()
 {
 	int first = rand() % 6;
 	int second = rand() % 6;
+
+	if (player[playerTurn].nextdice != 0)
+	{
+		if (player[playerTurn].nextdice % 2 == 0)
+		{
+			first = player[playerTurn].nextdice / 2 - 1;
+			second = player[playerTurn].nextdice / 2 - 1;
+		}
+		else
+		{
+			first = player[playerTurn].nextdice / 2;
+			second = player[playerTurn].nextdice / 2 - 1;
+		}
+
+		player[playerTurn].nextdice = 0;
+	}
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -1135,7 +1157,7 @@ void hospital()
 			cin >> input;
 			cout << endl;
 
-			for (int i = 0;i < 5;i++)
+			for (int i = 0; i < 5; i++)
 				cout << dice[random][i] << endl;
 
 			cout << endl;
@@ -1192,4 +1214,150 @@ void barrierCard()
 	}
 
 	area[pos].barrier = 1;
+}
+
+void controllDiceCard()
+{
+	cout << "Enter the dice you want to choose(2 ~ 12): " << endl;
+nextdiceInput:
+	cin >> input;
+
+	if (input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "11" || input == "12")
+	{
+		int nextdice = 0;
+
+		if (input.size() == 1)
+		{
+			nextdice = input[0] - '0';
+		}
+		else	if (input.size() == 2)
+		{
+			nextdice = input[1] - '0' + 10;
+		}
+		else
+		{
+			assert(0);
+		}
+
+		if (player[playerTurn].nextdice != 0)
+		{
+			cout << "You chose the dice already!Do you want to change it?(enter y or n)";
+		changeInput:
+			cin >> input;
+
+			if (input == "y")
+			{
+				player[playerTurn].nextdice = nextdice;
+			}
+			else if (input == "n")
+			{
+				return;
+			}
+			else
+			{
+				cout << "Wrong input, enter again:";
+				goto changeInput;
+			}
+		}
+		else
+		{
+			player[playerTurn].nextdice = nextdice;
+		}
+	}
+	else
+	{
+		cout << "Wrong input, enter again:";
+		goto nextdiceInput;
+	}
+}
+
+void destroyCard()
+{
+	cout << "Enter the player you want to destroy" << endl;
+
+	if (playerTurn == 0)
+	{
+		cout << "1.player2" << endl;
+	}
+	else
+	{
+		cout << "1.player1" << endl;
+	}
+playerinput:
+	cin >> input;
+
+	if (input == "1")
+	{
+		if (player[!playerTurn].house.size() == 0)
+		{
+			cout << "No house exit" << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+			return;
+		}
+
+		cout << "Enter the house you want to destroy one level" << endl;
+
+		for (int i = 0; i < player[!playerTurn].house.size(); i++)
+		{
+			cout << i + 1 << "." << area[player[!playerTurn].house[i]].name << endl;
+		}
+	houseinput:
+		cin >> input;
+
+		int destroyhouse = 0;
+
+		if (input.size() == 1)
+		{
+			if (isdigit(input[0]))
+			{
+				destroyhouse = input[0] - '0';
+			}
+			else
+			{
+				cout << "Wrong input, enter again:";
+				goto houseinput;
+			}
+		}
+		else if (input.size() == 2)
+		{
+
+			if (isdigit(input[0]) && isdigit(input[1]))
+			{
+				destroyhouse = input[1] - '0' + (input[0] - '0') * 10;
+			}
+			else
+			{
+				cout << "Wrong input, enter again:";
+				goto houseinput;
+			}
+		}
+		else
+		{
+			cout << "Wrong input, enter again:";
+			goto houseinput;
+		}
+
+		if (destroyhouse >= 1 && destroyhouse <= player[!playerTurn].house.size())
+		{
+			area[player[!playerTurn].house[destroyhouse - 1]].level -= 1;
+
+			if (area[player[!playerTurn].house[destroyhouse - 1]].level == 0)
+			{
+				area[player[!playerTurn].house[destroyhouse - 1]].owner = 2;
+
+				player[!playerTurn].house.erase(player[!playerTurn].house.begin() + destroyhouse - 1);
+			}
+		}
+		else
+		{
+			cout << "Wrong input, enter again:";
+			goto houseinput;
+		}
+	}
+	else
+	{
+		cout << "Wrong input, enter again:";
+		goto playerinput;
+	}
 }
