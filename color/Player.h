@@ -13,4 +13,5 @@ public:
 	int position = 0, money = 100000;
 	vector <string> card;
 	vector <int> house;
+	bool injured = 0;
 };

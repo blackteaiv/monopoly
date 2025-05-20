@@ -44,7 +44,7 @@ void horse();
 void chance();
 void fate();
 void house();
-
+void hospital();
 
 string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+-------+"},
 					  {"+-------+","| ¡´     |","|       |","|     ¡´ |","+-------+"},
@@ -88,31 +88,42 @@ int main()
 		drawMap();
 		status();
 		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
-		cout << "(choose to roll the dice or check the cards)" << endl;
-		cout << "1.Roll the dice" << endl << "2.Check the cards" << endl << "Enter 1 or 2:";
-	input1:
-		cin >> input;
 
-		if (input == "1")
+		if (player[playerTurn].injured == 0)
 		{
-			//continue
-		}
-		else if (input == "2")
-		{
-			//print the cards
+			cout << "(choose to roll the dice or check the cards)" << endl;
+			cout << "1.Roll the dice" << endl << "2.Check the cards" << endl << "Enter 1 or 2:";
+		input1:
+			cin >> input;
+
+			if (input == "1")
+			{
+				//continue
+			}
+			else if (input == "2")
+			{
+				//print the cards
+			}
+			else
+			{
+				cout << "Wrong input, enter again:";
+				goto input1;
+			}
+
+			rollDice();
+			cout << twoDiceTotal << endl;
+			cout << "(check the dice)" << endl << "Enter any word to move : ";
+			cin >> input;
+			walk(playerTurn, twoDiceTotal);
+			cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 		}
 		else
 		{
-			cout << "Wrong input, enter again:";
-			goto input1;
+			cout << "You are injured" << endl;
 		}
 
-		rollDice();
-		cout << twoDiceTotal << endl;
-		cout << "(check the dice)" << endl << "Enter any word to move : ";
-		cin >> input;
-		walk(playerTurn, twoDiceTotal);
-		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+
+		//------
 		cout << "(Trigger the event or check the cards)" << endl;
 		cout << "1.Trigger the event" << endl << "2.Check the cards" << endl << "Enter 1 or 2:";
 	input2:
@@ -144,6 +155,8 @@ int main()
 			cout << "Hospital" << endl;
 			cout << "Enter any word to continue:";
 			cin >> input;
+
+			hospital();
 		}
 		else
 		{
@@ -507,7 +520,6 @@ void status()
 
 void rollDice()
 {
-
 	int first = rand() % 6;
 	int second = rand() % 6;
 
@@ -1059,5 +1071,36 @@ void house()
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
+	}
+}
+
+void hospital()
+{
+	if (player[playerTurn].injured == 0)
+	{
+		cout << "You want to sleep in the hospital" << endl;
+		cout << "But you get ejected from the hospital" << endl;
+	}
+	else
+	{
+		cout << "You still have " << player[playerTurn].injured << " turn(s) to leave" << endl;
+		cout << "Do you want to paid some money to leave earlier by chance?";
+		cout << "1.Yes\n2.No\nEnter 1 or 2:";
+	inputHospital:
+		cin >> input;
+
+		if (input == "1")
+		{
+
+		}
+		else if (input == "2")
+		{
+
+		}
+		else
+		{
+
+		}
+
 	}
 }
