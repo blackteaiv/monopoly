@@ -1205,23 +1205,73 @@ buyInput:
 
 	if (input == "1")
 	{
-		player[playerTurn].card.push_back("B");
+		if (player[playerTurn].money >= 1500)
+		{
+			player[playerTurn].money -= 1500;
+			player[playerTurn].card.push_back("B");
+		}
+		else
+		{
+			cout << " You don't have enough money to buy [Barrier Card]. Your balance: $200, but the card costs $1500." << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
 	}
 	else if (input == "2")
 	{
-		player[playerTurn].card.push_back("Di");
+		if (player[playerTurn].money >= 2000)
+		{
+			player[playerTurn].money -= 2000;
+			player[playerTurn].card.push_back("Di");
+		}
+		else
+		{
+			cout << " You don't have enough money to buy [Barrier Card]. Your balance: $200, but the card costs $1500." << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
 	}
 	else if (input == "3")
 	{
-		player[playerTurn].card.push_back("De");
+		if (player[playerTurn].money >= 2500)
+		{
+			player[playerTurn].money -= 2500;
+			player[playerTurn].card.push_back("De");
+		}
+		else
+		{
+			cout << " You don't have enough money to buy [Barrier Card]. Your balance: $200, but the card costs $1500." << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
 	}
 	else if (input == "4")
 	{
-		player[playerTurn].card.push_back("F");
+		if (player[playerTurn].money >= 1000)
+		{
+			player[playerTurn].money -= 1000;
+			player[playerTurn].card.push_back("F");
+		}
+		else
+		{
+			cout << " You don't have enough money to buy [Barrier Card]. Your balance: $200, but the card costs $1500." << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
 	}
 	else if (input == "5")
 	{
-		player[playerTurn].card.push_back("R");
+		if (player[playerTurn].money >= 3000)
+		{
+			player[playerTurn].money -= 3000;
+			player[playerTurn].card.push_back("R");
+		}
+		else
+		{
+			cout << " You don't have enough money to buy [Barrier Card]. Your balance: $200, but the card costs $1500." << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
 
 	}
 	else if (input == "6")
@@ -1509,11 +1559,11 @@ cardInput:
 		}
 		else if (player[playerTurn].card[inputNumber - 1] == "Di")
 		{
-			destroyCard(inputNumber - 1);
+			controllDiceCard(inputNumber - 1);
 		}
 		else if (player[playerTurn].card[inputNumber - 1] == "De")
 		{
-			controllDiceCard(inputNumber - 1);
+			destroyCard(inputNumber - 1);
 		}
 		else if (player[playerTurn].card[inputNumber - 1] == "F")
 		{
