@@ -46,6 +46,7 @@ void chance();
 void fate();
 void house();
 void hospital();
+void shop();
 //card
 void rocketCard(int deleteIndex);
 void barrierCard(int deleteIndex);
@@ -169,9 +170,7 @@ int main()
 			}
 			else if (area[player[playerTurn].position].name == "Shop")
 			{
-				cout << "Shop" << endl;
-				cout << "Enter any word to continue:";
-				cin >> input;
+				shop();
 			}
 			else if (area[player[playerTurn].position].name == "Hospital")
 			{
@@ -1195,6 +1194,44 @@ void hospital()
 
 		cout << "Enter any word to continue:";
 		cin >> input;
+	}
+}
+
+void shop()
+{
+	cout << "Enter the number of the card you want to buy: ";
+buyInput:
+	cin >> input;
+
+	if (input == "1")
+	{
+		player[playerTurn].card.push_back("B");
+	}
+	else if (input == "2")
+	{
+		player[playerTurn].card.push_back("Di");
+	}
+	else if (input == "3")
+	{
+		player[playerTurn].card.push_back("De");
+	}
+	else if (input == "4")
+	{
+		player[playerTurn].card.push_back("F");
+	}
+	else if (input == "5")
+	{
+		player[playerTurn].card.push_back("R");
+
+	}
+	else if (input == "6")
+	{
+		return;
+	}
+	else
+	{
+		cout << "Wrong input, enter again:";
+		goto buyInput;
 	}
 }
 
