@@ -1126,6 +1126,7 @@ void house()
 		{
 			cout << "You should pay the toll" << endl << "toll: " << area[player[playerTurn].position].buyPrice * area[player[playerTurn].position].level / 10 << endl;
 			player[playerTurn].money -= area[player[playerTurn].position].buyPrice * area[player[playerTurn].position].level / 10;
+			player[!playerTurn].money += area[player[playerTurn].position].buyPrice * area[player[playerTurn].position].level / 10;
 			cout << "remain money: " << player[playerTurn].money << endl;
 			cout << "Enter any word to continue:";
 			cin >> input;
