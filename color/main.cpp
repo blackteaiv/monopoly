@@ -8,7 +8,7 @@
 #include <fstream>
 #include <cassert>
 #include <algorithm>
-#include<cctype>
+#include <cctype>
 #include "Region.h"
 #include "Player.h"
 
@@ -47,11 +47,12 @@ void fate();
 void house();
 void hospital();
 //card
-void rocketCard();
-void barrierCard();
-void controllDiceCard();
-void destroyCard();
-
+void rocketCard(int deleteIndex);
+void barrierCard(int deleteIndex);
+void controllDiceCard(int deleteIndex);
+void destroyCard(int deleteIndex);
+void fateCard(int deleteIndex);
+void selectCard();
 
 string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+-------+"},
 					  {"+-------+","| ¡´     |","|       |","|     ¡´ |","+-------+"},
@@ -86,6 +87,14 @@ int main()
 
 	in.close();
 	area[0].playerHere[0] = 1; area[0].playerHere[1] = 1;
+	for (int i = 0; i < 2; i++)
+	{
+		player[i].card.push_back("B");
+		player[i].card.push_back("Di");
+		player[i].card.push_back("De");
+		player[i].card.push_back("F");
+		player[i].card.push_back("R");
+	}
 	//beginAnime();
 
 	while (1)
@@ -109,10 +118,7 @@ int main()
 			}
 			else if (input == "2")
 			{
-				//print the cards
-				//barrierCard();
-				//controllDiceCard();
-				destroyCard();
+				selectCard();
 				goto turnBegin;
 			}
 			else
@@ -126,19 +132,19 @@ int main()
 			cout << "(check the dice)" << endl << "Enter any word to move : ";
 			cin >> input;
 			walk(playerTurn, twoDiceTotal);
-
-			if (area[player[playerTurn].position].barrier == 1)
-				cout << "You are blocked by barrier" << endl;
-
-			cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 		}
 		else
 		{
 			cout << "You are injured" << endl;
 		}
 
-
-		//------
+	triggerBegin:
+		system("CLS");
+		drawMap();
+		status();
+		if (area[player[playerTurn].position].barrier == 1)
+			cout << "You are blocked by barrier" << endl;
+		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 		cout << "(Trigger the event or check the cards)" << endl;
 		cout << "1.Trigger the event" << endl << "2.Check the cards" << endl << "Enter 1 or 2:";
 	input2:
@@ -182,9 +188,8 @@ int main()
 		}
 		else if (input == "2")
 		{
-			//card
-			cout << "Unfinish function, enter again:";
-			goto input2;
+			selectCard();
+			goto triggerBegin;
 		}
 		else
 		{
@@ -1140,6 +1145,8 @@ void hospital()
 	{
 		cout << "You want to sleep in the hospital" << endl;
 		cout << "But you get ejected from the hospital" << endl;
+		cout << "Enter any word to continue:";
+		cin >> input;
 	}
 	else
 	{
@@ -1191,15 +1198,16 @@ void hospital()
 	}
 }
 
-void rocketCard()
+void rocketCard(int deleteIndex)
 {
 	area[player[!playerTurn].position].playerHere[!playerTurn] = 0;
 	player[!playerTurn].position = 15;
 	area[15].playerHere[!playerTurn] = 1;
 	player[!playerTurn].injured += 3;
+	player[playerTurn].card.erase(player[playerTurn].card.begin() + deleteIndex);
 }
 
-void barrierCard()
+void barrierCard(int deleteIndex)
 {
 	int pos;
 	cout << "Choose a place to place barrier (0 ~ 27):";
@@ -1215,64 +1223,95 @@ void barrierCard()
 	}
 
 	area[pos].barrier = 1;
+	player[playerTurn].card.erase(player[playerTurn].card.begin() + deleteIndex);
 }
 
-void controllDiceCard()
+void controllDiceCard(int deleteIndex)
 {
-	cout << "Enter the dice you want to choose(2 ~ 12): " << endl;
-nextdiceInput:
-	cin >> input;
 
-	if (input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "11" || input == "12")
+	if (player[playerTurn].nextdice != 0)
 	{
-		int nextdice = 0;
+		cout << "You chose the dice already!Do you want to change it?(enter y or n)";
+	changeInput:
+		cin >> input;
 
-		if (input.size() == 1)
+		if (input == "y")
 		{
-			nextdice = input[0] - '0';
-		}
-		else	if (input.size() == 2)
-		{
-			nextdice = input[1] - '0' + 10;
-		}
-		else
-		{
-			assert(0);
-		}
-
-		if (player[playerTurn].nextdice != 0)
-		{
-			cout << "You chose the dice already!Do you want to change it?(enter y or n)";
-		changeInput:
+			cout << "Enter the dice you want to choose(2 ~ 12): " << endl;
+		nextdiceInput1:
 			cin >> input;
 
-			if (input == "y")
+			if (input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "11" || input == "12")
 			{
+				int nextdice = 0;
+
+				if (input.size() == 1)
+				{
+					nextdice = input[0] - '0';
+				}
+				else	if (input.size() == 2)
+				{
+					nextdice = input[1] - '0' + 10;
+				}
+				else
+				{
+					assert(0);
+				}
+
 				player[playerTurn].nextdice = nextdice;
-			}
-			else if (input == "n")
-			{
-				return;
 			}
 			else
 			{
 				cout << "Wrong input, enter again:";
-				goto changeInput;
+				goto nextdiceInput1;
 			}
+		}
+		else if (input == "n")
+		{
+			return;
 		}
 		else
 		{
-			player[playerTurn].nextdice = nextdice;
+			cout << "Wrong input, enter again:";
+			goto changeInput;
 		}
 	}
 	else
 	{
-		cout << "Wrong input, enter again:";
-		goto nextdiceInput;
+		cout << "Enter the dice you want to choose(2 ~ 12): " << endl;
+	nextdiceInput2:
+		cin >> input;
+
+		if (input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "11" || input == "12")
+		{
+			int nextdice = 0;
+
+			if (input.size() == 1)
+			{
+				nextdice = input[0] - '0';
+			}
+			else	if (input.size() == 2)
+			{
+				nextdice = input[1] - '0' + 10;
+			}
+			else
+			{
+				assert(0);
+			}
+
+			player[playerTurn].nextdice = nextdice;
+		}
+		else
+		{
+			cout << "Wrong input, enter again:";
+			goto nextdiceInput2;
+		}
 	}
+
+	player[playerTurn].card.erase(player[playerTurn].card.begin() + deleteIndex);
 }
 
-void destroyCard()
+void destroyCard(int deleteIndex)
 {
 	cout << "Enter the player you want to destroy" << endl;
 
@@ -1360,5 +1399,92 @@ playerinput:
 	{
 		cout << "Wrong input, enter again:";
 		goto playerinput;
+	}
+
+	player[playerTurn].card.erase(player[playerTurn].card.begin() + deleteIndex);
+}
+
+void fateCard(int deleteIndex)
+{
+	fate();
+	player[playerTurn].card.erase(player[playerTurn].card.begin() + deleteIndex);
+}
+
+void selectCard()
+{
+	cout << "Enter the number of the card to use (or 0 to exit): ";
+cardInput:
+	cin >> input;
+
+	if (input == "0")
+	{
+		return;
+	}
+
+	int cardSize = player[playerTurn].card.size(), cardSizeBit = 0;
+
+	while (cardSize != 0)
+	{
+		cardSizeBit++;
+		cardSize /= 10;
+	}
+
+	if (cardSizeBit == 0)
+	{
+		cout << "no card exist" << endl;
+		cout << "Enter any word to continue:";
+		cin >> input;
+		return;
+	}
+
+	if (input.size() > cardSizeBit)
+	{
+		cout << "Wrong input, enter again:";
+		goto cardInput;
+	}
+
+	for (int i = 0; i < input.size(); i++)
+	{
+		if (!isdigit(input[i]))
+		{
+			cout << "Wrong input, enter again:";
+			goto cardInput;
+		}
+	}
+
+	int inputNumber = 0;
+
+	for (int i = 0; i < input.size(); i++)
+	{
+		inputNumber += (input[i] - '0') * pow(10, input.size() - i - 1);
+	}
+
+	if (inputNumber < 1 || inputNumber > player[playerTurn].card.size())
+	{
+		cout << "Wrong input, enter again:";
+		goto cardInput;
+	}
+	else
+	{
+		if (player[playerTurn].card[inputNumber - 1] == "B")
+		{
+			barrierCard(inputNumber - 1);
+		}
+		else if (player[playerTurn].card[inputNumber - 1] == "Di")
+		{
+			destroyCard(inputNumber - 1);
+		}
+		else if (player[playerTurn].card[inputNumber - 1] == "De")
+		{
+			controllDiceCard(inputNumber - 1);
+		}
+		else if (player[playerTurn].card[inputNumber - 1] == "F")
+		{
+			fateCard(inputNumber - 1);
+		}
+		else if (player[playerTurn].card[inputNumber - 1] == "R")
+		{
+			rocketCard(inputNumber - 1);
+		}
 	}
 }
