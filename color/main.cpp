@@ -56,6 +56,13 @@ void destroyCard(int deleteIndex);
 void fateCard(int deleteIndex);
 int changeStringToNumber(string str);
 void selectCard();
+//command
+bool move();
+void get();
+void give();
+void card();
+void list();
+void minigame();
 
 string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+-------+"},
 					  {"+-------+","| ¡´     |","|       |","|     ¡´ |","+-------+"},
@@ -124,6 +131,54 @@ int main()
 				selectCard();
 				goto turnBegin;
 			}
+			else if (input == "/move")
+			{
+				if (move())
+				{
+					goto triggerBegin;
+				}
+				else
+				{
+					goto turnBegin;
+				}
+			}
+			else if (input == "/get")
+			{
+				get();
+				goto turnBegin;
+			}
+			else if (input == "/give")
+			{
+				give();
+				goto turnBegin;
+			}
+			else if (input == "/card")
+			{
+				card();
+				goto turnBegin;
+			}/*
+			else if (input == "/gamestate")
+			{
+
+			}
+			else if (input == "/info")
+			{
+
+			}*/
+			else if (input == "/refresh")
+			{
+				goto turnBegin;
+			}
+			else if (input == "/list" || input == "/help")
+			{
+				list();
+				goto turnBegin;
+			}
+			else if (input == "/minigame")
+			{
+				minigame();
+				goto turnBegin;
+			}
 			else
 			{
 				cout << "Wrong input, enter again:";
@@ -190,6 +245,48 @@ int main()
 		else if (input == "2")
 		{
 			selectCard();
+			goto triggerBegin;
+		}
+		else if (input == "/move")
+		{
+			move();
+			goto triggerBegin;
+		}
+		else if (input == "/get")
+		{
+			get();
+			goto triggerBegin;
+		}
+		else if (input == "/give")
+		{
+			give();
+			goto triggerBegin;
+		}
+		else if (input == "/card")
+		{
+			card();
+			goto triggerBegin;
+		}/*
+		else if (input == "/gamestate")
+		{
+
+		}
+		else if (input == "/info")
+		{
+
+		}*/
+		else if (input == "/refresh")
+		{
+			goto triggerBegin;
+		}
+		else if (input == "/list" || input == "/help")
+		{
+			list();
+			goto triggerBegin;
+		}
+		else if (input == "/minigame")
+		{
+			minigame();
 			goto triggerBegin;
 		}
 		else
@@ -533,7 +630,7 @@ void playerStatus(int who)
 
 	cout << "| ";
 
-	for (int i = 0;i < player[who].card.size();i++)
+	for (int i = 0; i < player[who].card.size(); i++)
 	{
 		if (player[who].card[i].length() > 1)
 			count2++;
@@ -541,7 +638,7 @@ void playerStatus(int who)
 		cout << player[who].card[i] << " ";
 	}
 
-	for (int i = count2;i < 58;i++)
+	for (int i = count2; i < 58; i++)
 		cout << " ";
 
 	cout << "|" << endl;
@@ -1527,7 +1624,7 @@ int changeStringToNumber(string str)
 {
 	int num = 0;
 
-	for (int i = 0;i < str.length();i++)
+	for (int i = 0; i < str.length(); i++)
 	{
 		if (str[i] >= '0' && str[i] <= '9')
 		{
@@ -1564,7 +1661,7 @@ void selectCard()
 	cout << "| No. | Card Name    | Effect                                     |\n";
 	cout << "+-----+--------------+--------------------------------------------+\n";
 
-	for (int i = 0;i < cardSize;i++)
+	for (int i = 0; i < cardSize; i++)
 	{
 		cout << "|  " << i + 1;
 
@@ -1618,5 +1715,660 @@ cardInput:
 	else if (player[playerTurn].card[read - 1] == "R")
 	{
 		rocketCard(read - 1);
+	}
+}
+
+
+bool move()
+{
+	char seeinput = cin.peek();
+
+	if (seeinput == ' ')
+	{
+		cin.ignore();
+		cin >> input;
+
+		if (input == "to")
+		{
+			seeinput = cin.peek();
+
+			if (seeinput == ' ')
+			{
+				cin.ignore();
+				cin >> input;
+
+				for (int i = 0; i < 28; i++)
+				{
+					if (input == area[i].name)
+					{
+						i -= player[playerTurn].position;
+
+
+						if (i < 0)
+						{
+							i += 28;
+						}
+
+						walk(playerTurn, i);
+						return true;
+					}
+				}
+
+
+				if (input.size() < 3)
+				{
+					if (input.size() == 1)
+					{
+						if (!isdigit(input[0]))
+						{
+							cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+							cout << "Invalid command.Type / list to see available commands." << endl;
+							cout << "Enter any word to continue:";
+							cin >> input;
+							return false;
+						}
+
+						int location = input[0] - '0';
+
+						location -= player[playerTurn].position;
+
+						if (location < 0)
+						{
+							location += 28;
+						}
+
+						walk(playerTurn, location);
+						return true;
+					}
+					else if (input.size() == 2)
+					{
+						if (!isdigit(input[0]) || !isdigit(input[1]))
+						{
+							cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+							cout << "Invalid command.Type / list to see available commands." << endl;
+							cout << "Enter any word to continue:";
+							cin >> input;
+							return false;
+						}
+						int location = (input[0] - '0') * 10 + input[1] - '0';
+
+						if (location > 27)
+						{
+							cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+							cout << "Invalid command.Type / list to see available commands." << endl;
+							cout << "Enter any word to continue:";
+							cin >> input;
+							return false;
+						}
+
+						location -= player[playerTurn].position;
+
+						if (location < 0)
+						{
+							location += 28;
+						}
+
+						walk(playerTurn, location);
+						return true;
+					}
+					else
+					{
+						cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+						cout << "Invalid command.Type / list to see available commands." << endl;
+						cout << "Enter any word to continue:";
+						cin >> input;
+						return false;
+					}
+				}
+				else
+				{
+					cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+					cout << "Invalid command.Type / list to see available commands." << endl;
+					cout << "Enter any word to continue:";
+					cin >> input;
+					return false;
+				}
+			}
+			else
+			{
+				cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+				cout << "Invalid command.Type / list to see available commands." << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+				return false;
+			}
+		}
+		else
+		{
+			for (int i = 0; i < 28; i++)
+			{
+				if (input == area[i].name)
+				{
+					i -= player[playerTurn].position;
+
+
+					if (i < 0)
+					{
+						i += 28;
+					}
+
+					walk(playerTurn, i);
+					return true;
+				}
+			}
+
+
+			if (input.size() < 3)
+			{
+				if (input.size() == 1)
+				{
+					if (!isdigit(input[0]))
+					{
+						cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+						cout << "Invalid command.Type / list to see available commands." << endl;
+						cout << "Enter any word to continue:";
+						cin >> input;
+					}
+
+					int location = input[0] - '0';
+
+					location -= player[playerTurn].position;
+
+					if (location < 0)
+					{
+						location += 28;
+					}
+
+					walk(playerTurn, location);
+					return true;
+				}
+				else if (input.size() == 2)
+				{
+					if (!isdigit(input[0]) || !isdigit(input[1]))
+					{
+						cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+						cout << "Invalid command.Type / list to see available commands." << endl;
+						cout << "Enter any word to continue:";
+						cin >> input;
+						return false;
+					}
+
+					int location = (input[0] - '0') * 10 + input[1] - '0';
+
+					if (location > 27)
+					{
+						cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+						cout << "Invalid command.Type / list to see available commands." << endl;
+						cout << "Enter any word to continue:";
+						cin >> input;
+						return false;
+					}
+
+					location -= player[playerTurn].position;
+
+					if (location < 0)
+					{
+						location += 28;
+					}
+
+					walk(playerTurn, location);
+					return true;
+				}
+				else
+				{
+					cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+					cout << "Invalid command.Type / list to see available commands." << endl;
+					cout << "Enter any word to continue:";
+					cin >> input;
+					return false;
+				}
+			}
+			else
+			{
+				cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+				cout << "Invalid command.Type / list to see available commands." << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+				return false;
+			}
+		}
+	}
+	else
+	{
+		cout << "Usage: / move[location] or /move to[0 - 27]" << endl;
+		cout << "Invalid command.Type / list to see available commands." << endl;
+		cout << "Enter any word to continue:";
+		cin >> input;
+		return false;
+	}
+}
+
+void get()
+{
+	char seeinput = cin.peek();
+
+	if (seeinput == ' ')
+	{
+		cin.ignore();
+		cin >> input;
+
+		if (input == "Player1")
+		{
+			seeinput = cin.peek();
+
+			if (seeinput == ' ')
+			{
+				cin.ignore();
+				cin >> input;
+
+				int money = changeStringToNumber(input);
+
+				if (money == -1)
+				{
+					cout << "Error: Invalid amount. Please enter a valid number." << endl;
+					cout << "Invalid command.Type / list to see available commands." << endl;
+					cout << "Enter any word to continue:";
+					cin >> input;
+				}
+				else
+				{
+					player[0].money += money;
+				}
+			}
+			else
+			{
+				cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+				cout << "Invalid command.Type / list to see available commands." << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+		}
+		else if (input == "Player2")
+		{
+			if (seeinput == ' ')
+			{
+				cin.ignore();
+				cin >> input;
+
+				int money = changeStringToNumber(input);
+
+				if (money == -1)
+				{
+					cout << "Error: Invalid amount. Please enter a valid number." << endl;
+					cout << "Invalid command.Type / list to see available commands." << endl;
+					cout << "Enter any word to continue:";
+					cin >> input;
+				}
+				else
+				{
+					player[1].money += money;
+				}
+			}
+			else
+			{
+				cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
+				cout << "Invalid command.Type / list to see available commands." << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+		}
+		else
+		{
+			int money = changeStringToNumber(input);
+
+			if (money == -1)
+			{
+				cout << "Error: Invalid amount. Please enter a valid number." << endl;
+				cout << "Invalid command.Type / list to see available commands." << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+			else
+			{
+				player[playerTurn].money += money;
+			}
+		}
+	}
+	else
+	{
+		cout << "Usage: / get[playerName][money] or /get[money]" << endl;
+		cout << "Invalid command.Type / list to see available commands." << endl;
+		cout << "Enter any word to continue:";
+		cin >> input;
+	}
+}
+
+void give()
+{
+	char seeinput = cin.peek();
+
+	if (seeinput == ' ')
+	{
+		cin.ignore();
+		cin >> input;
+
+		if (input == "Player1")
+		{
+			seeinput = cin.peek();
+
+			if (seeinput == ' ')
+			{
+				cin.ignore();
+				cin >> input;
+
+				int money = changeStringToNumber(input);
+
+				if (money == -1)
+				{
+					cout << "Error: Invalid amount. Please enter a valid number." << endl;
+					cout << "Invalid command.Type / list to see available commands." << endl;
+					cout << "Enter any word to continue:";
+					cin >> input;
+				}
+				else
+				{
+					if (player[playerTurn].money < money)
+					{
+						cout << "Not enough money" << endl;
+						cout << "Enter any word to continue:";
+						cin >> input;
+					}
+					else
+					{
+						player[playerTurn].money -= money;
+						player[0].money += money;
+
+					}
+				}
+			}
+			else
+			{
+				cout << "Usage: / give[playerName][money]" << endl;
+				cout << "Invalid command.Type / list to see available commands." << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+		}
+		else if (input == "Player2")
+		{
+			if (seeinput == ' ')
+			{
+				cin.ignore();
+				cin >> input;
+
+				int money = changeStringToNumber(input);
+
+				if (money == -1)
+				{
+					cout << "Error: Invalid amount. Please enter a valid number." << endl;
+					cout << "Invalid command.Type / list to see available commands." << endl;
+					cout << "Enter any word to continue:";
+					cin >> input;
+				}
+				else
+				{
+					if (player[playerTurn].money < money)
+					{
+						cout << "Not enough money" << endl;
+						cout << "Enter any word to continue:";
+						cin >> input;
+					}
+					else
+					{
+						player[playerTurn].money -= money;
+						player[1].money += money;
+
+					}
+				}
+			}
+			else
+			{
+				cout << "Usage: / give[playerName][money]" << endl;
+				cout << "Invalid command.Type / list to see available commands." << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+		}
+		else
+		{
+			cout << "Usage: / give[playerName][money]" << endl;
+			cout << "Invalid command.Type / list to see available commands." << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
+	}
+	else
+	{
+		cout << "Usage: / give[playerName][money]" << endl;
+		cout << "Invalid command.Type / list to see available commands." << endl;
+		cout << "Enter any word to continue:";
+		cin >> input;
+	}
+}
+
+
+void card()
+{
+	char seeinput = cin.peek();
+
+	if (seeinput == ' ')
+	{
+		cin.ignore();
+		cin >> input;
+
+		if (input == "Barrier")
+		{
+			seeinput = cin.peek();
+
+			if (seeinput == ' ')
+			{
+				cin.ignore();
+				cin >> input;
+
+				if (input == "Card")
+				{
+					player[playerTurn].card.push_back("B");
+				}
+				else
+				{
+					cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
+					cout << "Invalid command.Type / list to see available commands." << endl;
+					cout << "Enter any word to continue:";
+					cin >> input;
+				}
+			}
+			else
+			{
+				cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
+				cout << "Invalid command.Type / list to see available commands." << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+		}
+		else if (input == "Dice")
+		{
+			seeinput = cin.peek();
+
+			if (seeinput == ' ')
+			{
+				cin.ignore();
+				cin >> input;
+
+				if (input == "Card")
+				{
+					player[playerTurn].card.push_back("Di");
+				}
+				else
+				{
+					cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
+					cout << "Invalid command.Type / list to see available commands." << endl;
+					cout << "Enter any word to continue:";
+					cin >> input;
+				}
+			}
+			else
+			{
+				cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
+				cout << "Invalid command.Type / list to see available commands." << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+		}
+		else if (input == "Destroy")
+		{
+			seeinput = cin.peek();
+
+			if (seeinput == ' ')
+			{
+				cin.ignore();
+				cin >> input;
+
+				if (input == "Card")
+				{
+					player[playerTurn].card.push_back("De");
+				}
+				else
+				{
+					cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
+					cout << "Invalid command.Type / list to see available commands." << endl;
+					cout << "Enter any word to continue:";
+					cin >> input;
+				}
+			}
+			else
+			{
+				cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
+				cout << "Invalid command.Type / list to see available commands." << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+		}
+		else if (input == "Fate")
+		{
+			seeinput = cin.peek();
+
+			if (seeinput == ' ')
+			{
+				cin.ignore();
+				cin >> input;
+
+				if (input == "Card")
+				{
+					player[playerTurn].card.push_back("F");
+				}
+				else
+				{
+					cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
+					cout << "Invalid command.Type / list to see available commands." << endl;
+					cout << "Enter any word to continue:";
+					cin >> input;
+				}
+			}
+			else
+			{
+				cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
+				cout << "Invalid command.Type / list to see available commands." << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+		}
+		else if (input == "Rocket")
+		{
+			seeinput = cin.peek();
+
+			if (seeinput == ' ')
+			{
+				cin.ignore();
+				cin >> input;
+
+				if (input == "Card")
+				{
+					player[playerTurn].card.push_back("R");
+				}
+				else
+				{
+					cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
+					cout << "Invalid command.Type / list to see available commands." << endl;
+					cout << "Enter any word to continue:";
+					cin >> input;
+				}
+			}
+			else
+			{
+				cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
+				cout << "Invalid command.Type / list to see available commands." << endl;
+				cout << "Enter any word to continue:";
+				cin >> input;
+			}
+		}
+		else
+		{
+			cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
+			cout << "Invalid command.Type / list to see available commands." << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
+	}
+	else
+	{
+		cout << "Usage : / card[card_name]" << endl;
+		cout << "Invalid command.Type / list to see available commands." << endl;
+		cout << "Enter any word to continue:";
+		cin >> input;
+	}
+}
+
+void list()
+{
+	char seeinput = cin.peek();
+
+	if (seeinput == ' ')
+	{
+		cin.ignore();
+		cin >> input;
+
+		if (input == "-a")
+		{
+			cout << "¯D«Ç¨Ó°µ";
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
+		else
+		{
+			cout << "/card - Retrieve a specific card by name." << endl << "/gamestate - Change the game state." << endl << "/get - Get money from the system." << endl << "/give - Give money to another player." << endl << "/info - Display information about all players." << endl << "/minigame - Enter a minigame." << endl << "/move - Move to a specific position on the board." << endl << "/refresh - Refresh the game board." << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
+		}
+	}
+	else
+	{
+		cout << "/card - Retrieve a specific card by name." << endl << "/gamestate - Change the game state." << endl << "/get - Get money from the system." << endl << "/give - Give money to another player." << endl << "/info - Display information about all players." << endl << "/minigame - Enter a minigame." << endl << "/move - Move to a specific position on the board." << endl << "/refresh - Refresh the game board." << endl;
+		cout << "Enter any word to continue:";
+		cin >> input;
+	}
+}
+
+void minigame()
+{
+	cout << "Please choose (1~3):" << endl;
+chooseMnigame:
+	cin >> input;
+
+	if (input == "1")
+	{
+		shootDragonDoor();
+	}
+	else if (input == "2")
+	{
+		horse();
+	}
+	else if (input == "3")
+	{
+		return;
+	}
+	else
+	{
+		cout << "Please enter 1-3:";
+		goto chooseMnigame;
 	}
 }
