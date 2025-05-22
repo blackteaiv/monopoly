@@ -46,6 +46,7 @@ void chance();
 void fate();
 void house();
 void hospital();
+void shopItem();
 void shop();
 //card
 void rocketCard(int deleteIndex);
@@ -53,6 +54,7 @@ void barrierCard(int deleteIndex);
 void controllDiceCard(int deleteIndex);
 void destroyCard(int deleteIndex);
 void fateCard(int deleteIndex);
+int changeStringToNumber(string str);
 void selectCard();
 
 string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+-------+"},
@@ -90,11 +92,11 @@ int main()
 	area[0].playerHere[0] = 1; area[0].playerHere[1] = 1;
 	for (int i = 0; i < 2; i++)
 	{
-		player[i].card.push_back("B");
-		player[i].card.push_back("Di");
-		player[i].card.push_back("De");
-		player[i].card.push_back("F");
-		player[i].card.push_back("R");
+		player[i].card.push_back("B");//barrier
+		player[i].card.push_back("Di");//dice
+		player[i].card.push_back("De");//destroy
+		player[i].card.push_back("F");//fate
+		player[i].card.push_back("R");//rocket
 	}
 	//beginAnime();
 
@@ -196,7 +198,6 @@ int main()
 			goto input2;
 		}
 	}
-
 }
 
 void delay(int ms)
@@ -510,7 +511,7 @@ void statusEdge()
 
 void playerStatus(int who)
 {
-	int count = player[who].house.size() * 2;
+	int count1 = player[who].house.size() * 2, count2 = player[who].card.size() * 2;
 	cout << "| "; setTextColor(who + 31); cout << (who == 0 ? "[A]" : "[B]"); resetColor(); cout << " Player" << who + 1 << "   | ";
 	cout << player[who].money;
 
@@ -522,17 +523,27 @@ void playerStatus(int who)
 	for (int i = 0; i < player[who].house.size(); i++)
 	{
 		if (player[who].house[i] >= 10)
-			count++;
+			count1++;
 
 		cout << player[who].house[i] << " ";
 	}
 
-	for (int i = count; i < 51; i++)
+	for (int i = count1; i < 51; i++)
 		cout << " ";
 
 	cout << "| ";
-	cout << "(Unfinished)";
-	cout << "                                              ";
+
+	for (int i = 0;i < player[who].card.size();i++)
+	{
+		if (player[who].card[i].length() > 1)
+			count2++;
+
+		cout << player[who].card[i] << " ";
+	}
+
+	for (int i = count2;i < 58;i++)
+		cout << " ";
+
 	cout << "|" << endl;
 }
 
@@ -1197,9 +1208,24 @@ void hospital()
 	}
 }
 
+void shopItem()
+{
+	cout << "+-----+--------------+--------------------------------------------+\n";
+	cout << "| No. | Card Name    | Effect                                     |\n";
+	cout << "+-----+--------------+--------------------------------------------+\n";
+	cout << "|  1  | Barrier Card | Place a barrier on a tile to block players |\n";
+	cout << "|  2  | Dice Card    | Choose the number you roll on the dice     |\n";
+	cout << "|  3  | Destroy Card | Destroy another player's property          |\n";
+	cout << "|  4  | Fate Card    | Trigger a fate event                       |\n";
+	cout << "|  5  | Rocket Card  | Send a player to the hospital for 3 turns  |\n";
+	cout << "+-----+--------------+--------------------------------------------+\n";
+	cout << endl;
+}
+
 void shop()
 {
-	cout << "Enter the number of the card you want to buy: ";
+	shopItem();
+	cout << "Enter the number of the card you want to buy (or enter 0 to exit): ";
 buyInput:
 	cin >> input;
 
@@ -1274,7 +1300,7 @@ buyInput:
 		}
 
 	}
-	else if (input == "6")
+	else if (input == "0")
 	{
 		return;
 	}
@@ -1497,26 +1523,36 @@ void fateCard(int deleteIndex)
 	player[playerTurn].card.erase(player[playerTurn].card.begin() + deleteIndex);
 }
 
+int changeStringToNumber(string str)
+{
+	int num = 0;
+
+	for (int i = 0;i < str.length();i++)
+	{
+		if (str[i] >= '0' && str[i] <= '9')
+		{
+			num = num * 10 + str[i] - '0';
+		}
+		else
+		{
+			num = -1;
+			break;
+		}
+	}
+
+	return num;
+}
+
 void selectCard()
 {
-	cout << "Enter the number of the card to use (or 0 to exit): ";
-cardInput:
-	cin >> input;
+	int cardSize = player[playerTurn].card.size(), read;
+	string card[5] = { {"  | Barrier Card | Place a barrier on a tile to block players |\n"},
+					   {"  | Dice Card    | Choose the number you roll on the dice     |\n"},
+					   {"  | Destroy Card | Destroy another player's property          |\n"},
+					   {"  | Fate Card    | Trigger a fate event                       |\n"},
+					   {"  | Rocket Card  | Send a player to the hospital for 3 turns  |\n"} };
 
-	if (input == "0")
-	{
-		return;
-	}
-
-	int cardSize = player[playerTurn].card.size(), cardSizeBit = 0;
-
-	while (cardSize != 0)
-	{
-		cardSizeBit++;
-		cardSize /= 10;
-	}
-
-	if (cardSizeBit == 0)
+	if (cardSize == 0)
 	{
 		cout << "no card exist" << endl;
 		cout << "Enter any word to continue:";
@@ -1524,54 +1560,63 @@ cardInput:
 		return;
 	}
 
-	if (input.size() > cardSizeBit)
+	cout << "+-----+--------------+--------------------------------------------+\n";
+	cout << "| No. | Card Name    | Effect                                     |\n";
+	cout << "+-----+--------------+--------------------------------------------+\n";
+
+	for (int i = 0;i < cardSize;i++)
+	{
+		cout << "|  " << i + 1;
+
+		if (player[playerTurn].card[i] == "B")
+			cout << card[0];
+		else if (player[playerTurn].card[i] == "Di")
+			cout << card[1];
+		else if (player[playerTurn].card[i] == "De")
+			cout << card[2];
+		else if (player[playerTurn].card[i] == "F")
+			cout << card[3];
+		else if (player[playerTurn].card[i] == "R")
+			cout << card[4];
+		else
+			cout << "Error\n";
+	}
+
+	cout << "+-----+--------------+--------------------------------------------+\n\n";
+	cout << "Enter the number of the card to use (or enter 0 to exit): ";
+cardInput:
+	cin >> input;
+	read = changeStringToNumber(input);
+
+	if (read == 0)
+	{
+		return;
+	}
+
+	if (read > cardSize || read == -1)
 	{
 		cout << "Wrong input, enter again:";
 		goto cardInput;
 	}
 
-	for (int i = 0; i < input.size(); i++)
+	if (player[playerTurn].card[read - 1] == "B")
 	{
-		if (!isdigit(input[i]))
-		{
-			cout << "Wrong input, enter again:";
-			goto cardInput;
-		}
+		barrierCard(read - 1);
 	}
-
-	int inputNumber = 0;
-
-	for (int i = 0; i < input.size(); i++)
+	else if (player[playerTurn].card[read - 1] == "Di")
 	{
-		inputNumber += (input[i] - '0') * pow(10, input.size() - i - 1);
+		controllDiceCard(read - 1);
 	}
-
-	if (inputNumber < 1 || inputNumber > player[playerTurn].card.size())
+	else if (player[playerTurn].card[read - 1] == "De")
 	{
-		cout << "Wrong input, enter again:";
-		goto cardInput;
+		destroyCard(read - 1);
 	}
-	else
+	else if (player[playerTurn].card[read - 1] == "F")
 	{
-		if (player[playerTurn].card[inputNumber - 1] == "B")
-		{
-			barrierCard(inputNumber - 1);
-		}
-		else if (player[playerTurn].card[inputNumber - 1] == "Di")
-		{
-			controllDiceCard(inputNumber - 1);
-		}
-		else if (player[playerTurn].card[inputNumber - 1] == "De")
-		{
-			destroyCard(inputNumber - 1);
-		}
-		else if (player[playerTurn].card[inputNumber - 1] == "F")
-		{
-			fateCard(inputNumber - 1);
-		}
-		else if (player[playerTurn].card[inputNumber - 1] == "R")
-		{
-			rocketCard(inputNumber - 1);
-		}
+		fateCard(read - 1);
+	}
+	else if (player[playerTurn].card[read - 1] == "R")
+	{
+		rocketCard(read - 1);
 	}
 }
