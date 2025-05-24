@@ -63,6 +63,27 @@ void give();
 void card();
 void list();
 void minigame();
+//art
+string drawPlayer[8] = { " ________     _     ______   __      __   _________    ________  ",
+						 "| ______ \\   | |   / ____ \\  \\ \\    / /  |  _______|  | ______ \\ ",
+						 "| |     \\ \\  | |  / /    \\ \\  \\ \\  / /   | |          | |     \\ \\" ,
+						 "| |_____/ /  | |  | |____| |   \\ \\/ /    | |_______   | |_____/ /" ,
+						 "|  ______/   | |  |  ____  |    \\  /     |  _______|  |  ___  _/ " ,
+						 "| |          | |  | |    | |     ||      | |          | |   \\ \\  " ,
+						 "| |          | |  | |    | |     ||      | |_______   | |    \\ \\ " ,
+						 "|_|          |_|  |_|    |_|     ||      |_________|  |_|     \\_\\" };
+
+string drawWinner[2][8] = { {"  ___    "," /   |   ","/_/| |   ","   | |   ","   | |   ","   | |   "," __| |_  ","|______| "},
+						{"  ____   "," / __ \\  ","/ /  \\ \\ ","\\_\\  / / ","    / /  ","   / /   ","  / /___ "," /______|"} };
+
+string drawWin[8] = { " _     _     _    _    ___       _ ",
+				  "| |   | |   | |  | |  |   \\     | |",
+				  "| |   | |   | |  | |  | |\\ \\    | |",
+				  "| |   | |   | |  | |  | | \\ \\   | |",
+				  "| |   | |   | |  | |  | |  \\ \\  | |",
+				  "| |  / ^ \\  | |  | |  | |   \\ \\ | |",
+				  " \\ \\/ / \\ \\/ /   | |  | |    \\ \\| |",
+				  "  \\__/   \\__/    |_|  |_|     \\___|" };
 
 string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+-------+"},
 					  {"+-------+","| ¡´     |","|       |","|     ¡´ |","+-------+"},
@@ -74,6 +95,8 @@ string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+------
 //dice
 int twoDiceTotal;
 void rollDice();
+//end
+void endScreen(int winner);
 
 Region area[28];
 Player player[2];
@@ -2350,6 +2373,14 @@ void list()
 
 void minigame()
 {
+	cout << "=====================\n";
+	cout << "    MiniGame Menu\n";
+	cout << "=====================\n";
+	cout << "1.Dragon Gate\n";
+	cout << "2.Horses\n";
+	cout << "3.Return\n";
+	cout << "=====================\n";
+
 	cout << "Please choose (1~3):" << endl;
 chooseMnigame:
 	cin >> input;
@@ -2371,4 +2402,20 @@ chooseMnigame:
 		cout << "Please enter 1-3:";
 		goto chooseMnigame;
 	}
+}
+
+void endScreen(int winner)
+{
+	system("CLS");
+
+	for (int i = 0;i < 8;i++)
+	{
+		cout << drawPlayer[i] << "      " << drawWinner[winner][i] << "      " << drawWin[i] << "  " << endl;
+	}
+
+	cout << endl;
+	cout << "Player 1's asset : " << player[0].money << endl;
+	cout << "Player 2's asset : " << player[1].money << endl;
+	cout << "Enter any word to continue:";
+	cin >> input;
 }
