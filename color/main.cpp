@@ -105,7 +105,6 @@ Player player[2];
 bool playerTurn = 0;
 string input;
 
-
 int main()
 {
 	srand(time(NULL));
@@ -128,6 +127,7 @@ int main()
 		player[i].card.push_back("F");//fate
 		player[i].card.push_back("R");//rocket
 	}
+
 	//beginAnime();
 
 	while (1)
@@ -318,6 +318,8 @@ int main()
 			goto input2;
 		}
 	}
+
+	endScreen(0);
 }
 
 void delay(int ms)
@@ -2352,7 +2354,53 @@ void list()
 
 		if (input == "-a")
 		{
-			cout << "¯D«Ç¨Ó°µ";
+			cout << "/card - Retrieve a specific card by name.\n";
+			cout << "   Usage:    / card[card_name]\n";
+			cout << "   Example:\n             / card Lucky\n             / card Rocket\n";
+
+			cout << endl;
+
+			cout << "/gamestate - Change the game state.\n";
+			cout << "   Usage :   / gamestate[state]\n";
+			cout << "   Example :\n             / gamestate INIT\n             / gamestate START\n             / gamestate MOVED\n             / gamestate FINISH\n";
+
+			cout << endl;
+
+			cout << "/get - Get money from the system.\n";
+			cout << "   Usage :   / get[playerName][money] or /get[money]\n";
+			cout << "   Example :\n             / get Bob 100\n             / get 100\n";
+
+			cout << endl;
+
+			cout << "/give - Give money to another player.\n";
+			cout << "   Usage :   / give[playerName][money]\n";
+			cout << "   Example :\n             / give Alice 500\n";
+
+			cout << endl;
+
+			cout << "/info - Display information about all players.\n";
+			cout << "   Usage :   / info\n";
+			cout << "   Example :\n             / info\n";
+
+			cout << endl;
+
+			cout << "/minigame - Enter a minigame.\n";
+			cout << "   Usage :   / minigame\n";
+			cout << "   Example :\n             / minigame\n";
+
+			cout << endl;
+
+			cout << "/move - Move to a specific position on the board.\n";
+			cout << "   Usage :   / move[location] or /move to[0 - 31]\n";
+			cout << "   Example :\n             / move 5\n             / move to 10\n";
+
+			cout << endl;
+
+			cout << "/refresh - Refresh the game board.\n";
+			cout << "   Usage :   / refresh\n";
+			cout << "   Example :\n             / refresh\n";
+
+			cout << endl;
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
