@@ -61,6 +61,7 @@ bool move();
 void get();
 void give();
 void card();
+void info();
 void list();
 void minigame();
 //art
@@ -157,6 +158,7 @@ gamestateINIT:
 
 	while (1)
 	{
+	gamestateSTART:
 	turnBegin:
 		if (win())
 			break;
@@ -165,6 +167,7 @@ gamestateINIT:
 		drawMap();
 		status();
 		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+	gamestateMOVED:
 
 		if (player[playerTurn].injured == 0)
 		{
@@ -210,12 +213,17 @@ gamestateINIT:
 			}
 			else if (input == "/gamestate")
 			{
-				goto gamestateINIT;
+				//goto gamestateINIT;
+				//goto gamestateSTART;
+				//goto gamestateMOVED;
+				//goto gamestateROUND_END;
+				//goto gamestateFINISH;
 			}
-			/*else if (input == "/info")
+			else if (input == "/info")
 			{
-
-			}*/
+				info();
+				goto turnBegin;
+			}
 			else if (input == "/refresh")
 			{
 				goto turnBegin;
@@ -295,6 +303,7 @@ gamestateINIT:
 				house();
 			}
 
+		gamestateROUND_END:
 			area[player[playerTurn].position].barrier = 0;
 			playerTurn = !playerTurn;
 		}
@@ -322,15 +331,20 @@ gamestateINIT:
 		{
 			card();
 			goto triggerBegin;
-		}/*
+		}
 		else if (input == "/gamestate")
 		{
-
+			//goto gamestateINIT;
+			//goto gamestateSTART;
+			//goto gamestateMOVED;
+			//goto gamestateROUND_END;
+			//goto gamestateFINISH;
 		}
 		else if (input == "/info")
 		{
-
-		}*/
+			info();
+			goto triggerBegin;
+		}
 		else if (input == "/refresh")
 		{
 			goto triggerBegin;
@@ -350,6 +364,20 @@ gamestateINIT:
 			cout << "Wrong input, enter again:";
 			goto input2;
 		}
+	}
+
+gamestateFINISH:
+	if (player[0].money > player[1].money)
+	{
+		winner = 1;
+	}
+	else if (player[0].money < player[1].money)
+	{
+		winner = 2;
+	}
+	else
+	{
+		winner = 0;
 	}
 
 	endScreen(winner);
@@ -2374,6 +2402,97 @@ void card()
 	}
 }
 
+void info()
+{
+	int count, length;
+	cout << "+---------------------------------------------+---------------------------------------------+\n";
+	cout << "| Player1                                     | Player2                                     |\n";
+	cout << "+---------------------------------------------+---------------------------------------------+\n";
+
+	for (int i = 0;i < 2;i++)
+	{
+		count = 2 + area[player[i].position].name.length();
+
+		if (player[i].position >= 10)
+			count++;
+
+		cout << "| current position : " << player[i].position << " " << area[player[i].position].name;
+
+		for (int j = count;j < 25;j++)
+			cout << " ";
+	}
+
+	cout << "|\n";
+
+	for (int i = 0;i < 2;i++)
+	{
+		count = player[i].money;
+		length = 0;
+
+		while (count != 0)
+		{
+			count /= 10;
+			length++;
+		}
+
+		cout << "| assets : " << player[i].money;
+
+		for (int j = length;j < 35;j++)
+			cout << " ";
+	}
+
+	cout << "|\n";
+
+	for (int i = 0;i < 2;i++)
+	{
+		count = player[i].card.size() * 2;
+		cout << "| card : ";
+
+		for (int j = 0;j < player[i].card.size();j++)
+		{
+			if (player[i].card[j].length() > 1)
+				count++;
+
+			cout << player[i].card[j] << " ";
+		}
+
+		for (int j = count;j < 37;j++)
+			cout << " ";
+	}
+
+	cout << "|\n";
+
+	for (int i = 0;i < 2;i++)
+	{
+		count = player[i].house.size() * 2;
+		cout << "| property : ";
+
+		for (int j = 0;j < player[i].house.size();j++)
+		{
+			if (player[i].house[j] >= 10)
+				count++;
+
+			cout << player[i].house[j] << " ";
+		}
+
+		for (int j = count;j < 33;j++)
+			cout << " ";
+	}
+
+	cout << "|\n";
+
+	for (int i = 0;i < 2;i++)
+	{
+		cout << "| " << (player[i].injured == 0 ? "healthy" : "injured") << "                                     ";
+	}
+
+	cout << "|\n";
+	cout << "+---------------------------------------------+---------------------------------------------+\n";
+	cout << endl;
+	cout << "Enter any word to continue:";
+	cin >> input;
+}
+
 void list()
 {
 	char seeinput = cin.peek();
@@ -2489,12 +2608,10 @@ bool win()
 
 	if (player[0].money >= winMoney || player[1].money <= 0)
 	{
-		winner = 1;
 		return true;
 	}
 	else if (player[0].money <= 0 || player[1].money >= winMoney)
 	{
-		winner = 2;
 		return true;
 	}
 	else
