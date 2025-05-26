@@ -156,7 +156,7 @@ gamestateINIT:
 		player[i].card.push_back("R");//rocket
 	}
 
-	//beginAnime();
+	beginAnime();
 
 	while (1)
 	{
