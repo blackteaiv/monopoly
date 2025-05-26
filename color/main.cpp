@@ -97,7 +97,7 @@ int twoDiceTotal;
 void rollDice();
 //judge the winner
 bool win();
-int winner = 0;
+int winner;
 //end
 void endScreen(int winner);
 
@@ -105,7 +105,7 @@ Region area[28];
 Player player[2];
 
 //player A:0 player B:1
-bool playerTurn = 0;
+bool playerTurn;
 string input;
 
 int main()
@@ -121,7 +121,29 @@ int main()
 		in >> area[i].buyPrice;
 
 	in.close();
-	area[0].playerHere[0] = 1; area[0].playerHere[1] = 1;
+gamestateINIT:
+	winner = 0;
+	playerTurn = 0;
+
+	for (int i = 0;i < 2;i++)
+	{
+		area[player[i].position].playerHere[i] = 0;
+		area[0].playerHere[i] = 1;
+		player[i].position = 0;
+		player[i].money = 100000;
+		player[i].card.resize(0);
+		player[i].house.resize(0);
+		player[i].injured = 0;
+		player[i].nextdice = 0;
+	}
+
+	for (int i = 0;i < 28;i++)
+	{
+		area[i].level = 0;
+		area[i].owner = 2;
+		area[i].barrier = 0;
+	}
+
 	for (int i = 0; i < 2; i++)
 	{
 		player[i].card.push_back("B");//barrier
@@ -185,12 +207,12 @@ int main()
 			{
 				card();
 				goto turnBegin;
-			}/*
+			}
 			else if (input == "/gamestate")
 			{
-
+				goto gamestateINIT;
 			}
-			else if (input == "/info")
+			/*else if (input == "/info")
 			{
 
 			}*/
@@ -2371,7 +2393,7 @@ void list()
 
 			cout << "/gamestate - Change the game state.\n";
 			cout << "   Usage :   / gamestate[state]\n";
-			cout << "   Example :\n             / gamestate INIT\n             / gamestate START\n             / gamestate MOVED\n             / gamestate FINISH\n";
+			cout << "   Example :\n             / gamestate INIT\n             / gamestate START\n             / gamestate MOVED\n             / gamestate ROUND_END\n             / gamestate FINISH\n";
 
 			cout << endl;
 
