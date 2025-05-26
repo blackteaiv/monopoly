@@ -101,6 +101,7 @@ void rollDice();
 bool win();
 int winner;
 //end
+void endRank(int rank, int who);
 void endScreen(int winner);
 
 Region area[28];
@@ -1428,6 +1429,7 @@ void shopItem()
 void shop()
 {
 	shopItem();
+	cout << "Your assets:" << player[playerTurn].money << endl;
 	cout << "Enter the number of the card you want to buy (or enter 0 to exit): ";
 buyInput:
 	cin >> input;
@@ -1519,7 +1521,7 @@ void rocketCard(int deleteIndex)
 	area[player[!playerTurn].position].playerHere[!playerTurn] = 0;
 	player[!playerTurn].position = 15;
 	area[15].playerHere[!playerTurn] = 1;
-	player[!playerTurn].injured += 3;
+	player[!playerTurn].injured += 2;
 	player[playerTurn].card.erase(player[playerTurn].card.begin() + deleteIndex);
 }
 
@@ -2689,6 +2691,64 @@ bool win()
 		return false;
 }
 
+void endRank(int rank, int who)
+{
+	int count = player[who].money, length = 0;
+
+	cout << "|    " << rank << "    | Player" << who + 1 << "  | " << player[who].money;
+
+	if (count == 0)
+	{
+		length = 1;
+	}
+	else
+	{
+		while (count != 0)
+		{
+			count /= 10;
+			length++;
+		}
+	}
+
+	for (int i = length;i < 9;i++)
+		cout << " ";
+
+	cout << "| ";
+	count = player[who].house.size() * 2;
+
+	for (int i = 0;i < player[who].house.size();i++)
+	{
+		if (player[who].house[i] >= 10)
+		{
+			count++;
+		}
+
+		cout << player[who].house[i] << " ";
+	}
+
+	for (int i = count;i < 51;i++)
+		cout << " ";
+
+	cout << "| ";
+	count = player[who].card.size() * 2;
+
+	for (int i = 0;i < player[who].card.size();i++)
+	{
+		if (player[who].card[i].length() > 1)
+		{
+			count++;
+		}
+
+		cout << player[who].card[i] << " ";
+	}
+
+	for (int i = count;i < 58;i++)
+		cout << " ";
+
+
+	cout << "|" << endl;
+}
+
 void endScreen(int winner)
 {
 	system("CLS");
@@ -2706,8 +2766,27 @@ void endScreen(int winner)
 	}
 
 	cout << endl;
-	cout << "Player 1's asset : " << player[0].money << endl;
-	cout << "Player 2's asset : " << player[1].money << endl;
+	cout << "+---------+----------+----------+----------------------------------------------------+-----------------------------------------------------------+" << endl;
+	cout << "| Ranking | Name     | Assets   | Property                                           | Cards                                                     |" << endl;
+	cout << "+---------+----------+----------+----------------------------------------------------+-----------------------------------------------------------+" << endl;
+
+	if (winner == 1)
+	{
+		endRank(1, 0);
+		endRank(2, 1);
+	}
+	else if (winner == 2)
+	{
+		endRank(1, 1);
+		endRank(2, 0);
+	}
+	else
+	{
+		endRank(1, 0);
+		endRank(1, 1);
+	}
+
+	cout << "+---------+----------+----------+----------------------------------------------------+-----------------------------------------------------------+" << endl << endl;
 	cout << "Enter any word to continue:";
 	cin >> input;
 }
