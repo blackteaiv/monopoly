@@ -1413,15 +1413,15 @@ void hospital()
 
 void shopItem()
 {
-	cout << "+-----+--------------+--------------------------------------------+\n";
-	cout << "| No. | Card Name    | Effect                                     |\n";
-	cout << "+-----+--------------+--------------------------------------------+\n";
-	cout << "|  1  | Barrier Card | Place a barrier on a tile to block players |\n";
-	cout << "|  2  | Dice Card    | Choose the number you roll on the dice     |\n";
-	cout << "|  3  | Destroy Card | Destroy another player's property          |\n";
-	cout << "|  4  | Fate Card    | Trigger a fate event                       |\n";
-	cout << "|  5  | Rocket Card  | Send a player to the hospital for 3 turns  |\n";
-	cout << "+-----+--------------+--------------------------------------------+\n";
+	cout << "+-----+--------------+--------------------------------------------+-------+\n";
+	cout << "| No. | Card Name    | Effect                                     | Price |\n";
+	cout << "+-----+--------------+--------------------------------------------+-------+\n";
+	cout << "|  1  | Barrier Card | Place a barrier on a tile to block players | $1500 |\n";
+	cout << "|  2  | Dice Card    | Choose the number you roll on the dice     | $2000 |\n";
+	cout << "|  3  | Destroy Card | Destroy another player's property          | $2500 |\n";
+	cout << "|  4  | Fate Card    | Trigger a fate event                       | $1000 |\n";
+	cout << "|  5  | Rocket Card  | Send a player to the hospital for 3 turns  | $3000 |\n";
+	cout << "+-----+--------------+--------------------------------------------+-------+\n";
 	cout << endl;
 }
 
@@ -1441,7 +1441,7 @@ buyInput:
 		}
 		else
 		{
-			cout << " You don't have enough money to buy [Barrier Card]. Your balance: $200, but the card costs $1500." << endl;
+			cout << " You don't have enough money to buy [Barrier Card]. Your balance: $" << player[playerTurn].money << ", but the card costs $1500." << endl;
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -1455,7 +1455,7 @@ buyInput:
 		}
 		else
 		{
-			cout << " You don't have enough money to buy [Barrier Card]. Your balance: $200, but the card costs $1500." << endl;
+			cout << " You don't have enough money to buy [Dice Card]. Your balance: $" << player[playerTurn].money << ", but the card costs $2000." << endl;
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -1469,7 +1469,7 @@ buyInput:
 		}
 		else
 		{
-			cout << " You don't have enough money to buy [Barrier Card]. Your balance: $200, but the card costs $1500." << endl;
+			cout << " You don't have enough money to buy [Destroy Card]. Your balance: $" << player[playerTurn].money << ", but the card costs $2500." << endl;
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -1483,7 +1483,7 @@ buyInput:
 		}
 		else
 		{
-			cout << " You don't have enough money to buy [Barrier Card]. Your balance: $200, but the card costs $1500." << endl;
+			cout << " You don't have enough money to buy [Fate Card]. Your balance: $" << player[playerTurn].money << ", but the card costs $1000." << endl;
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -1497,7 +1497,7 @@ buyInput:
 		}
 		else
 		{
-			cout << " You don't have enough money to buy [Barrier Card]. Your balance: $200, but the card costs $1500." << endl;
+			cout << " You don't have enough money to buy [Rocket Card]. Your balance: $" << player[playerTurn].money << ", but the card costs $3000." << endl;
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
