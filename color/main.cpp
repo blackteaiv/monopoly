@@ -95,6 +95,9 @@ string dice[6][5] = { {"+-------+","|       |","|   ¡´   |","|       |","+------
 //dice
 int twoDiceTotal;
 void rollDice();
+//judge the winner
+bool win();
+int winner = 0;
 //end
 void endScreen(int winner);
 
@@ -133,6 +136,9 @@ int main()
 	while (1)
 	{
 	turnBegin:
+		if (win())
+			break;
+
 		system("CLS");
 		drawMap();
 		status();
@@ -220,11 +226,16 @@ int main()
 		}
 
 	triggerBegin:
+		if (win())
+			break;
+
 		system("CLS");
 		drawMap();
 		status();
+
 		if (area[player[playerTurn].position].barrier == 1)
 			cout << "You are blocked by barrier" << endl;
+
 		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 		cout << "(Trigger the event or check the cards)" << endl;
 		cout << "1.Trigger the event" << endl << "2.Check the cards" << endl << "Enter 1 or 2:";
@@ -319,7 +330,7 @@ int main()
 		}
 	}
 
-	endScreen(0);
+	endScreen(winner);
 }
 
 void delay(int ms)
@@ -335,7 +346,7 @@ void delay(int ms)
 void setTextColor(int textColor)
 {
 	//white:0 red:31 green:32 yellow:33 blue:34 purple:35 light blue:36
-	//    lighter:+60
+	//lighter:+60
 	cout << "\033[" << textColor << "m";
 }
 
@@ -353,7 +364,8 @@ void resetColor()
 void beginAnime()
 {
 	//white:0 red:31 green:32 yellow:33 blue:34 purple:35 light blue:36
-	int color[11] = { 31,33,32,36,34,35,31,33,36,34,0 };
+	//lighter:+60
+	int color[11] = { 0,31,93,33,92,96,36,34,95,35,0 };
 
 	for (int i = 0; i <= 10; i++)
 	{
@@ -729,19 +741,15 @@ void walk(bool who, int count)
 			area[player[who].position].playerHere[who] = 0;
 			player[who].position = (player[who].position + 1) % 28;
 			area[player[who].position].playerHere[who] = 1;
-			system("CLS");
-			drawMap();
-			delay(150);
+
+			if (i != 1 && area[player[who].position].barrier == 0)
+			{
+				system("CLS");
+				drawMap();
+				delay(150);
+			}
 		}
 	}
-	else
-	{
-		system("CLS");
-		drawMap();
-
-	}
-
-	status();
 }
 
 void shootDragonDoor()
@@ -1075,8 +1083,9 @@ void house()
 	{
 		cout << "buyPrices: " << area[player[playerTurn].position].buyPrice << endl;
 		cout << "(choose to buy the house or pass)" << endl;
-		cout << "1.buy the house" << endl << "2.pass" << endl << "Enter 1 or 2:";
+		cout << "1.buy the house" << endl << "2.pass" << endl;
 	buyOrNotInput:
+		cout << "Enter 1 or 2:";
 		cin >> input;
 
 		if (input == "1")
@@ -2452,13 +2461,38 @@ chooseMnigame:
 	}
 }
 
+bool win()
+{
+	int winMoney = 1000000;
+
+	if (player[0].money >= winMoney || player[1].money <= 0)
+	{
+		winner = 1;
+		return true;
+	}
+	else if (player[0].money <= 0 || player[1].money >= winMoney)
+	{
+		winner = 2;
+		return true;
+	}
+	else
+		return false;
+}
+
 void endScreen(int winner)
 {
 	system("CLS");
 
-	for (int i = 0;i < 8;i++)
+	if (winner != 0)
 	{
-		cout << drawPlayer[i] << "      " << drawWinner[winner][i] << "      " << drawWin[i] << "  " << endl;
+		for (int i = 0;i < 8;i++)
+		{
+			cout << drawPlayer[i] << "      " << drawWinner[winner - 1][i] << "      " << drawWin[i] << "  " << endl;
+		}
+	}
+	else
+	{
+		cout << "The result is a draw" << endl;;
 	}
 
 	cout << endl;
