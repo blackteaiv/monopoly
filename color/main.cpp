@@ -103,6 +103,7 @@ int winner;
 //end
 void endRank(int rank, int who);
 void endScreen(int winner);
+bool restartANewRound();
 
 Region area[28];
 Player player[2];
@@ -404,6 +405,11 @@ gamestateFINISH:
 	}
 
 	endScreen(winner);
+
+	if (restartANewRound() == true)
+	{
+		goto gamestateINIT;
+	}
 }
 
 void delay(int ms)
@@ -793,6 +799,8 @@ void rollDice()
 
 		player[playerTurn].nextdice = 0;
 	}
+
+	//system("chcp 65001>nul");
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -2787,6 +2795,26 @@ void endScreen(int winner)
 	}
 
 	cout << "+---------+----------+----------+----------------------------------------------------+-----------------------------------------------------------+" << endl << endl;
-	cout << "Enter any word to continue:";
+}
+
+bool restartANewRound()
+{
+	cout << "Do you want to restart? (Y/N):";
+restartInput:
 	cin >> input;
+
+	if (input == "Y" || input == "y")
+	{
+		return true;
+	}
+	else if (input == "N" || input == "n")
+	{
+		system("CLS");
+		return false;
+	}
+	else
+	{
+		cout << "Wrong input, enter again:";
+		goto restartInput;
+	}
 }
