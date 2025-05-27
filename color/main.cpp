@@ -87,15 +87,15 @@ string drawWin[8] = { " _     _     _    _    ___       _ ",
 				  " \\ \\/ / \\ \\/ /   | |  | |    \\ \\| |",
 				  "  \\__/   \\__/    |_|  |_|     \\___|" };
 
-string dot = { (char)0xE2,(char)0x97,(char)0x8F,'\0' };
+//string dot = { (char)0xE2,(char)0x97,(char)0x8F,'\0' };
 //string dot = "¡´";
 
-string dice[6][5] = { {"+-------+","|       |","|   D   |","|       |","+-------+"},
-					  {"+-------+","| D     |","|       |","|     D |","+-------+"},
-					  {"+-------+","| D     |","|   D   |","|     D |","+-------+"},
-					  {"+-------+","| D   D |","|       |","| D   D |","+-------+"},
-					  {"+-------+","| D   D |","|   D   |","| D   D |","+-------+"},
-					  {"+-------+","| D   D |","| D   D |","| D   D |","+-------+"} };
+string dice[6][5] = { {"+-------+","|       |","|   O   |","|       |","+-------+"},
+					  {"+-------+","| O     |","|       |","|     O |","+-------+"},
+					  {"+-------+","| O     |","|   O   |","|     O |","+-------+"},
+					  {"+-------+","| O   O |","|       |","| O   O |","+-------+"},
+					  {"+-------+","| O   O |","|   O   |","| O   O |","+-------+"},
+					  {"+-------+","| O   O |","| O   O |","| O   O |","+-------+"} };
 
 //dice
 int twoDiceTotal;
@@ -805,36 +805,7 @@ void rollDice()
 
 	for (int i = 0; i < 5; i++)
 	{
-		for (int j = 0;j < 9;j++)
-		{
-			if (dice[first][i][j] == 'D')
-			{
-				system("chcp 950>nul");
-				cout << dot;
-			}
-			else
-			{
-				cout << dice[first][i][j];
-			}
-		}
-
-		cout << "  ";
-
-		for (int j = 0;j < 9;j++)
-		{
-			if (dice[second][i][j] == 'D')
-			{
-				system("chcp 950>nul");
-				cout << dot;
-			}
-			else
-			{
-				cout << dice[second][i][j];
-			}
-		}
-
-		cout << endl;
-		//cout << dice[first][i] << "  " << dice[second][i] << endl;
+		cout << dice[first][i] << "  " << dice[second][i] << endl;
 	}
 
 	twoDiceTotal = first + second + 2;
