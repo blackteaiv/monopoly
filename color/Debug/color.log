@@ -1,16 +1,16 @@
 ﻿  main.cpp
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(117,12): warning C4244: '引數': 將 'time_t' 轉換為 'unsigned int'，由於類型不同，可能導致資料遺失
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(736,20): warning C4018: '<': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(749,20): warning C4018: '<': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1206,50): warning C4805: '==': 作業中不安全的混用類型 'int' 和類型 'bool'
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1243,24): warning C4018: '<': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1295,24): warning C4018: '<': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1328,24): warning C4018: '<': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1667,21): warning C4018: '<': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1707,41): warning C4018: '<=': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1743,20): warning C4018: '<': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2532,21): warning C4018: '<': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2551,21): warning C4018: '<': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2727,19): warning C4018: '<': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2743,19): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(120,12): warning C4244: '引數': 將 'time_t' 轉換為 'unsigned int'，由於類型不同，可能導致資料遺失
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(739,20): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(752,20): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1236,50): warning C4805: '==': 作業中不安全的混用類型 'int' 和類型 'bool'
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1273,24): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1325,24): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1358,24): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1697,21): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1737,41): warning C4018: '<=': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1773,20): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2562,21): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2581,21): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2757,19): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2773,19): warning C4018: '<': signed/unsigned 不相符
   color.vcxproj -> C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\Debug\color.exe
