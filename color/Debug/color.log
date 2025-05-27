@@ -11,6 +11,6 @@ C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1708,41): warnin
 C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(1744,20): warning C4018: '<': signed/unsigned 不相符
 C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2533,21): warning C4018: '<': signed/unsigned 不相符
 C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2552,21): warning C4018: '<': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2728,19): warning C4018: '<': signed/unsigned 不相符
-C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2744,19): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2731,19): warning C4018: '<': signed/unsigned 不相符
+C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\color\main.cpp(2747,19): warning C4018: '<': signed/unsigned 不相符
   color.vcxproj -> C:\Users\slntc\OneDrive\桌面\monopoly\monopoly\Debug\color.exe

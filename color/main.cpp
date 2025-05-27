@@ -772,10 +772,10 @@ void status()
 	playerStatus(0);
 	playerStatus(1);
 
-	cout << "| "; setTextColor(93); cout << "[C]"; resetColor();
-	cout << " Player3   |DoNotExist| Player3 is used to check format                    |                                                           |" << endl;
-	cout << "| "; setTextColor(94); cout << "[D]"; resetColor();
-	cout << " Player4   |DoNotExist| Player4 is used to check format                    |                                                           |" << endl;
+	//cout << "| "; setTextColor(93); cout << "[C]"; resetColor();
+	//cout << " Player3   |DoNotExist| Player3 is used to check format                    |                                                           |" << endl;
+	//cout << "| "; setTextColor(94); cout << "[D]"; resetColor();
+	//cout << " Player4   |DoNotExist| Player4 is used to check format                    |                                                           |" << endl;
 
 	statusEdge();
 
@@ -1212,7 +1212,7 @@ void house()
 				cout << "upgradePrices: " << area[player[playerTurn].position].buyPrice / 2 << endl;
 				cout << "sellPrices: " << area[player[playerTurn].position].buyPrice * 1 << endl;
 				cout << "(choose to upgrade the house,sell the house or pass)" << endl;
-				cout << "1.buy the house" << endl << "2.sell the house" << endl << "3.pass" << endl << "Enter 1, 2 or 3:";
+				cout << "1.upgrade the house" << endl << "2.sell the house" << endl << "3.pass" << endl << "Enter 1, 2 or 3:";
 			upgradeOrSellInput1:
 				cin >> input;
 
@@ -2718,6 +2718,9 @@ void endRank(int rank, int who)
 			length++;
 		}
 	}
+
+	if (player[who].money < 0)
+		length++;
 
 	for (int i = length;i < 9;i++)
 		cout << " ";
