@@ -146,6 +146,7 @@
     <ClInclude Include="Region.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="initial.txt" />
     <Text Include="map.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

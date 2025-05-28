@@ -88,7 +88,6 @@ string drawWin[8] = { " _     _     _    _    ___       _ ",
 				  "  \\__/   \\__/    |_|  |_|     \\___|" };
 
 //string dot = { (char)0xE2,(char)0x97,(char)0x8F,'\0' };
-//string dot = "¡´";
 
 string dice[6][5] = { {"+-------+","|       |","|   O   |","|       |","+-------+"},
 					  {"+-------+","| O     |","|       |","|     O |","+-------+"},
@@ -103,6 +102,7 @@ void rollDice();
 //judge the winner
 bool win();
 int winner;
+int winMoney;
 //end
 void endRank(int rank, int who);
 void endScreen(int winner);
@@ -129,6 +129,25 @@ int main()
 
 	in.close();
 gamestateINIT:
+	in.open("initial.txt");
+
+	for (int i = 0;i < 2;i++)
+	{
+		player[i].card.clear();
+		player[i].house.clear();
+		player[i].card.resize(5);
+		player[i].house.resize(0);
+		in >> player[i].money;
+
+		for (int j = 0;j < 5;j++)
+		{
+			in >> input;
+			player[i].card[j] = input;
+		}
+	}
+
+	in >> winMoney;
+	in.close();
 	winner = 0;
 	playerTurn = 0;
 
@@ -137,9 +156,6 @@ gamestateINIT:
 		area[player[i].position].playerHere[i] = 0;
 		area[0].playerHere[i] = 1;
 		player[i].position = 0;
-		player[i].money = 100000;
-		player[i].card.resize(0);
-		player[i].house.resize(0);
 		player[i].injured = 0;
 		player[i].nextdice = 0;
 	}
@@ -149,15 +165,6 @@ gamestateINIT:
 		area[i].level = 0;
 		area[i].owner = 2;
 		area[i].barrier = 0;
-	}
-
-	for (int i = 0; i < 2; i++)
-	{
-		player[i].card.push_back("B");//barrier
-		player[i].card.push_back("Di");//dice
-		player[i].card.push_back("De");//destroy
-		player[i].card.push_back("F");//fate
-		player[i].card.push_back("R");//rocket
 	}
 
 	beginAnime();
@@ -269,6 +276,8 @@ gamestateINIT:
 		else
 		{
 			cout << "You are injured" << endl;
+			cout << "Enter any word to continue:";
+			cin >> input;
 		}
 
 	triggerBegin:
@@ -291,6 +300,11 @@ gamestateINIT:
 		//trigger the event or check the cards
 		if (input == "1")
 		{
+			system("CLS");
+			drawMap();
+			status();
+			cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+
 			if (area[player[playerTurn].position].name == "Start")
 			{
 				cout << "You get some money as reward\nYou get 1000 dollars\n";
@@ -1161,10 +1175,6 @@ void fate()
 
 void house()
 {
-	system("CLS");
-	drawMap();
-	status();
-	cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 	if (area[player[playerTurn].position].level == 0)
 	{
 		cout << "buyPrices: " << area[player[playerTurn].position].buyPrice << endl;
@@ -1397,6 +1407,11 @@ void hospital()
 
 		if (input == "1")
 		{
+			system("CLS");
+			drawMap();
+			status();
+			cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+
 			player[playerTurn].money -= 5000;
 			int random = rand() % 6;
 			cout << "You can leave the hospital if the number on the dice is larger than 4\n";
@@ -1828,6 +1843,11 @@ cardInput:
 		cout << "Wrong input, enter again:";
 		goto cardInput;
 	}
+
+	system("CLS");
+	drawMap();
+	status();
+	cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 
 	if (player[playerTurn].card[read - 1] == "B")
 	{
