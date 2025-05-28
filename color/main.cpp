@@ -1728,26 +1728,82 @@ void rocketCard(int deleteIndex)
 
 void barrierCard(int deleteIndex)
 {
-	int pos;
+
 	cout << "Choose a place to place barrier (0 ~ 27):";
+barrierNumber:
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+	cin >> input;
 
-	while (cin >> pos)
+	if (input.size() < 3)
 	{
-		if (pos < 0 || pos >27)
-			cout << "Wrong input, enter again:";
-		else if (area[pos].barrier == 1)
-			cout << "There is already barrier placed here, enter again:";
+		if (input.size() == 1)
+		{
+			if (!isdigit(input[0]))
+			{
+				cout << "Invalid input. Please enter a valid tile number.";
+
+				goto barrierNumber;
+			}
+
+			int location = input[0] - '0';
+
+			if (area[location].barrier == 1)
+			{
+				cout << "There is already barrier placed here, enter again:";
+
+				goto barrierNumber;
+			}
+			else
+			{
+				area[location].barrier = 1;
+				player[playerTurn].card.erase(player[playerTurn].card.begin() + deleteIndex);
+			}
+		}
+		else if (input.size() == 2)
+		{
+			if (!isdigit(input[0]) || !isdigit(input[1]))
+			{
+				cout << "Invalid input. Please enter a valid tile number.";
+
+				goto barrierNumber;
+			}
+			int location = (input[0] - '0') * 10 + input[1] - '0';
+
+			if (location > 27)
+			{
+				cout << "Invalid input. Please enter a valid tile number.";
+
+				goto barrierNumber;
+			}
+
+
+			if (area[location].barrier == 1)
+			{
+				cout << "There is already barrier placed here, enter again:";
+
+				goto barrierNumber;
+			}
+			else
+			{
+				area[location].barrier = 1;
+				player[playerTurn].card.erase(player[playerTurn].card.begin() + deleteIndex);
+			}
+		}
 		else
-			break;
+		{
+			cout << "Invalid input. Please enter a valid tile number.";
 
-
-		if (std::cin.rdbuf()->in_avail() > 0) {
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			goto barrierNumber;
 		}
 	}
+	else
+	{
+		cout << "Invalid input. Please enter a valid tile number.";
 
-	area[pos].barrier = 1;
-	player[playerTurn].card.erase(player[playerTurn].card.begin() + deleteIndex);
+		goto barrierNumber;
+	}
 }
 
 void controllDiceCard(int deleteIndex)
