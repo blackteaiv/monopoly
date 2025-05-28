@@ -1161,6 +1161,10 @@ void fate()
 
 void house()
 {
+	system("CLS");
+	drawMap();
+	status();
+	cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 	if (area[player[playerTurn].position].level == 0)
 	{
 		cout << "buyPrices: " << area[player[playerTurn].position].buyPrice << endl;
@@ -1172,6 +1176,10 @@ void house()
 
 		if (input == "1")
 		{
+			system("CLS");
+			drawMap();
+			status();
+			cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 			if (player[playerTurn].money >= area[player[playerTurn].position].buyPrice)
 			{
 				area[player[playerTurn].position].owner = playerTurn;
@@ -1216,6 +1224,10 @@ void house()
 			upgradeOrSellInput1:
 				cin >> input;
 
+				system("CLS");
+				drawMap();
+				status();
+				cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 				if (input == "1")
 				{
 					if (player[playerTurn].money >= area[player[playerTurn].position].buyPrice / 2)
@@ -1265,10 +1277,14 @@ void house()
 				cout << "upgradePrices: " << area[player[playerTurn].position].buyPrice << endl;
 				cout << "sellPrices: " << area[player[playerTurn].position].buyPrice * 2 << endl;
 				cout << "(choose to upgrade the house,sell the house or pass)" << endl;
-				cout << "1.buy the house" << endl << "2.sell the house" << endl << "3.pass" << endl << "Enter 1, 2 or 3:";
+				cout << "1.upgrade the house" << endl << "2.sell the house" << endl << "3.pass" << endl << "Enter 1, 2 or 3:";
 			upgradeOrSellInput2:
 				cin >> input;
 
+				system("CLS");
+				drawMap();
+				status();
+				cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
 				if (input == "1")
 				{
 					if (player[playerTurn].money >= area[player[playerTurn].position].buyPrice)
@@ -2722,13 +2738,13 @@ void endRank(int rank, int who)
 	if (player[who].money < 0)
 		length++;
 
-	for (int i = length;i < 9;i++)
+	for (int i = length; i < 9; i++)
 		cout << " ";
 
 	cout << "| ";
 	count = player[who].house.size() * 2;
 
-	for (int i = 0;i < player[who].house.size();i++)
+	for (int i = 0; i < player[who].house.size(); i++)
 	{
 		if (player[who].house[i] >= 10)
 		{
@@ -2738,13 +2754,13 @@ void endRank(int rank, int who)
 		cout << player[who].house[i] << " ";
 	}
 
-	for (int i = count;i < 51;i++)
+	for (int i = count; i < 51; i++)
 		cout << " ";
 
 	cout << "| ";
 	count = player[who].card.size() * 2;
 
-	for (int i = 0;i < player[who].card.size();i++)
+	for (int i = 0; i < player[who].card.size(); i++)
 	{
 		if (player[who].card[i].length() > 1)
 		{
@@ -2754,7 +2770,7 @@ void endRank(int rank, int who)
 		cout << player[who].card[i] << " ";
 	}
 
-	for (int i = count;i < 58;i++)
+	for (int i = count; i < 58; i++)
 		cout << " ";
 
 
