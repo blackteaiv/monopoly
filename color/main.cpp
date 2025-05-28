@@ -1180,16 +1180,12 @@ void house()
 		cout << "buyPrices: " << area[player[playerTurn].position].buyPrice << endl;
 		cout << "(choose to buy the house or pass)" << endl;
 		cout << "1.buy the house" << endl << "2.pass" << endl;
-	buyOrNotInput:
 		cout << "Enter 1 or 2:";
+	buyOrNotInput:
 		cin >> input;
 
 		if (input == "1")
 		{
-			system("CLS");
-			drawMap();
-			status();
-			cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 			if (player[playerTurn].money >= area[player[playerTurn].position].buyPrice)
 			{
 				area[player[playerTurn].position].owner = playerTurn;
@@ -1197,6 +1193,10 @@ void house()
 				player[playerTurn].money -= area[player[playerTurn].position].buyPrice;
 				player[playerTurn].house.push_back(player[playerTurn].position);
 				sort(player[playerTurn].house.begin(), player[playerTurn].house.end());
+				system("CLS");
+				drawMap();
+				status();
+				cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 				cout << "buying sucessful" << endl;
 				cout << "remain money: " << player[playerTurn].money << endl;
 				cout << "Enter any word to continue:";
@@ -1204,6 +1204,10 @@ void house()
 			}
 			else
 			{
+				system("CLS");
+				drawMap();
+				status();
+				cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 				cout << "Not enough money to buy" << endl;
 				cout << "Enter any word to continue:";
 				cin >> input;
@@ -1234,16 +1238,16 @@ void house()
 			upgradeOrSellInput1:
 				cin >> input;
 
-				system("CLS");
-				drawMap();
-				status();
-				cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 				if (input == "1")
 				{
 					if (player[playerTurn].money >= area[player[playerTurn].position].buyPrice / 2)
 					{
 						area[player[playerTurn].position].level = 2;
 						player[playerTurn].money -= area[player[playerTurn].position].buyPrice / 2;
+						system("CLS");
+						drawMap();
+						status();
+						cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 						cout << "upgrading sucessful" << endl;
 						cout << "remain money: " << player[playerTurn].money << endl;
 						cout << "Enter any word to continue:";
@@ -1251,6 +1255,10 @@ void house()
 					}
 					else
 					{
+						system("CLS");
+						drawMap();
+						status();
+						cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 						cout << "Not enough money to upgrade" << endl;
 						cout << "Enter any word to continue:";
 						cin >> input;
@@ -1291,16 +1299,16 @@ void house()
 			upgradeOrSellInput2:
 				cin >> input;
 
-				system("CLS");
-				drawMap();
-				status();
-				cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 				if (input == "1")
 				{
 					if (player[playerTurn].money >= area[player[playerTurn].position].buyPrice)
 					{
 						area[player[playerTurn].position].level = 3;
 						player[playerTurn].money -= area[player[playerTurn].position].buyPrice;
+						system("CLS");
+						drawMap();
+						status();
+						cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 						cout << "upgrading sucessful" << endl;
 						cout << "remain money: " << player[playerTurn].money << endl;
 						cout << "Enter any word to continue:";
@@ -1308,6 +1316,10 @@ void house()
 					}
 					else
 					{
+						system("CLS");
+						drawMap();
+						status();
+						cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 						cout << "Not enough money to upgrade" << endl;
 						cout << "Enter any word to continue:";
 						cin >> input;
@@ -1407,12 +1419,13 @@ void hospital()
 
 		if (input == "1")
 		{
+			player[playerTurn].money -= 5000;
 			system("CLS");
 			drawMap();
 			status();
 			cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 
-			player[playerTurn].money -= 5000;
+
 			int random = rand() % 6;
 			cout << "You can leave the hospital if the number on the dice is larger than 4\n";
 			cout << "Enter any word to roll the dice:";
