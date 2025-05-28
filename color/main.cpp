@@ -131,7 +131,7 @@ int main()
 gamestateINIT:
 	in.open("initial.txt");
 
-	for (int i = 0;i < 2;i++)
+	for (int i = 0; i < 2; i++)
 	{
 		player[i].card.clear();
 		player[i].house.clear();
@@ -139,7 +139,7 @@ gamestateINIT:
 		player[i].house.resize(0);
 		in >> player[i].money;
 
-		for (int j = 0;j < 5;j++)
+		for (int j = 0; j < 5; j++)
 		{
 			in >> input;
 			player[i].card[j] = input;
@@ -249,7 +249,7 @@ gamestateINIT:
 			}
 			else if (input == "/refresh")
 			{
-				goto turnBegin;
+				goto gamestateMOVED;
 			}
 			else if (input == "/list" || input == "/help")
 			{
@@ -388,7 +388,7 @@ gamestateINIT:
 		}
 		else if (input == "/refresh")
 		{
-			goto triggerBegin;
+			goto gamestateROUND_END;
 		}
 		else if (input == "/list" || input == "/help")
 		{
