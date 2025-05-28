@@ -179,7 +179,7 @@ gamestateINIT:
 		system("CLS");
 		drawMap();
 		status();
-		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+		cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 
 
 		if (player[playerTurn].injured == 0)
@@ -292,7 +292,7 @@ gamestateINIT:
 		if (area[player[playerTurn].position].barrier == 1)
 			cout << "You are blocked by barrier" << endl;
 
-		cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+		cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 		cout << "(Trigger the event or check the cards)" << endl;
 		cout << "1.Trigger the event" << endl << "2.Check the cards" << endl << "Enter 1 or 2:";
 	input2:
@@ -303,7 +303,7 @@ gamestateINIT:
 			system("CLS");
 			drawMap();
 			status();
-			cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+			cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 
 			if (area[player[playerTurn].position].name == "Start")
 			{
@@ -1189,7 +1189,7 @@ void house()
 			system("CLS");
 			drawMap();
 			status();
-			cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+			cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 			if (player[playerTurn].money >= area[player[playerTurn].position].buyPrice)
 			{
 				area[player[playerTurn].position].owner = playerTurn;
@@ -1237,7 +1237,7 @@ void house()
 				system("CLS");
 				drawMap();
 				status();
-				cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+				cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 				if (input == "1")
 				{
 					if (player[playerTurn].money >= area[player[playerTurn].position].buyPrice / 2)
@@ -1294,7 +1294,7 @@ void house()
 				system("CLS");
 				drawMap();
 				status();
-				cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+				cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 				if (input == "1")
 				{
 					if (player[playerTurn].money >= area[player[playerTurn].position].buyPrice)
@@ -1410,7 +1410,7 @@ void hospital()
 			system("CLS");
 			drawMap();
 			status();
-			cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+			cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 
 			player[playerTurn].money -= 5000;
 			int random = rand() % 6;
@@ -1847,7 +1847,7 @@ cardInput:
 	system("CLS");
 	drawMap();
 	status();
-	cout << "Player " << (playerTurn == 0 ? "A" : "B") << " turn" << endl;
+	cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 
 	if (player[playerTurn].card[read - 1] == "B")
 	{
