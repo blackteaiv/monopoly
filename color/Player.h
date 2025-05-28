@@ -10,7 +10,8 @@ class Player
 {
 public:
 	char name = ' ';
-	int position = 0, money = 100000;
+	int position = 0;
+	long long	money = 100000;
 	vector <string> card;
 	vector <int> house;
 	int injured = 0;

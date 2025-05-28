@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <cstring>
+#include <string>
 #include <vector>
 #include <cstdlib>
 #include <time.h>
@@ -2011,14 +2012,14 @@ int changeStringToNumber(string str)
 
 void selectCard()
 {
-	int cardSize = player[playerTurn].card.size(), read;
+	long long read;
 	string card[5] = { {"  | Barrier Card | Place a barrier on a tile to block players |\n"},
 					   {"  | Dice Card    | Choose the number you roll on the dice     |\n"},
 					   {"  | Destroy Card | Destroy another player's property          |\n"},
 					   {"  | Fate Card    | Trigger a fate event                       |\n"},
 					   {"  | Rocket Card  | Send a player to the hospital for 3 turns  |\n"} };
 
-	if (cardSize == 0)
+	if (player[playerTurn].card.size() == 0)
 	{
 		cout << "no card exist" << endl;
 
@@ -2034,7 +2035,7 @@ void selectCard()
 	cout << "| No. | Card Name    | Effect                                     |\n";
 	cout << "+-----+--------------+--------------------------------------------+\n";
 
-	for (int i = 0; i < cardSize; i++)
+	for (int i = 0; i < player[playerTurn].card.size(); i++)
 	{
 		cout << "|  " << i + 1;
 
@@ -2060,18 +2061,37 @@ cardInput:
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
 	cin >> input;
-	read = changeStringToNumber(input);
 
-	if (read == 0)
+	try
 	{
-		return;
-	}
+		for (int i = 0; i < input.size(); i++)
+		{
+			if (!isdigit(input[i]))
+			{
+				cout << "Wrong input, enter again:";
+				goto cardInput;
+			}
+		}
 
-	if (read > cardSize || read == -1)
+		read = std::stoll(input);
+
+		if (read == 0)
+		{
+			return;
+		}
+
+		if (read > player[playerTurn].card.size())
+		{
+			cout << "Wrong input, enter again:";
+			goto cardInput;
+		}
+	}
+	catch (std::exception outofrange)
 	{
 		cout << "Wrong input, enter again:";
 		goto cardInput;
 	}
+
 
 	system("CLS");
 	drawMap();
@@ -2391,11 +2411,35 @@ void get()
 				cin.ignore();
 				cin >> input;
 
-				int money = changeStringToNumber(input);
-
-				if (money == -1)
+				try
 				{
-					cout << "Error: Invalid amount. Please enter a valid number." << endl;
+
+					for (int i = 0; i < input.size(); i++)
+					{
+						if (!isdigit(input[i]))
+						{
+							cout << "Error: Invalid amount. Please enter a valid number." << endl;
+							cout << "Invalid command.Type / list to see available commands." << endl;
+
+							if (std::cin.rdbuf()->in_avail() > 0) {
+								std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+							}
+							cout << "Enter any word to continue:";
+							cin >> input;
+							break;
+						}
+
+						if (i == input.size() - 1)
+						{
+							long long money = std::stoll(input);
+
+							player[0].money += money;
+						}
+					}
+				}
+				catch (std::exception outofrange)
+				{
+					cout << "Error: Amount out of range. Please enter a valid number." << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
 
 					if (std::cin.rdbuf()->in_avail() > 0) {
@@ -2403,10 +2447,6 @@ void get()
 					}
 					cout << "Enter any word to continue:";
 					cin >> input;
-				}
-				else
-				{
-					player[0].money += money;
 				}
 			}
 			else
@@ -2428,11 +2468,35 @@ void get()
 				cin.ignore();
 				cin >> input;
 
-				int money = changeStringToNumber(input);
-
-				if (money == -1)
+				try
 				{
-					cout << "Error: Invalid amount. Please enter a valid number." << endl;
+
+					for (int i = 0; i < input.size(); i++)
+					{
+						if (!isdigit(input[i]))
+						{
+							cout << "Error: Invalid amount. Please enter a valid number." << endl;
+							cout << "Invalid command.Type / list to see available commands." << endl;
+
+							if (std::cin.rdbuf()->in_avail() > 0) {
+								std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+							}
+							cout << "Enter any word to continue:";
+							cin >> input;
+							break;
+						}
+
+						if (i == input.size() - 1)
+						{
+							long long money = std::stoll(input);
+
+							player[1].money += money;
+						}
+					}
+				}
+				catch (std::exception outofrange)
+				{
+					cout << "Error: Amount out of range. Please enter a valid number." << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
 
 					if (std::cin.rdbuf()->in_avail() > 0) {
@@ -2440,10 +2504,6 @@ void get()
 					}
 					cout << "Enter any word to continue:";
 					cin >> input;
-				}
-				else
-				{
-					player[1].money += money;
 				}
 			}
 			else
@@ -2460,11 +2520,35 @@ void get()
 		}
 		else
 		{
-			int money = changeStringToNumber(input);
-
-			if (money == -1)
+			try
 			{
-				cout << "Error: Invalid amount. Please enter a valid number." << endl;
+
+				for (int i = 0; i < input.size(); i++)
+				{
+					if (!isdigit(input[i]))
+					{
+						cout << "Error: Invalid amount. Please enter a valid number." << endl;
+						cout << "Invalid command.Type / list to see available commands." << endl;
+
+						if (std::cin.rdbuf()->in_avail() > 0) {
+							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+						}
+						cout << "Enter any word to continue:";
+						cin >> input;
+						break;
+					}
+
+					if (i == input.size() - 1)
+					{
+						long long money = std::stoll(input);
+
+						player[playerTurn].money += money;
+					}
+				}
+			}
+			catch (std::exception outofrange)
+			{
+				cout << "Error: Amount out of range. Please enter a valid number." << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
 
 				if (std::cin.rdbuf()->in_avail() > 0) {
@@ -2472,10 +2556,6 @@ void get()
 				}
 				cout << "Enter any word to continue:";
 				cin >> input;
-			}
-			else
-			{
-				player[playerTurn].money += money;
 			}
 		}
 	}
@@ -2510,11 +2590,50 @@ void give()
 				cin.ignore();
 				cin >> input;
 
-				int money = changeStringToNumber(input);
-
-				if (money == -1)
+				try
 				{
-					cout << "Error: Invalid amount. Please enter a valid number." << endl;
+
+					for (int i = 0; i < input.size(); i++)
+					{
+						if (!isdigit(input[i]))
+						{
+							cout << "Error: Invalid amount. Please enter a valid number." << endl;
+							cout << "Invalid command.Type / list to see available commands." << endl;
+
+							if (std::cin.rdbuf()->in_avail() > 0) {
+								std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+							}
+							cout << "Enter any word to continue:";
+							cin >> input;
+							break;
+						}
+
+						if (i == input.size() - 1)
+						{
+							long long money = std::stoll(input);
+
+							if (player[playerTurn].money < money)
+							{
+								cout << "Error: Not enough money." << endl;
+
+								if (std::cin.rdbuf()->in_avail() > 0) {
+									std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+								}
+								cout << "Enter any word to continue:";
+								cin >> input;
+							}
+							else
+							{
+								player[playerTurn].money -= money;
+								player[0].money += money;
+
+							}
+						}
+					}
+				}
+				catch (std::exception outofrange)
+				{
+					cout << "Error: Amount out of range. Please enter a valid number." << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
 
 					if (std::cin.rdbuf()->in_avail() > 0) {
@@ -2522,25 +2641,6 @@ void give()
 					}
 					cout << "Enter any word to continue:";
 					cin >> input;
-				}
-				else
-				{
-					if (player[playerTurn].money < money)
-					{
-						cout << "Error: Not enough money." << endl;
-
-						if (std::cin.rdbuf()->in_avail() > 0) {
-							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-						}
-						cout << "Enter any word to continue:";
-						cin >> input;
-					}
-					else
-					{
-						player[playerTurn].money -= money;
-						player[0].money += money;
-
-					}
 				}
 			}
 			else
@@ -2562,11 +2662,50 @@ void give()
 				cin.ignore();
 				cin >> input;
 
-				int money = changeStringToNumber(input);
-
-				if (money == -1)
+				try
 				{
-					cout << "Error: Invalid amount. Please enter a valid number." << endl;
+
+					for (int i = 0; i < input.size(); i++)
+					{
+						if (!isdigit(input[i]))
+						{
+							cout << "Error: Invalid amount. Please enter a valid number." << endl;
+							cout << "Invalid command.Type / list to see available commands." << endl;
+
+							if (std::cin.rdbuf()->in_avail() > 0) {
+								std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+							}
+							cout << "Enter any word to continue:";
+							cin >> input;
+							break;
+						}
+
+						if (i == input.size() - 1)
+						{
+							long long money = std::stoll(input);
+
+							if (player[playerTurn].money < money)
+							{
+								cout << "Error: Not enough money." << endl;
+
+								if (std::cin.rdbuf()->in_avail() > 0) {
+									std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+								}
+								cout << "Enter any word to continue:";
+								cin >> input;
+							}
+							else
+							{
+								player[playerTurn].money -= money;
+								player[1].money += money;
+
+							}
+						}
+					}
+				}
+				catch (std::exception outofrange)
+				{
+					cout << "Error: Amount out of range. Please enter a valid number." << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
 
 					if (std::cin.rdbuf()->in_avail() > 0) {
@@ -2574,25 +2713,6 @@ void give()
 					}
 					cout << "Enter any word to continue:";
 					cin >> input;
-				}
-				else
-				{
-					if (player[playerTurn].money < money)
-					{
-						cout << "Error: Not enough money." << endl;
-
-						if (std::cin.rdbuf()->in_avail() > 0) {
-							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-						}
-						cout << "Enter any word to continue:";
-						cin >> input;
-					}
-					else
-					{
-						player[playerTurn].money -= money;
-						player[1].money += money;
-
-					}
 				}
 			}
 			else
