@@ -1400,7 +1400,7 @@ void hospital()
 	else
 	{
 		cout << "You still have " << player[playerTurn].injured << " turn(s) to leave" << endl;
-		cout << "Do you want to paid some money to leave earlier by chance?\n";
+		cout << "Do you want to paid $5000 to leave earlier by chance?\n";
 		cout << "1.Yes\n2.No\nEnter 1 or 2:";
 	inputHospital:
 		cin >> input;
