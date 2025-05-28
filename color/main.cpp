@@ -2037,7 +2037,12 @@ void selectCard()
 
 	for (int i = 0; i < player[playerTurn].card.size(); i++)
 	{
-		cout << "|  " << i + 1;
+		cout << "| ";
+
+		if (i + 1 < 10)
+			cout << " ";
+
+		cout << i + 1;
 
 		if (player[playerTurn].card[i] == "B")
 			cout << card[0];
@@ -3136,50 +3141,50 @@ void list()
 		if (input == "-a")
 		{
 			cout << "/card - Retrieve a specific card by name.\n";
-			cout << "   Usage:    / card[card_name]\n";
-			cout << "   Example:\n             / card Lucky\n             / card Rocket\n";
+			cout << "   Usage:    /card[card_name]\n";
+			cout << "   Example:\n             /card Dice Card\n             /card Rocket Card\n";
 
 			cout << endl;
 
 			cout << "/gamestate - Change the game state.\n";
-			cout << "   Usage :   / gamestate[state]\n";
-			cout << "   Example :\n             / gamestate INIT\n             / gamestate START\n             / gamestate MOVED\n             / gamestate ROUND_END\n             / gamestate FINISH\n";
+			cout << "   Usage :   /gamestate[state]\n";
+			cout << "   Example :\n             /gamestate INIT\n             /gamestate START\n             /gamestate MOVED\n             /gamestate ROUND_END\n             /gamestate FINISH\n";
 
 			cout << endl;
 
 			cout << "/get - Get money from the system.\n";
-			cout << "   Usage :   / get[playerName][money] or /get[money]\n";
-			cout << "   Example :\n             / get Bob 100\n             / get 100\n";
+			cout << "   Usage :   /get[playerName][money] or /get[money]\n";
+			cout << "   Example :\n             /get Player1 100\n             /get 100\n";
 
 			cout << endl;
 
 			cout << "/give - Give money to another player.\n";
-			cout << "   Usage :   / give[playerName][money]\n";
-			cout << "   Example :\n             / give Alice 500\n";
+			cout << "   Usage :   /give[playerName][money]\n";
+			cout << "   Example :\n             /give Alice 500\n";
 
 			cout << endl;
 
 			cout << "/info - Display information about all players.\n";
-			cout << "   Usage :   / info\n";
-			cout << "   Example :\n             / info\n";
+			cout << "   Usage :   /info\n";
+			cout << "   Example :\n             /info\n";
 
 			cout << endl;
 
 			cout << "/minigame - Enter a minigame.\n";
-			cout << "   Usage :   / minigame\n";
-			cout << "   Example :\n             / minigame\n";
+			cout << "   Usage :   /minigame\n";
+			cout << "   Example :\n             /minigame\n";
 
 			cout << endl;
 
 			cout << "/move - Move to a specific position on the board.\n";
-			cout << "   Usage :   / move[location] or /move to[0 - 31]\n";
-			cout << "   Example :\n             / move 5\n             / move to 10\n";
+			cout << "   Usage :   /move[location] or /move to[0 - 31]\n";
+			cout << "   Example :\n             /move 5\n             /move to 10\n";
 
 			cout << endl;
 
 			cout << "/refresh - Refresh the game board.\n";
-			cout << "   Usage :   / refresh\n";
-			cout << "   Example :\n             / refresh\n";
+			cout << "   Usage :   /refresh\n";
+			cout << "   Example :\n             /refresh\n";
 
 			cout << endl;
 
