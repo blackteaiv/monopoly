@@ -187,6 +187,9 @@ gamestateINIT:
 			cout << "(choose to roll the dice or check the cards)" << endl;
 			cout << "1.Roll the dice" << endl << "2.Check the cards" << endl << "Enter 1 or 2:";
 		input1:
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cin >> input;
 
 			if (input == "1")
@@ -268,6 +271,10 @@ gamestateINIT:
 			}
 
 			rollDice();
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << twoDiceTotal << endl;
 			cout << "(check the dice)" << endl << "Enter any word to move : ";
 			cin >> input;
@@ -275,6 +282,10 @@ gamestateINIT:
 		}
 		else
 		{
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "You are injured" << endl;
 			cout << "Enter any word to continue:";
 			cin >> input;
@@ -296,6 +307,10 @@ gamestateINIT:
 		cout << "(Trigger the event or check the cards)" << endl;
 		cout << "1.Trigger the event" << endl << "2.Check the cards" << endl << "Enter 1 or 2:";
 	input2:
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cin >> input;
 		//trigger the event or check the cards
 		if (input == "1")
@@ -309,6 +324,10 @@ gamestateINIT:
 			{
 				cout << "You get some money as reward\nYou get 1000 dollars\n";
 				player[playerTurn].money += 1000;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 			}
@@ -869,6 +888,10 @@ void shootDragonDoor()
 	cout << "Stake : 1. 500 dollars\n        2. 1000 dollars\n        3. 1500 dollars\n        4. 2000 dollars" << endl;
 	cout << "Enter 1~4 :";
 stakeSDD:
+
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
 	cin >> stake;
 
 	if (stake >= 1 && stake <= 4)
@@ -889,6 +912,10 @@ stakeSDD:
 		cout << "Guess if the next card is larger or smaller" << endl;
 		cout << "1:larger\n2:smaller\nEnter 1 or 2 : ";
 	reEnterGuess1:
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cin >> guess;
 
 		if (guess == 1)
@@ -943,6 +970,10 @@ stakeSDD:
 		cout << "Guess if the next card is in or out if range" << endl;
 		cout << "1:in\n2:out\nEnter 1 or 2 : ";
 	reEnterGuess2:
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cin >> guess;
 
 		if (guess == 1)
@@ -993,6 +1024,10 @@ stakeSDD:
 		}
 	}
 
+
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
 	cout << endl << "Enter any word to continue:";
 	cin >> input;
 }
@@ -1010,6 +1045,10 @@ void horse()
 	cout << "Stake : 1. 500 dollars\n        2. 1000 dollars\n        3. 1500 dollars\n        4. 2000 dollars" << endl;
 	cout << "Enter 1~4 :";
 stakeHorse:
+
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
 	cin >> stake;
 
 	if (stake >= 1 && stake <= 4)
@@ -1024,6 +1063,10 @@ stakeHorse:
 
 	cout << endl << "Choose the horse from 1~4 : ";
 chooseHorseNumber:
+
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
 	cin >> horseNumber;
 
 	if (horseNumber < 1 || horseNumber>4)
@@ -1104,6 +1147,10 @@ chooseHorseNumber:
 		cout << "\nyou lose";
 	}
 
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+
 	cout << "\n\nEnter any word to continue:";
 	cin >> input;
 }
@@ -1118,6 +1165,10 @@ void chance()
 		player[playerTurn].money += random;
 		cout << "It rains cats and dogs ... and money?" << endl;
 		cout << "You get " << random << " dollars" << endl;
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cout << "Enter any word to continue:";
 		cin >> input;
 	}
@@ -1128,6 +1179,10 @@ void chance()
 		if (random == 0)
 		{
 			cout << "Your friend invites you to play shoot dragon door" << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 			shootDragonDoor();
@@ -1135,6 +1190,10 @@ void chance()
 		else
 		{
 			cout << "You decide to gamble on the horses" << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 			horse();
@@ -1169,6 +1228,11 @@ void fate()
 		}
 	}
 
+
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+
 	cout << "Enter any word to continue:";
 	cin >> input;
 }
@@ -1182,6 +1246,10 @@ void house()
 		cout << "1.buy the house" << endl << "2.pass" << endl;
 		cout << "Enter 1 or 2:";
 	buyOrNotInput:
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cin >> input;
 
 		if (input == "1")
@@ -1199,6 +1267,10 @@ void house()
 				cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 				cout << "buying sucessful" << endl;
 				cout << "remain money: " << player[playerTurn].money << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 			}
@@ -1209,6 +1281,10 @@ void house()
 				status();
 				cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 				cout << "Not enough money to buy" << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 				goto buyOrNotInput;
@@ -1236,6 +1312,10 @@ void house()
 				cout << "(choose to upgrade the house,sell the house or pass)" << endl;
 				cout << "1.upgrade the house" << endl << "2.sell the house" << endl << "3.pass" << endl << "Enter 1, 2 or 3:";
 			upgradeOrSellInput1:
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cin >> input;
 
 				if (input == "1")
@@ -1250,6 +1330,10 @@ void house()
 						cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 						cout << "upgrading sucessful" << endl;
 						cout << "remain money: " << player[playerTurn].money << endl;
+
+						if (std::cin.rdbuf()->in_avail() > 0) {
+							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+						}
 						cout << "Enter any word to continue:";
 						cin >> input;
 					}
@@ -1260,6 +1344,10 @@ void house()
 						status();
 						cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 						cout << "Not enough money to upgrade" << endl;
+
+						if (std::cin.rdbuf()->in_avail() > 0) {
+							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+						}
 						cout << "Enter any word to continue:";
 						cin >> input;
 						goto upgradeOrSellInput1;
@@ -1297,6 +1385,10 @@ void house()
 				cout << "(choose to upgrade the house,sell the house or pass)" << endl;
 				cout << "1.upgrade the house" << endl << "2.sell the house" << endl << "3.pass" << endl << "Enter 1, 2 or 3:";
 			upgradeOrSellInput2:
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cin >> input;
 
 				if (input == "1")
@@ -1311,6 +1403,10 @@ void house()
 						cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 						cout << "upgrading sucessful" << endl;
 						cout << "remain money: " << player[playerTurn].money << endl;
+
+						if (std::cin.rdbuf()->in_avail() > 0) {
+							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+						}
 						cout << "Enter any word to continue:";
 						cin >> input;
 					}
@@ -1321,6 +1417,10 @@ void house()
 						status();
 						cout << "Player " << (playerTurn == 0 ? "1" : "2") << " turn" << endl;
 						cout << "Not enough money to upgrade" << endl;
+
+						if (std::cin.rdbuf()->in_avail() > 0) {
+							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+						}
 						cout << "Enter any word to continue:";
 						cin >> input;
 						goto upgradeOrSellInput2;
@@ -1357,6 +1457,10 @@ void house()
 				cout << "(choose to sell the house or pass)" << endl;
 				cout << "1.sell the house" << endl << "2.pass" << endl << "Enter 1 or 2:";
 			upgradeOrSellInput3:
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cin >> input;
 
 				if (input == "1")
@@ -1394,6 +1498,10 @@ void house()
 			player[playerTurn].money -= area[player[playerTurn].position].buyPrice * area[player[playerTurn].position].level / 10;
 			player[!playerTurn].money += area[player[playerTurn].position].buyPrice * area[player[playerTurn].position].level / 10;
 			cout << "remain money: " << player[playerTurn].money << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -1406,6 +1514,10 @@ void hospital()
 	{
 		cout << "You want to sleep in the hospital" << endl;
 		cout << "But you get ejected from the hospital" << endl;
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cout << "Enter any word to continue:";
 		cin >> input;
 	}
@@ -1415,6 +1527,10 @@ void hospital()
 		cout << "Do you want to paid $5000 to leave earlier by chance?\n";
 		cout << "1.Yes\n2.No\nEnter 1 or 2:";
 	inputHospital:
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cin >> input;
 
 		if (input == "1")
@@ -1428,6 +1544,10 @@ void hospital()
 
 			int random = rand() % 6;
 			cout << "You can leave the hospital if the number on the dice is larger than 4\n";
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to roll the dice:";
 			cin >> input;
 			cout << endl;
@@ -1460,6 +1580,10 @@ void hospital()
 			goto inputHospital;
 		}
 
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cout << "Enter any word to continue:";
 		cin >> input;
 	}
@@ -1485,6 +1609,10 @@ void shop()
 	cout << "Your assets:" << player[playerTurn].money << endl;
 	cout << "Enter the number of the card you want to buy (or enter 0 to exit): ";
 buyInput:
+
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
 	cin >> input;
 
 	if (input == "1")
@@ -1497,6 +1625,10 @@ buyInput:
 		else
 		{
 			cout << " You don't have enough money to buy [Barrier Card]. Your balance: $" << player[playerTurn].money << ", but the card costs $1500." << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -1511,6 +1643,10 @@ buyInput:
 		else
 		{
 			cout << " You don't have enough money to buy [Dice Card]. Your balance: $" << player[playerTurn].money << ", but the card costs $2000." << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -1525,6 +1661,10 @@ buyInput:
 		else
 		{
 			cout << " You don't have enough money to buy [Destroy Card]. Your balance: $" << player[playerTurn].money << ", but the card costs $2500." << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -1539,6 +1679,10 @@ buyInput:
 		else
 		{
 			cout << " You don't have enough money to buy [Fate Card]. Your balance: $" << player[playerTurn].money << ", but the card costs $1000." << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -1553,6 +1697,10 @@ buyInput:
 		else
 		{
 			cout << " You don't have enough money to buy [Rocket Card]. Your balance: $" << player[playerTurn].money << ", but the card costs $3000." << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -1591,6 +1739,11 @@ void barrierCard(int deleteIndex)
 			cout << "There is already barrier placed here, enter again:";
 		else
 			break;
+
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 	}
 
 	area[pos].barrier = 1;
@@ -1604,12 +1757,20 @@ void controllDiceCard(int deleteIndex)
 	{
 		cout << "You chose the dice already!Do you want to change it?(enter y or n)";
 	changeInput:
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cin >> input;
 
 		if (input == "y")
 		{
 			cout << "Enter the dice you want to choose(2 ~ 12): " << endl;
 		nextdiceInput1:
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cin >> input;
 
 			if (input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "11" || input == "12")
@@ -1651,6 +1812,10 @@ void controllDiceCard(int deleteIndex)
 	{
 		cout << "Enter the dice you want to choose(2 ~ 12): " << endl;
 	nextdiceInput2:
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cin >> input;
 
 		if (input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "11" || input == "12")
@@ -1687,6 +1852,10 @@ void destroyCard(int deleteIndex)
 	if (player[!playerTurn].house.size() == 0)
 	{
 		cout << "No house exit" << endl;
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cout << "Enter any word to continue:";
 		cin >> input;
 		return;
@@ -1699,6 +1868,10 @@ void destroyCard(int deleteIndex)
 		cout << i + 1 << "." << area[player[!playerTurn].house[i]].name << endl;
 	}
 houseinput:
+
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
 	cin >> input;
 
 	int destroyhouse = 0;
@@ -1792,6 +1965,10 @@ void selectCard()
 	if (cardSize == 0)
 	{
 		cout << "no card exist" << endl;
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cout << "Enter any word to continue:";
 		cin >> input;
 		return;
@@ -1822,6 +1999,10 @@ void selectCard()
 	cout << "+-----+--------------+--------------------------------------------+\n\n";
 	cout << "Enter the number of the card to use (or enter 0 to exit): ";
 cardInput:
+
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
 	cin >> input;
 	read = changeStringToNumber(input);
 
@@ -1908,6 +2089,10 @@ bool move()
 						{
 							cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 							cout << "Invalid command.Type / list to see available commands." << endl;
+
+							if (std::cin.rdbuf()->in_avail() > 0) {
+								std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+							}
 							cout << "Enter any word to continue:";
 							cin >> input;
 							return false;
@@ -1931,6 +2116,10 @@ bool move()
 						{
 							cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 							cout << "Invalid command.Type / list to see available commands." << endl;
+
+							if (std::cin.rdbuf()->in_avail() > 0) {
+								std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+							}
 							cout << "Enter any word to continue:";
 							cin >> input;
 							return false;
@@ -1941,6 +2130,10 @@ bool move()
 						{
 							cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 							cout << "Invalid command.Type / list to see available commands." << endl;
+
+							if (std::cin.rdbuf()->in_avail() > 0) {
+								std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+							}
 							cout << "Enter any word to continue:";
 							cin >> input;
 							return false;
@@ -1960,6 +2153,10 @@ bool move()
 					{
 						cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 						cout << "Invalid command.Type / list to see available commands." << endl;
+
+						if (std::cin.rdbuf()->in_avail() > 0) {
+							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+						}
 						cout << "Enter any word to continue:";
 						cin >> input;
 						return false;
@@ -1969,6 +2166,10 @@ bool move()
 				{
 					cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
+
+					if (std::cin.rdbuf()->in_avail() > 0) {
+						std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					}
 					cout << "Enter any word to continue:";
 					cin >> input;
 					return false;
@@ -1978,6 +2179,10 @@ bool move()
 			{
 				cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 				return false;
@@ -2011,6 +2216,10 @@ bool move()
 					{
 						cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 						cout << "Invalid command.Type / list to see available commands." << endl;
+
+						if (std::cin.rdbuf()->in_avail() > 0) {
+							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+						}
 						cout << "Enter any word to continue:";
 						cin >> input;
 					}
@@ -2033,6 +2242,10 @@ bool move()
 					{
 						cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 						cout << "Invalid command.Type / list to see available commands." << endl;
+
+						if (std::cin.rdbuf()->in_avail() > 0) {
+							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+						}
 						cout << "Enter any word to continue:";
 						cin >> input;
 						return false;
@@ -2044,6 +2257,10 @@ bool move()
 					{
 						cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 						cout << "Invalid command.Type / list to see available commands." << endl;
+
+						if (std::cin.rdbuf()->in_avail() > 0) {
+							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+						}
 						cout << "Enter any word to continue:";
 						cin >> input;
 						return false;
@@ -2063,6 +2280,10 @@ bool move()
 				{
 					cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
+
+					if (std::cin.rdbuf()->in_avail() > 0) {
+						std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					}
 					cout << "Enter any word to continue:";
 					cin >> input;
 					return false;
@@ -2072,6 +2293,10 @@ bool move()
 			{
 				cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 				return false;
@@ -2082,6 +2307,10 @@ bool move()
 	{
 		cout << "Usage: / move[location] or /move to[0 - 27]" << endl;
 		cout << "Invalid command.Type / list to see available commands." << endl;
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cout << "Enter any word to continue:";
 		cin >> input;
 		return false;
@@ -2112,6 +2341,10 @@ void get()
 				{
 					cout << "Error: Invalid amount. Please enter a valid number." << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
+
+					if (std::cin.rdbuf()->in_avail() > 0) {
+						std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					}
 					cout << "Enter any word to continue:";
 					cin >> input;
 				}
@@ -2124,6 +2357,10 @@ void get()
 			{
 				cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 			}
@@ -2141,6 +2378,10 @@ void get()
 				{
 					cout << "Error: Invalid amount. Please enter a valid number." << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
+
+					if (std::cin.rdbuf()->in_avail() > 0) {
+						std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					}
 					cout << "Enter any word to continue:";
 					cin >> input;
 				}
@@ -2153,6 +2394,10 @@ void get()
 			{
 				cout << "Error: Invalid location. Please enter a valid number (0-27) or a named location (USA, START, etc.)." << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 			}
@@ -2165,6 +2410,10 @@ void get()
 			{
 				cout << "Error: Invalid amount. Please enter a valid number." << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 			}
@@ -2178,6 +2427,10 @@ void get()
 	{
 		cout << "Usage: / get[playerName][money] or /get[money]" << endl;
 		cout << "Invalid command.Type / list to see available commands." << endl;
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cout << "Enter any word to continue:";
 		cin >> input;
 	}
@@ -2207,6 +2460,10 @@ void give()
 				{
 					cout << "Error: Invalid amount. Please enter a valid number." << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
+
+					if (std::cin.rdbuf()->in_avail() > 0) {
+						std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					}
 					cout << "Enter any word to continue:";
 					cin >> input;
 				}
@@ -2215,6 +2472,10 @@ void give()
 					if (player[playerTurn].money < money)
 					{
 						cout << "Error: Not enough money." << endl;
+
+						if (std::cin.rdbuf()->in_avail() > 0) {
+							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+						}
 						cout << "Enter any word to continue:";
 						cin >> input;
 					}
@@ -2230,6 +2491,10 @@ void give()
 			{
 				cout << "Usage: / give[playerName][money]" << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 			}
@@ -2247,6 +2512,10 @@ void give()
 				{
 					cout << "Error: Invalid amount. Please enter a valid number." << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
+
+					if (std::cin.rdbuf()->in_avail() > 0) {
+						std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					}
 					cout << "Enter any word to continue:";
 					cin >> input;
 				}
@@ -2255,6 +2524,10 @@ void give()
 					if (player[playerTurn].money < money)
 					{
 						cout << "Error: Not enough money." << endl;
+
+						if (std::cin.rdbuf()->in_avail() > 0) {
+							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+						}
 						cout << "Enter any word to continue:";
 						cin >> input;
 					}
@@ -2270,6 +2543,10 @@ void give()
 			{
 				cout << "Usage: / give[playerName][money]" << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 			}
@@ -2278,6 +2555,10 @@ void give()
 		{
 			cout << "Usage: / give[playerName][money]" << endl;
 			cout << "Invalid command.Type / list to see available commands." << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -2286,6 +2567,10 @@ void give()
 	{
 		cout << "Usage: / give[playerName][money]" << endl;
 		cout << "Invalid command.Type / list to see available commands." << endl;
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cout << "Enter any word to continue:";
 		cin >> input;
 	}
@@ -2318,6 +2603,10 @@ void card()
 				{
 					cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
+
+					if (std::cin.rdbuf()->in_avail() > 0) {
+						std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					}
 					cout << "Enter any word to continue:";
 					cin >> input;
 				}
@@ -2326,6 +2615,10 @@ void card()
 			{
 				cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 			}
@@ -2347,6 +2640,10 @@ void card()
 				{
 					cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
+
+					if (std::cin.rdbuf()->in_avail() > 0) {
+						std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					}
 					cout << "Enter any word to continue:";
 					cin >> input;
 				}
@@ -2355,6 +2652,10 @@ void card()
 			{
 				cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 			}
@@ -2376,6 +2677,10 @@ void card()
 				{
 					cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
+
+					if (std::cin.rdbuf()->in_avail() > 0) {
+						std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					}
 					cout << "Enter any word to continue:";
 					cin >> input;
 				}
@@ -2384,6 +2689,10 @@ void card()
 			{
 				cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 			}
@@ -2405,6 +2714,10 @@ void card()
 				{
 					cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
+
+					if (std::cin.rdbuf()->in_avail() > 0) {
+						std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					}
 					cout << "Enter any word to continue:";
 					cin >> input;
 				}
@@ -2413,6 +2726,10 @@ void card()
 			{
 				cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 			}
@@ -2434,6 +2751,10 @@ void card()
 				{
 					cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
 					cout << "Invalid command.Type / list to see available commands." << endl;
+
+					if (std::cin.rdbuf()->in_avail() > 0) {
+						std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					}
 					cout << "Enter any word to continue:";
 					cin >> input;
 				}
@@ -2442,6 +2763,10 @@ void card()
 			{
 				cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
 				cout << "Invalid command.Type / list to see available commands." << endl;
+
+				if (std::cin.rdbuf()->in_avail() > 0) {
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				}
 				cout << "Enter any word to continue:";
 				cin >> input;
 			}
@@ -2450,6 +2775,10 @@ void card()
 		{
 			cout << "Available cards name :" << endl << "1. Barrier Card" << endl << "2. Dice Card" << endl << "3. Destroy Card" << endl << "4. Fate Card" << endl << "5. Rocket Card" << endl;
 			cout << "Invalid command.Type / list to see available commands." << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -2458,6 +2787,10 @@ void card()
 	{
 		cout << "Usage : / card[card_name]" << endl;
 		cout << "Invalid command.Type / list to see available commands." << endl;
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cout << "Enter any word to continue:";
 		cin >> input;
 	}
@@ -2497,6 +2830,10 @@ int gamestate()
 		{
 			cout << "Error: Invalid state. Please enter a valid state." << endl;
 			cout << "Invalid command.Type / list to see available commands." << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 			return 0;
@@ -2506,6 +2843,10 @@ int gamestate()
 	{
 		cout << "Usage: / gamestate[state]" << endl;
 		cout << "Invalid command.Type / list to see available commands." << endl;
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cout << "Enter any word to continue:";
 		cin >> input;
 		return 0;
@@ -2599,6 +2940,10 @@ void info()
 	cout << "|\n";
 	cout << "+---------------------------------------------+---------------------------------------------+\n";
 	cout << endl;
+
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
 	cout << "Enter any word to continue:";
 	cin >> input;
 }
@@ -2661,12 +3006,20 @@ void list()
 			cout << "   Example :\n             / refresh\n";
 
 			cout << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
 		else
 		{
 			cout << "/card - Retrieve a specific card by name." << endl << "/gamestate - Change the game state." << endl << "/get - Get money from the system." << endl << "/give - Give money to another player." << endl << "/info - Display information about all players." << endl << "/minigame - Enter a minigame." << endl << "/move - Move to a specific position on the board." << endl << "/refresh - Refresh the game board." << endl;
+
+			if (std::cin.rdbuf()->in_avail() > 0) {
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
 			cout << "Enter any word to continue:";
 			cin >> input;
 		}
@@ -2674,6 +3027,10 @@ void list()
 	else
 	{
 		cout << "/card - Retrieve a specific card by name." << endl << "/gamestate - Change the game state." << endl << "/get - Get money from the system." << endl << "/give - Give money to another player." << endl << "/info - Display information about all players." << endl << "/minigame - Enter a minigame." << endl << "/move - Move to a specific position on the board." << endl << "/refresh - Refresh the game board." << endl;
+
+		if (std::cin.rdbuf()->in_avail() > 0) {
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		cout << "Enter any word to continue:";
 		cin >> input;
 	}
@@ -2691,6 +3048,10 @@ void minigame()
 
 	cout << "Please choose (1~3):" << endl;
 chooseMnigame:
+
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
 	cin >> input;
 
 	if (input == "1")
@@ -2833,6 +3194,10 @@ bool restartANewRound()
 {
 	cout << "Do you want to restart? (Y/N):";
 restartInput:
+
+	if (std::cin.rdbuf()->in_avail() > 0) {
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
 	cin >> input;
 
 	if (input == "Y" || input == "y")
