@@ -1684,81 +1684,43 @@ void controllDiceCard(int deleteIndex)
 
 void destroyCard(int deleteIndex)
 {
-	cout << "Enter the player you want to destroy" << endl;
+	if (player[!playerTurn].house.size() == 0)
+	{
+		cout << "No house exit" << endl;
+		cout << "Enter any word to continue:";
+		cin >> input;
+		return;
+	}
 
-	if (playerTurn == 0)
+	cout << "Enter the house you want to destroy one level" << endl;
+
+	for (int i = 0; i < player[!playerTurn].house.size(); i++)
 	{
-		cout << "1.player2" << endl;
+		cout << i + 1 << "." << area[player[!playerTurn].house[i]].name << endl;
 	}
-	else
-	{
-		cout << "1.player1" << endl;
-	}
-playerinput:
+houseinput:
 	cin >> input;
 
-	if (input == "1")
+	int destroyhouse = 0;
+
+	if (input.size() == 1)
 	{
-		if (player[!playerTurn].house.size() == 0)
+		if (isdigit(input[0]))
 		{
-			cout << "No house exit" << endl;
-			cout << "Enter any word to continue:";
-			cin >> input;
-			return;
-		}
-
-		cout << "Enter the house you want to destroy one level" << endl;
-
-		for (int i = 0; i < player[!playerTurn].house.size(); i++)
-		{
-			cout << i + 1 << "." << area[player[!playerTurn].house[i]].name << endl;
-		}
-	houseinput:
-		cin >> input;
-
-		int destroyhouse = 0;
-
-		if (input.size() == 1)
-		{
-			if (isdigit(input[0]))
-			{
-				destroyhouse = input[0] - '0';
-			}
-			else
-			{
-				cout << "Wrong input, enter again:";
-				goto houseinput;
-			}
-		}
-		else if (input.size() == 2)
-		{
-
-			if (isdigit(input[0]) && isdigit(input[1]))
-			{
-				destroyhouse = input[1] - '0' + (input[0] - '0') * 10;
-			}
-			else
-			{
-				cout << "Wrong input, enter again:";
-				goto houseinput;
-			}
+			destroyhouse = input[0] - '0';
 		}
 		else
 		{
 			cout << "Wrong input, enter again:";
 			goto houseinput;
 		}
+	}
+	else if (input.size() == 2)
+	{
 
-		if (destroyhouse >= 1 && destroyhouse <= player[!playerTurn].house.size())
+		if (isdigit(input[0]) && isdigit(input[1]))
 		{
-			area[player[!playerTurn].house[destroyhouse - 1]].level -= 1;
-
-			if (area[player[!playerTurn].house[destroyhouse - 1]].level == 0)
-			{
-				area[player[!playerTurn].house[destroyhouse - 1]].owner = 2;
-
-				player[!playerTurn].house.erase(player[!playerTurn].house.begin() + destroyhouse - 1);
-			}
+			destroyhouse = input[1] - '0' + (input[0] - '0') * 10;
 		}
 		else
 		{
@@ -1769,7 +1731,24 @@ playerinput:
 	else
 	{
 		cout << "Wrong input, enter again:";
-		goto playerinput;
+		goto houseinput;
+	}
+
+	if (destroyhouse >= 1 && destroyhouse <= player[!playerTurn].house.size())
+	{
+		area[player[!playerTurn].house[destroyhouse - 1]].level -= 1;
+
+		if (area[player[!playerTurn].house[destroyhouse - 1]].level == 0)
+		{
+			area[player[!playerTurn].house[destroyhouse - 1]].owner = 2;
+
+			player[!playerTurn].house.erase(player[!playerTurn].house.begin() + destroyhouse - 1);
+		}
+	}
+	else
+	{
+		cout << "Wrong input, enter again:";
+		goto houseinput;
 	}
 
 	player[playerTurn].card.erase(player[playerTurn].card.begin() + deleteIndex);
